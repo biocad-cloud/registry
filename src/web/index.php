@@ -1,10 +1,12 @@
 <?php
 
-include __DIR__ . "/../modules/php.NET/package.php";
+include __DIR__ . "/../framework/bootstrap.php";
 
 class App {
 
-
+    /**
+     * GCModeller Git Repository
+    */
     public function index() {
         View::Display();
     }
