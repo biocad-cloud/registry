@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . "/../../framework/bootstrap.php";
+include __DIR__ . "/../framework/bootstrap.php";
 
 /**
  * pull data from registry
@@ -16,7 +16,7 @@ class app {
      * @uses api
     */
     public function taxonomic_group($id = null) {
-        $tax = new Table(["cad_registry" => "taxonomic"]);
+        $tax = new Table("taxonomic");
 
         if (Utils::isDbNull($id)) {
             // pull all

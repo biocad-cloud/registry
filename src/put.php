@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . "/../../framework/bootstrap.php";
+include __DIR__ . "/../framework/bootstrap.php";
 
 /**
  * put data to registry
@@ -14,7 +14,7 @@ class app {
      * @access *
     */
     public function taxonomic($name, $note = "") {
-        $tax = new Table(["cad_registry" => "taxonomic"]);
+        $tax = new Table("taxonomic");
         $name = trim($name, '"\s');
         $note = trim($note, '"\s');
         # check data is exists or not
