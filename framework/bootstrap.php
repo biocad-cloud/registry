@@ -1,6 +1,15 @@
 <?php
 
-include __DIR__ . "/../modules/php.NET/package.php";
+define("APP_PATH", dirname(__DIR__));
+define("WEB_ROOT", dirname(APP_PATH));
+define("APP_DEBUG", true);
 
-dotnet::AutoLoad(__DIR__ . "/../../.etc/config.ini.php");
+define("YEAR", date("Y"));
+
+session_start();
+
+include __DIR__ . "/../../framework/php.NET/package.php";
+include APP_PATH . "/framework/accessController.php";
+
+dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");
 dotnet::HandleRequest(new App());
