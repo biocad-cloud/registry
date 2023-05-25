@@ -8,7 +8,7 @@ define("YEAR", date("Y"));
 
 session_start();
 
-include __DIR__ . "/../../framework/php.NET/package.php";
+include "/opt/runtime/package.php";
 include APP_PATH . "/framework/accessController.php";
 
 dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");
