@@ -3,7 +3,7 @@
 return [
 
     "ERR_HANDLER_DISABLE" => "FALSE",
-	"RFC7231"       => __DIR__ . "/../src/views/http_errors/",
+	"RFC7231"       => __DIR__ . "/../views/http_errors/",
     "CACHE" => FALSE,
     "CACHE.MINIFY" => FALSE,
     "APP_NAME" => "git_viewer",
