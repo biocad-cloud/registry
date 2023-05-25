@@ -10,6 +10,6 @@ return [
     "APP_TITLE" => "GCModeller git repository",
     "APP_VERSION" => "2.3.111.13-alpha",
 	"MVC_VIEW_ROOT" => [
-        "index" => __DIR__ . "/../src/views/"
+        "index" => __DIR__ . "/../views/"
     ]
 ];
