@@ -42,6 +42,7 @@ class app {
      * 
      * @uses api
      * @param integer $grp the taxonomic group id
+     * @method POST
     */
     public function genomes($grp) {
         $li = $_POST["li"];
