@@ -36,4 +36,42 @@ class app {
             controller::success(["id" => $check["id"], "exist_data" => $check]);
         }
     }
+
+    /**
+     * put a set of the genome into one taxonomic group
+     * 
+     * @uses api
+     * @param integer $grp the taxonomic group id
+    */
+    public function genomes($grp) {
+        $li = $_POST["li"];
+        $tax = new Table("taxonomic");
+
+        if (is_string($li)) {
+            $li = json_decode($li, true);
+        }
+
+        // check of the taxonomic is exists in database or not?
+        $check = $tax->where(["id" => $grp])->find();
+        $genome = new Table("genomes");
+
+        if (Utils::isDbNull($check)) {
+            controller::error("no target taxonomic group data!");
+        } else {
+            foreach($li as $name => $t) {
+                $genome->add([
+                    "id" => $t["id"], 
+                    "taxonomic_group" => $grp, 
+                    "name" => $t["name"], 
+                    "ncbi_taxid" => 0
+                ]);
+            }
+
+            $tax->where(["id" => $grp])->save([
+                "n_tax" => count($li)
+            ]);
+
+            controller::success(1);
+        }
+    }
 }
