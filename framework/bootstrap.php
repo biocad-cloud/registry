@@ -12,4 +12,4 @@ include "/opt/runtime/package.php";
 include APP_PATH . "/framework/accessController.php";
 
 dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");
-dotnet::HandleRequest(new App());
+dotnet::HandleRequest(new App(), new accessController());

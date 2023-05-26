@@ -17,6 +17,7 @@ class app {
         $tax = new Table("taxonomic");
         $name = trim($name, '"\s');
         $note = trim($note, '"\s');
+        $id = trim($id, '"\s');
         # check data is exists or not
         $check = $tax->where(["name" => urldecode($name)])->find();
 
