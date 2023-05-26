@@ -13,7 +13,7 @@ class app {
      * @method POST
      * @access *
     */
-    public function taxonomic($name, $note = "") {
+    public function taxonomic($name, $id, $note = "") {
         $tax = new Table("taxonomic");
         $name = trim($name, '"\s');
         $note = trim($note, '"\s');
@@ -24,7 +24,8 @@ class app {
             // add new
             $id = $tax->add([
                 "name" => urldecode($name),
-                "note" => urldecode($note)
+                "note" => urldecode($note),
+                "id" => $id
             ]);
 
             controller::success(["id" => $id], $tax->getLastMySql());
