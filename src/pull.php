@@ -23,12 +23,12 @@ class app {
             controller::success($tax->all());
         } else {
             $load = $tax->left_join("genomes")
-            ->on(["genomes" => "taxonomic_group", "taxonomic" => "id"])
-            ->where(["`taxonomic`.`id`" => $id])
-            ->select([
-                "`genomes`.*", "`taxonomic`.`name` as group"
-            ])
-            ;
+                ->on(["genomes" => "taxonomic_group", "taxonomic" => "id"])
+                ->where(["`taxonomic`.`id`" => $id])
+                ->select([
+                    "`genomes`.*", "`taxonomic`.`name` as `group`"
+                ])
+                ;
 
             controller::success($load, $tax->getLastMySql());
         }
