@@ -12,6 +12,7 @@ class app {
      * 
      * @method POST
      * @access *
+     * @uses api
     */
     public function taxonomic($name, $id, $note = "") {
         $tax = new Table("taxonomic");
