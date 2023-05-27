@@ -16,9 +16,9 @@ class app {
     */
     public function taxonomic($name, $id, $note = "") {
         $tax = new Table("taxonomic");
-        $name = trim($name, '"\s');
-        $note = trim($note, '"\s');
-        $id = trim($id, '"\s');
+        $name = strip_postVal($name);
+        $note = strip_postVal($note);
+        $id = strip_postVal($id);
         # check data is exists or not
         $check = $tax->where(["name" => urldecode($name)])->find();
 
@@ -86,6 +86,7 @@ class app {
         $genes = new Table("molecules");
         $operons = new Table("operon_group");
         $names = [];
+        $operon = null;
 
         if (is_string($li)) {
             $li = json_decode($li, true);
@@ -98,10 +99,20 @@ class app {
             array_push($names, $gene["name"]);
         }
 
-        $operon = $operons->add([
-            "operon" => implode(",", $names),
+        $operon_name = implode(",", $names);
+        $check = $operons->where([
+            "operon" => $operon_name,
             "genome_id" => $genome
-        ]);
+        ])->find();
+
+        if (Utils::isDbNull($check)) {
+            $operon = $operons->add([
+                "operon" => $operon_name,
+                "genome_id" => $genome
+            ]);
+        } else {
+            $operon = $check["id"];
+        }
 
         $operon_graph = new Table("operon_graph");
         $dblinks = new Table("dblinks");
@@ -109,14 +120,17 @@ class app {
 
         foreach($li as $gene) {
             # check gene molecule is exists or not
-            $check = $genes->where(["id" => $gene["id"]])->find();
+            $check = $genes->where(["molecule_id" => $gene["locusId"]])->find();
                 
             if (Utils::isDbNull($check)) {
-                $genes->add([
-                    "id" => $gene["id"],
+                $check = $genes->add([
+                    // "id" => $gene["id"],
                     "molecule_id" => $gene["locusId"],
                     "name" => $gene["name"]
                 ]);
+                $gene["id"] = $check;
+            } else {
+                $gene["id"] = $check["id"];
             }
 
             foreach($gene["dblinks"] as $dbname => $xref_id) {
@@ -153,5 +167,48 @@ class app {
         }
 
         controller::success(1);
+    }
+
+    /**
+     * @uses api
+     * @method POST
+    */
+    public function regulation($genome, $regulator, $regulator_name, $li, $family, $type) {
+        $reg = new Table("regulator");
+        $mols = new Table("molecules");
+        $family = strip_postVal(urldecode($family));
+        $type = strip_postVal(urldecode($type));
+        $check = $reg->where(["gene_id" => $regulator, "genome_id" => $genome])->find();
+        $motifs = new Table("motif_sites");
+        $regulator_id = null;
+
+        if (is_string($li)) {
+            $li = json_decode($li, true);
+        }
+
+        if (Utils::isDbNull($check)) {
+            $gene = $mols->where(["molecule_id" => $regulator])->find();
+
+            if (Utils::isDbNull($gene)) {
+                $gene = $mols->add([
+                    "molecule_id" => $regulator,
+                    "type" => 1,
+                    "name" => $regulator_name
+                ]);
+            } else {
+                $gene = $gene["id"];
+            }
+
+            $regulator_id = $reg->add([
+                "gene_id" => $regulator,
+                "mol_id" => $gene,
+                "family" => 0,
+                "genome_id" => $genome
+            ]);
+        } else {
+            $regulator_id = $check["id"];
+        }
+
+
     }
 }

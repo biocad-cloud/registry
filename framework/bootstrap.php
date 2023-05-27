@@ -15,5 +15,9 @@ function registry_key($term) {
     return md5(strtolower(urldecode($term)));
 }
 
+function strip_postVal($str) {
+    return trim($str, '\'"\s');
+}
+
 dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");
 dotnet::HandleRequest(new App(), new accessController());
