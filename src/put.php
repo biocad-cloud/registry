@@ -202,7 +202,9 @@ class app {
             $regulator_id = $reg->add([
                 "gene_id" => $regulator,
                 "mol_id" => $gene,
-                "family" => 0,
+                "family" => $family,
+                "family_id" => 0,
+                "type" => $type,
                 "genome_id" => $genome
             ]);
         } else {
@@ -220,7 +222,9 @@ class app {
                 "motif_id" => 0,
                 "len" => strlen($motif["SequenceData"]),
                 "hashcode" => md5($motif["SequenceData"]),
-                "seq" => $motif["SequenceData"]
+                "seq" => $motif["SequenceData"],
+                "score" => $motif["score"],
+                "family" => $family
             ]);
         }
 
