@@ -75,4 +75,83 @@ class app {
             controller::success(1);
         }
     }
+
+    /**
+     * @uses api
+     * @method POST
+    */
+    public function operons($genome, $li) {
+        $tax = new Table("genomes");
+        $check = $tax->where(["id" => $genome])->find();
+        $genes = new Table("molecules");
+        $operons = new Table("operon_group");
+        $names = [];
+
+        if (is_string($li)) {
+            $li = json_decode($li, true);
+        }
+        if (Utils::isDbNull($check)) {
+            controller::error("no target genome data!");
+        }
+
+        foreach($li as $gene) {
+            array_push($names, $gene["name"]);
+        }
+
+        $operon = $operons->add([
+            "operon" => implode(",", $names),
+            "genome_id" => $genome
+        ]);
+
+        $operon_graph = new Table("operon_graph");
+        $dblinks = new Table("dblinks");
+        $vocabulary = new Table("vocabulary");
+
+        foreach($li as $gene) {
+            # check gene molecule is exists or not
+            $check = $genes->where(["id" => $gene["id"]])->find();
+                
+            if (Utils::isDbNull($check)) {
+                $genes->add([
+                    "id" => $gene["id"],
+                    "molecule_id" => $gene["locusId"],
+                    "name" => $gene["name"]
+                ]);
+            }
+
+            foreach($gene["dblinks"] as $dbname => $xref_id) {
+                $dbindex = $vocabulary->where([
+                    "term" => $dbname
+                ])->find();
+
+                if (Utils::isDbNull($dbindex)) {
+                    $vocabulary->add([
+                        "term" => $dbname,
+                        "hashcode" => registry_key($dbname),
+                        "category" => "Biological Database",
+                        "description" => "add from operon data"
+                    ]);
+
+                    $dbindex = $vocabulary->where([
+                        "term" => $dbname
+                    ])->find();
+                }
+
+                $dblinks->add([
+                    "db_src" => $dbindex["id"],
+                    "xref_id" => $xref_id,
+                    "entity_id" => $gene["id"],
+                    "entity_type" => 1
+                ]);
+            }
+
+            $operon_graph->add([
+                "operon_id" => $operon,
+                "gene_id" => $gene["id"],
+                "genome_id" => $genome
+            ]);
+        }
+
+        controller::success(1);
+    }
 }
