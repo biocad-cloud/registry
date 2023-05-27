@@ -28,4 +28,4 @@ Header set Cache-Control: "max-age=0, no-store"
 RewriteRule ^pull/(.+)/$ /pull.php?app=$1
 RewriteRule ^put/(.+)/$ /put.php?app=$1
 
-RewriteRule ^(.+)/$ /index.php?app=$1
+# RewriteRule ^(.+)/$ /index.php?app=$1
