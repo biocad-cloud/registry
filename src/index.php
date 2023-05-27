@@ -10,4 +10,12 @@ class App {
     public function index() {
         View::Display();
     }
+
+    /**
+     * @uses view
+     * @method POST
+    */
+    public function err500_test() {
+        RFC7231Error::err500();
+    }
 }
