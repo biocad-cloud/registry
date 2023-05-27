@@ -209,6 +209,21 @@ class app {
             $regulator_id = $check["id"];
         }
 
+        foreach($li as $motif) {
+            $motifs->add([
+                "type" => $type,
+                "gene_id" => $motif["locus_tag"],
+                "gene_name" => $motif["name"],
+                "loci" => $motif["position"],
+                "regulator" => $regulator_id,
+                "genome_id" => $genome,
+                "motif_id" => 0,
+                "len" => strlen($motif["SequenceData"]),
+                "hashcode" => md5($motif["SequenceData"]),
+                "seq" => $motif["SequenceData"]
+            ]);
+        }
 
+        controller::success(1);
     }
 }
