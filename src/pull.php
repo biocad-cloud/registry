@@ -33,4 +33,21 @@ class app {
             controller::success($load, $tax->getLastMySql());
         }
     }
+
+    /**
+     * get all avaliable motif sites family
+     * 
+     * @uses api
+     * @method GET
+    */
+    public function motif_site_family() {
+        $motifs = new Table("motif_sites");
+        $pull = $motifs
+        ->where(["family" => not_eq("")])
+        ->group_by("family")
+        ->select(["family", "count(*) as nsize"])
+        ;
+
+        controller::success($pull);
+    }
 }
