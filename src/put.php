@@ -156,7 +156,7 @@ class app {
                     "xref_id" => $xref_id,
                     "entity_id" => $gene["id"],
                     "entity_type" => 1
-                ]);
+                ], $strict = false);
             }
 
             $operon_graph->add([
