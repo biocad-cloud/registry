@@ -230,4 +230,45 @@ class app {
 
         controller::success(1);
     }
+
+    /**
+     * write gene/protein sequence into database
+     * 
+     * @param integer $gene_id the biocad registry internal molecules id
+     * 
+    */
+    public function upload_seqs($gene_id, $locus_tag, $gene_seq = null, $prot_seq = null) {
+        imports("Microsoft.VisualBasic.Strings");
+
+        $archive = new Table("seq_archive");
+        $seq_id = [
+            "nucl" => -1,
+            "prot" => -1
+        ];
+
+        if (!(Utils::isDbNull($gene_seq) || Strings::Empty($gene_seq))) {
+            $gene_seq = strip_postVal($gene_seq);
+            $seq_id["nucl"] = $archive->add([
+                "seq_id" => $locus_tag,
+                "mol_id" => $gene_id,
+                "mol_type" => 1,
+                "len" => strlen($gene_seq),
+                "hashcode" => md5($gene_seq),
+                "seq" => $gene_seq
+            ]);
+        }
+        if (!(Utils::isDbNull($prot_seq) || Strings::Empty($prot_seq))) {
+            $prot_seq = strip_postVal($prot_seq);
+            $seq_id["prot"] = $archive->add([
+                "seq_id" => $locus_tag,
+                "mol_id" => $gene_id,
+                "mol_type" => 3,
+                "len" => strlen($prot_seq),
+                "hashcode" => md5($prot_seq),
+                "seq" => $prot_seq
+            ]);
+        }
+
+        controller::success($seq_id);
+    }
 }
