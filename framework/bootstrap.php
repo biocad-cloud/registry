@@ -16,7 +16,11 @@ function registry_key($term) {
 }
 
 function strip_postVal($str) {
-    return trim($str, '\'"\s');
+    if (Utils::isDbnull($str)) {
+        return "";
+    } else {
+        return trim($str, '\'"\s');
+    }    
 }
 
 dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");

@@ -238,7 +238,11 @@ class app {
      * @uses api
      * @method POST
     */
-    public function upload_seqs($gene_id, $locus_tag, $gene_seq = null, $prot_seq = null) {
+    public function seqs($gene_id, $locus_tag, 
+                         $gene_seq = null, 
+                         $prot_seq = null, 
+                         $note = null) {
+
         imports("Microsoft.VisualBasic.Strings");
 
         $archive = new Table("seq_archive");
@@ -246,9 +250,12 @@ class app {
             "nucl" => -1,
             "prot" => -1
         ];
+        $n = 0;
+        $note = strip_postVal($note);
 
         if (!(Utils::isDbNull($gene_seq) || Strings::Empty($gene_seq))) {
             $gene_seq = strip_postVal($gene_seq);
+            $n = $n + 1;
             $seq_id["nucl"] = $archive->add([
                 "seq_id" => $locus_tag,
                 "mol_id" => $gene_id,
@@ -260,6 +267,7 @@ class app {
         }
         if (!(Utils::isDbNull($prot_seq) || Strings::Empty($prot_seq))) {
             $prot_seq = strip_postVal($prot_seq);
+            $n = $n + 1;
             $seq_id["prot"] = $archive->add([
                 "seq_id" => $locus_tag,
                 "mol_id" => $gene_id,
@@ -269,6 +277,16 @@ class app {
                 "seq" => $prot_seq
             ]);
         }
+
+        // update database of the molecule info
+        (new Table("molecules"))->where([
+            "id" => $gene_id
+        ])
+        ->save([
+            "seq_num" => "~seq_num + $n",
+            "description" => $note
+        ])
+        ;
 
         controller::success($seq_id);
     }
