@@ -40,14 +40,19 @@ class app {
      * @uses api
      * @method GET
     */
-    public function motif_site_family() {
+    public function motif_site_family($genome = null) {
         $motifs = new Table("motif_sites");
-        $pull = $motifs
-        ->where(["family" => not_eq("")])
-        ->group_by("family")
-        ->select(["family", "count(*) as nsize"])
-        ;
 
-        controller::success($pull);
+        if (Utils::isDbNull($genome)) {
+            controller::success($motifs
+            ->where(["family" => not_eq("")])
+            ->group_by("family")
+            ->select(["family", "count(*) as nsize"]));
+        } else {
+            controller::success($motifs
+            ->where(["family" => not_eq(""), "genome_id" => $genome])
+            ->group_by("family")
+            ->select(["family", "count(*) as nsize"]));
+        }        
     }
 }
