@@ -235,7 +235,8 @@ class app {
      * write gene/protein sequence into database
      * 
      * @param integer $gene_id the biocad registry internal molecules id
-     * 
+     * @uses api
+     * @method POST
     */
     public function upload_seqs($gene_id, $locus_tag, $gene_seq = null, $prot_seq = null) {
         imports("Microsoft.VisualBasic.Strings");
