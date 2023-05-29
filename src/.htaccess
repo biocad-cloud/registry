@@ -31,7 +31,7 @@ RewriteRule ^put/(.+)/$ /put.php?app=$1
 RewriteRule ^exportServlet/motif_sites/(.+)/$ /exportServlet.php?app=motif_sites_$1
 RewriteRule ^exportServlet/gene/(.+)/$ /exportServlet.php?app=gene_$1
 
-RewriteRule ^ncbi_tax/(.+)$ /ncbi_tax.php?app=$1
+RewriteRule ^ncbi_tax/(.+)/$ /ncbi_tax.php?app=$1
 
 # RewriteRule ^(.+)/$ /index.php?app=$1
 RewriteRule ^install/$ /index.php?app=install
