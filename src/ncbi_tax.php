@@ -71,7 +71,7 @@ class App {
             $tax = $ncbi_tax
             ->left_join("vocabulary")
             ->on(["vocabulary" => "id", "ncbi_taxonomy_tree" => "rank"])
-            ->where(["id" => $taxid])
+            ->where(["`ncbi_taxonomy_tree`.`id`" => $taxid])
             ->find(["`ncbi_taxonomy_tree`.*", "`term` as `rank_name`"])
             ;
 

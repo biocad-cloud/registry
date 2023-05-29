@@ -16,10 +16,12 @@ function registry_key($term) {
 }
 
 function strip_postVal($str) {
-    if (Utils::isDbnull($str)) {
+    if (Utils::isDbNull($str)) {
         return "";
     } else {
-        return trim($str, '\'"\s');
+        # this constant string value is a character set
+        # not regular expression
+        return trim($str, '\'" \t\r\n-_,;?');
     }    
 }
 

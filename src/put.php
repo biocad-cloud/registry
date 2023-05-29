@@ -178,6 +178,7 @@ class app {
         $mols = new Table("molecules");
         $family = strip_postVal(urldecode($family));
         $type = strip_postVal(urldecode($type));
+        $regulator = strip_postVal(urldecode($regulator));
         $check = $reg->where(["gene_id" => $regulator, "genome_id" => $genome])->find();
         $motifs = new Table("motif_sites");
         $regulator_id = null;
