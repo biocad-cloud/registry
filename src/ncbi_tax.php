@@ -11,6 +11,8 @@ class App {
      * @method POST
     */
     public function add($taxid, $name, $rank, $parent, $nchilds) {
+        imports("Microsoft.VisualBasic.Strings");
+
         $ncbi_tax = new Table("ncbi_taxonomy_tree");
         $terms = new Table("vocabulary");
         $taxid = strip_postVal($taxid);
@@ -19,7 +21,7 @@ class App {
         $parent = strip_postVal($parent);
         $nchilds = strip_postVal($nchilds);
 
-        if (Utils::isDbNull($rank)) {
+        if (Utils::isDbNull($rank) || Strings::Empty($rank) || $rank == "" || strlen($rank) == 0) {
             $rank = "no rank";
         }
 
@@ -27,7 +29,7 @@ class App {
 
         if (Utils::isDbNull($rank_term)) {
             $rank_term = $terms->add([
-                "term" => $rank_term,
+                "term" => $rank,
                 "hashcode" => registry_key($rank),
                 "category" => "Category Term",
                 "description" => "Imported from ncbi taxonomy dump file"
