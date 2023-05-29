@@ -24,6 +24,15 @@ class App {
         if (Utils::isDbNull($rank) || Strings::Empty($rank) || $rank == "" || strlen($rank) == 0) {
             $rank = "no rank";
         }
+        if ($nchilds == '') {
+            $nchilds = "0";
+        }
+        if ($taxid == '') {
+            $taxid = "0";
+        }
+        if ($parent == '') {
+            $parent = "0";
+        }
 
         $rank_term = $terms->where(["hashcode" => registry_key($rank)])->find();
 
