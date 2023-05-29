@@ -57,4 +57,37 @@ class App {
 
         controller::success(1);
     }
+
+    /**
+     * get taxonomy lineage
+     * 
+     * @uses api
+    */
+    public function lineage($taxid) {
+        $ncbi_tax = new Table("ncbi_taxonomy_tree");
+        $list = [];
+
+        for($i = 0; $i < 100000; $i++) {
+            $tax = $ncbi_tax
+            ->left_join("vocabulary")
+            ->on(["vocabulary" => "id", "ncbi_taxonomy_tree" => "rank"])
+            ->where(["id" => $taxid])
+            ->find(["`ncbi_taxonomy_tree`.*", "`term` as `rank_name`"])
+            ;
+
+            if (Utils::isDbNull($tax)) {
+                break;
+            } else {
+                array_push($list, $tax);
+            }
+
+            if ($tax["parent"] == 0) {
+                break;
+            } else {
+                $taxid = $tax["parent"];
+            }
+        }
+
+        controller::success($list);
+    }
 }
