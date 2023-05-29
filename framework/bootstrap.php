@@ -21,7 +21,8 @@ function strip_postVal($str) {
     } else {
         # this constant string value is a character set
         # not regular expression
-        return trim($str, '\'" \t\r\n-_,;?');
+        # \t\s\r\n not working at here?
+        return trim($str, '\'" -_,;?');
     }    
 }
 
