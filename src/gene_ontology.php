@@ -14,7 +14,7 @@ class App {
         $dag = new Table("go_dag");
         $id = strip_postVal($id);
         $find = $go->where(["id" => $id])->find();
-        $is_obsolete = boolval(strip_postVal($is_obsolete));
+        $is_obsolete = Conversion::CBool(strip_postVal($is_obsolete));
 
         if (Utils::isDbNull($find)) {
             $go->add([
