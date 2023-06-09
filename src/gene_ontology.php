@@ -9,18 +9,20 @@ class App {
      * 
      * @method POST
     */
-    public function add($id, $name, $namespace, $is_a, $xref, $def, $synonym) {
+    public function add($id, $name, $namespace, $is_a, $xref, $def, $synonym, $is_obsolete) {
         $go = new Table("gene_ontology");
         $dag = new Table("go_dag");
         $id = strip_postVal($id);
         $find = $go->where(["id" => $id])->find();
+        $is_obsolete = boolval(strip_postVal($is_obsolete));
 
         if (Utils::isDbNull($find)) {
             $go->add([
                 "id" => $id,
                 "name" => strip_postVal($name),
                 "namespace" => strip_postVal($namespace),
-                "def" => strip_postVal($def)
+                "def" => strip_postVal($def),
+                "is_obsolete" => $is_obsolete ? 1 : 0
             ]);
         }
 
