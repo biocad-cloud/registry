@@ -1,5 +1,7 @@
 <?php
 
+define("APP_VIEWS", __DIR__ . "/../views/");
+
 return [
 
     'DB_TYPE' => 'mysql',
@@ -10,13 +12,13 @@ return [
     'DB_PORT' => '3306',
 
     "ERR_HANDLER_DISABLE" => "FALSE",
-	"RFC7231"       => __DIR__ . "/../views/http_errors/",
+	"RFC7231"       => APP_VIEWS . "/http_errors/",
     "CACHE" => FALSE,
     "CACHE.MINIFY" => FALSE,
-    "APP_NAME" => "git_viewer",
-    "APP_TITLE" => "GCModeller git repository",
+    "APP_NAME" => "数据之源，洞见之始",
+    "APP_TITLE" => "数据之源，洞见之始",
     "APP_VERSION" => "2.3.111.13-alpha",
 	"MVC_VIEW_ROOT" => [
-        "index" => __DIR__ . "/../views/"
+        "index" => APP_VIEWS
     ]
 ];
