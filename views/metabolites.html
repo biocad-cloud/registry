@@ -26,7 +26,35 @@
 
       <div class="container">
 
+        <div class="row">
+          <div class="col">
 
+            <foreach @page>
+
+              <div class="row">
+                <div class="col">
+
+                  <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded"
+                    style="width: 100%; background-color: white !important;">
+                    <div class="card-body">
+                      <h5 class="card-title"><a href='/metabolite/@page["id"]'>@page["name"]</a> (<i>@page["id"]</i>)
+                      </h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary">Formula: @page["formula"] (Exact Mass:
+                        @page["exact_mass"])</h6>
+                      
+                      <p class="card-text">@page["note"]</p>
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </foreach>
+
+          </div>
+        </div>
 
       </div>
 

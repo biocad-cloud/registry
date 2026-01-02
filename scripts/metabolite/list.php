@@ -2,11 +2,11 @@
 
 class metabolite_list {
 
-    public static function getList($page, $page_size = 200) {
+    public static function getList($page, $page_size = 100) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
         $sql = "SELECT 
-    metabolites.id,
+    CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
     name,
     IF(formula = '', 'n/a', formula) AS formula,
     ROUND(exact_mass, 4) AS exact_mass,
@@ -31,6 +31,7 @@ FROM
     cad_registry.metabolites
         LEFT JOIN
     struct_data ON struct_data.metabolite_id = metabolites.id
+ORDER BY metabolites.id
 LIMIT {$offset}, {$page_size}";
 
         $list = new Table(["cad_registry"=>"metabolites"]);
