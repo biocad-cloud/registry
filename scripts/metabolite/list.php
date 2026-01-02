@@ -35,6 +35,7 @@ LIMIT {$offset}, {$page_size}";
 
         $list = new Table(["cad_registry"=>"metabolites"]);
         $page = $list->exec($sql);
+        $data["page"] = $page;
 
         return $data;
     }
