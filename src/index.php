@@ -18,7 +18,7 @@ class App {
      * @access *
      * @uses view
     */
-    public function metabolites($page, $page_size = 200) {
+    public function metabolites($page = 1, $page_size = 200) {
         View::Display();
     }
 
