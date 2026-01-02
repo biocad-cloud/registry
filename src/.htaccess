@@ -23,6 +23,9 @@ Header set Cache-Control: "max-age=0, no-store"
 </FilesMatch>
 # --- Header 配置结束 ---
 
+RewriteRule ^metabolite/(.+)$ /index.php?app=metabolite&id=$1
+RewriteRule ^metabolite/(.+)/$ /index.php?app=metabolite&id=$1
+
 # 1. 如果请求的是 index.php，直接跳过重写（可选，但为了性能推荐保留）
 RewriteCond %{REQUEST_URI} ^/index.php
 RewriteRule ^(.*)$ - [L]
