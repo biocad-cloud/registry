@@ -1,6 +1,5 @@
 RewriteEngine On
 
-# --- 以下是你原有的 Header 配置 (保持不变) ---
 Header set Access-Control-Allow-Origin "*"
 
 # cache images for 1 month, do not require revalidation
@@ -25,7 +24,7 @@ Header set Cache-Control: "max-age=0, no-store"
 # --- Header 配置结束 ---
 
 # 1. 如果请求的是 index.php，直接跳过重写（可选，但为了性能推荐保留）
-RewriteCond %{REQUEST_URI} ^/index\.php
+RewriteCond %{REQUEST_URI} ^/index.php
 RewriteRule ^(.*)$ - [L]
 
 # 2. 定义通用条件：请求的不是真实文件，也不是真实目录
@@ -45,3 +44,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.+)$ /index.php?app=$1 [L]
+
