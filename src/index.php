@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . "/../framework/bootstrap.php";
+include __DIR__ . "/../.etc/bootstrap.php";
 
 class App {
 

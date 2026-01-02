@@ -8,8 +8,8 @@ define("YEAR", date("Y"));
 
 session_start();
 
-include "/opt/runtime/package.php";
-include APP_PATH . "/framework/accessController.php";
+include APP_PATH . "/framework/php.NET/package.php";
+include APP_PATH . "/.etc/access.php";
 
 function registry_key($term) {
     return md5(strtolower(urldecode($term)));
@@ -26,5 +26,5 @@ function strip_postVal($str) {
     }    
 }
 
-dotnet::AutoLoad(__DIR__ . "/../.etc/config.ini.php");
+dotnet::AutoLoad(APP_PATH . "/.etc/config.ini.php");
 dotnet::HandleRequest(new App(), new accessController());
