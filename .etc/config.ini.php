@@ -3,10 +3,10 @@
 return [
 
     'DB_TYPE' => 'mysql',
-    'DB_HOST' => '192.168.3.27',
+    'DB_HOST' => '192.168.3.2',
     'DB_NAME' => 'cad_registry',
-    'DB_USER' => 'biocad',
-    'DB_PWD'  => '12345',
+    'DB_USER' => 'root',
+    'DB_PWD'  => '123456',
     'DB_PORT' => '3306',
 
     "ERR_HANDLER_DISABLE" => "FALSE",
