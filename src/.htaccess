@@ -23,8 +23,7 @@ Header set Cache-Control: "max-age=0, no-store"
 </FilesMatch>
 # --- Header 配置结束 ---
 
-RewriteRule ^metabolite/(.+)$ /index.php?app=metabolite&id=$1
-RewriteRule ^metabolite/(.+)/$ /index.php?app=metabolite&id=$1
+RewriteRule ^metabolite/([^/]+)/?$ /index.php?app=metabolite&id=$1 [L,QSA,NC]
 
 # 1. 如果请求的是 index.php，直接跳过重写（可选，但为了性能推荐保留）
 RewriteCond %{REQUEST_URI} ^/index.php
@@ -36,7 +35,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # 3. 处理带斜杠的请求 (例如 /home/ ) -> 去掉斜杠传给 app
 # 注意：上面的条件对这条规则生效
-RewriteRule ^(.+)/$ /index.php?app=$1 [L]
+RewriteRule ^(.+)/$ /index.php?app=$1 [L,QSA]
 
 # 4. 处理普通请求 (例如 /home ) -> 传给 app
 # 重要：必须再次声明条件，或者让这条规则共享上面的条件。
@@ -46,5 +45,5 @@ RewriteRule ^(.+)/$ /index.php?app=$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.+)$ /index.php?app=$1 [L]
+RewriteRule ^(.+)$ /index.php?app=$1 [L,QSA]
 
