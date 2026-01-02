@@ -28,6 +28,7 @@ class App {
      * @uses view
     */
     public function metabolite($id) {
-        View::Display();
+        include APP_PATH . "/scripts/metabolite/page.php";
+        View::Display(metabolite_page::page_data($id));
     }
 }
