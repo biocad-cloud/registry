@@ -10,6 +10,7 @@ session_start();
 
 include APP_PATH . "/framework/php.NET/package.php";
 include APP_PATH . "/.etc/access.php";
+include APP_PATH . "/.etc/registry.php";
 
 function registry_key($term) {
     return md5(strtolower(urldecode($term)));

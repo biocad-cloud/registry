@@ -14,7 +14,13 @@ class metabolite_page {
         $page["title"] = $page["name"];
         $page["id"] = "BioCAD" . str_pad($id,11,'0', STR_PAD_LEFT);
         $synonyms = new Table(["cad_registry"=>"synonym"]);
-
+        $synonyms = $synonyms
+            ->where(["type" => ENTITY_METABOLITE, "obj_id"=>$id])
+            ->group_by("hashcode")
+            ->order_by("COUNT(*)", true)
+            ->limit(6)
+            ->select(["hashcode","MIN(synonym) AS synonym","COUNT(*) AS refers","MIN(lang) AS language","GROUP_CONCAT(DISTINCT db_source) AS db_source"])
+            ;
 
         return $page;
     }
