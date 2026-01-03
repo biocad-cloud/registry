@@ -55,6 +55,11 @@ class metabolite_list {
         // 3. 设置/覆盖 page 参数
         // 无论 page 是否存在，都将其设置为目标页码
         $currentParams['page'] =$pageNo;
+
+        foreach(array_keys($currentParams) as $key) {
+            $currentParams[$key] = urldecode($currentParams[$key]);
+        }
+
         // 4. 构建查询字符串
         // http_build_query 会自动处理 URL 编码和参数拼接
         $queryString = http_build_query($currentParams);
