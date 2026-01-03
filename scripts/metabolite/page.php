@@ -31,6 +31,16 @@ class metabolite_page {
 
         $page["synonyms"] = $synonyms;
 
+        if (strlen($page["cas_id"]) > 0)      $page["cas_id"]       = "<a href='https://commonchemistry.cas.org/detail?cas_rn={$page["cas_id"]}'>{$page["cas_id"]}</a>";
+        if (strlen($page["pubchem_cid"]) > 0) $page["pubchem_cid"]  = "<a href='https://pubchem.ncbi.nlm.nih.gov/compound/{$page["pubchem_cid"]}'>{$page["pubchem_cid"]}</a>";
+        if (strlen($page["hmdb_id"]) >0)      $page["hmdb_id"]      = "<a href='https://hmdb.ca/metabolites/{$page["hmdb_id"]}'>{$page["hmdb_id"]}</a>";
+        if (strlen($page["wikipedia"]) >0)    $page["wikipedia"]    = "<a href='https://en.wikipedia.org/wiki/{$page["wikipedia"]}'>{$page["wikipedia"]}</a>";   
+        if (strlen($page["mesh_id"]) >0)      $page["mesh_id"]      = "<a href='https://www.ncbi.nlm.nih.gov/mesh/?term={$page["mesh_id"]}'>{$page["mesh_id"]}</a>";  
+        if (strlen($page["chebi_id"]) >0)     $page["chebi_id"]     = "<a href='https://www.ebi.ac.uk/chebi/{$page["chebi_id"]}'>{$page["chebi_id"]}</a>";  
+        if (strlen($page["kegg_id"]) >0)      $page["kegg_id"]      = "<a href='https://www.genome.jp/entry/{$page["kegg_id"]}'>{$page["kegg_id"]}</a>";  
+        if (strlen($page["biocyc"]) >0)       $page["biocyc"]       = "<a href='https://www.biocyc.org/compound?id={$page["biocyc"]}'>{$page["biocyc"]}</a>";  
+        if (strlen($page["lipidmaps_id"]) >0) $page["lipidmaps_id"] = "<a href='https://lipidmaps.org/databases/lmsd/{$page["lipidmaps_id"]}'>{$page["lipidmaps_id"]}</a>";  
+
         return $page;
     }
 
