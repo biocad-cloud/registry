@@ -2,7 +2,7 @@
 
 class metabolite_list {
 
-    public static function getList($page, $page_size = 100) {
+    public static function getList($page, $page_size = 50, $topic = null) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
         $sql = "SELECT 

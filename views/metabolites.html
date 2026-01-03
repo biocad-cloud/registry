@@ -41,8 +41,17 @@
                       </h5>
                       <h6 class="card-subtitle mb-2 text-body-secondary">Formula: @page["formula"] (Exact Mass:
                         @page["exact_mass"])</h6>
-                      
-                      <p class="card-text">@page["note"]</p>
+
+                      <div class="row">
+                        <div class="col">
+                          <p class="card-text">@page["note"]</p>
+                        </div>
+                        <div class="col">
+                          <canvas class="smiles_drawer" width="400px" height="350px" role="img" focusable="false">
+                          </canvas>
+                        </div>
+                      </div>
+
                       <a href="#" class="card-link">Card link</a>
                       <a href="#" class="card-link">Another link</a>
                     </div>

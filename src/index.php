@@ -26,9 +26,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function metabolites($page = 1, $page_size = 100) {
+    public function metabolites($page = 1, $page_size = 50, $topic = null) {
         include APP_PATH . "/scripts/metabolite/list.php";
-        View::Display(metabolite_list::getList($page, $page_size));
+        View::Display(metabolite_list::getList($page, $page_size, $topic));
     }
 
     /**
