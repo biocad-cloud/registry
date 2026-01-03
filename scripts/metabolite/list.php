@@ -7,7 +7,7 @@ class metabolite_list {
         $offset = ($page -1) * $page_size;
         $page = null;
 
-        if (!$topic) {
+        if (!Utils::isDbNull($topic)) {
             $page = self::page_topic($topic,$offset,$page_size);
         } else {
             $page = self::page_list($offset, $page_size);
