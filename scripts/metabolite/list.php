@@ -5,6 +5,7 @@ class metabolite_list {
     public static function getList($page, $topic = null, $page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
+        $page_num = $page;
         $page = null;
 
         if (!Utils::isDbNull($topic)) {
@@ -17,17 +18,23 @@ class metabolite_list {
             return metabolite_list::link_topics($meta);
         }, $page);
 
-        if ($page == 1) {
+        if ($page_num == 1) {
             $data["a_1"] = self::buildPageUrl(1);
             $data["a_2"] = self::buildPageUrl(2);
             $data["a_3"] = self::buildPageUrl(3);
+            $data["n1"]  = (1);
+            $data["n2"]  = (2);
+            $data["n3"]  = (3);
         } else {
-            $prevPage = max(1, $page - 1); // 上一页，最少为1
-            $nextPage = $page + 1;         // 下一页
+            $prevPage = max(1, $page_num - 1); // 上一页，最少为1
+            $nextPage = $page_num + 1;         // 下一页
 
             $data["a_1"] = self::buildPageUrl($prevPage);
-            $data["a_2"] = self::buildPageUrl($page);
+            $data["a_2"] = self::buildPageUrl($page_num);
             $data["a_3"] = self::buildPageUrl($nextPage);
+            $data["n1"]  = ($prevPage);
+            $data["n2"]  = ($page_num);
+            $data["n3"]  = ($nextPage);
         }
 
         return $data;
@@ -44,7 +51,7 @@ class metabolite_list {
         $baseUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         // 2. 获取当前所有的 GET 查询参数
         // $_GET 是一个关联数组，包含当前 URL 中所有的参数
-        $currentParams =$_GET;
+        $currentParams =$_GET["query"]; 
         // 3. 设置/覆盖 page 参数
         // 无论 page 是否存在，都将其设置为目标页码
         $currentParams['page'] =$pageNo;
@@ -79,11 +86,17 @@ class metabolite_list {
             ->distinct()
             ->project("model_id")
             ;
+        if (count($model_id) == 0) {
+            return [];
+        } 
         $model_id = (new Table(["cad_registry"=>"registry_resolver"]))
             ->where(["id"=> in($model_id)])
             ->distinct()
             ->project("symbol_id")
             ;
+        if (count($model_id) == 0) {
+            return [];
+        } 
         $model_id = Strings::Join($model_id,",");
         $list = new Table(["cad_registry"=>"metabolites"]);
             $sql = "SELECT 
@@ -100,7 +113,7 @@ class metabolite_list {
         struct_data ON struct_data.metabolite_id = metabolites.id
     WHERE metabolites.id IN ({$model_id})
     ORDER BY metabolites.id"
-            ;       
+            ;      
             return $list->exec($sql);
     }
 
