@@ -25,7 +25,7 @@ class metabolite_page {
 
         foreach($langs as $lang => $list) {
             $list = Strings::Join($list,"; ");
-            $synonyms = $synonyms . "<h5>Synonyms [$lang]</h5>
+            $synonyms = $synonyms . "<h4>Synonyms [$lang]</h4>
             <p>$list</p>";
         }
 
