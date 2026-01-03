@@ -47,7 +47,8 @@
                           <p class="card-text">@page["note"]</p>
                         </div>
                         <div class="col">
-                          <canvas class="smiles_drawer" width="400px" height="350px" role="img" focusable="false">
+                          <canvas class="smiles_drawer" width="400px" height="350px" role="img" focusable="false"
+                            data='@page["smiles"]'>
                           </canvas>
                         </div>
                       </div>
@@ -74,5 +75,32 @@
 
   ${./includes/footer.html}
 </body>
+
+
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
+<script>
+  let canvas = document.getElementsByClassName("smiles_drawer");
+  let options = {
+    width: 400,
+    height: 350
+  };
+  let smilesDrawer = new SmilesDrawer.Drawer(options);
+
+  for (let element of canvas) {
+    // Initialize the drawer to draw to canvas
+
+    // Alternatively, initialize the SVG drawer:
+    // let svgDrawer = new SmilesDrawer.SvgDrawer(options);
+    // Clean the input (remove unrecognized characters, such as spaces and tabs) and parse it
+    SmilesDrawer.parse(element.getAttribute("data"), function (tree) {
+      // Draw to the canvas
+      smilesDrawer.draw(tree, element, "light", false);
+      // Alternatively, draw to SVG:
+      // svgDrawer.draw(tree, 'output-svg', 'dark', false);
+    }, function (err) {
+      console.log(err);
+    });
+  }
+</script>
 
 </html>
