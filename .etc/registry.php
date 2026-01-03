@@ -15,3 +15,24 @@ define("DB_WIKIPEDIA", 9);
 define("DB_REFMET", 11);
 define("DB_DRUGBANK", 12);
 define("DB_CLASSYFIRE", 13);
+
+function enum_to_dbnames($ids) {
+    return array_map(function($id) {
+        switch($id) {
+            case DB_HMDB: return "HMDB";
+            case DB_KEGG: return "KEGG";
+            case DB_MESH: return "NCBI MeSH";
+            case DB_CHEBI: return "ChEBI";
+            case DB_CAS: return "CAS Registry Number";
+            case DB_BIOCYC: return "BioCyc";
+            case DB_REFMET: return "RefMet";
+            case DB_PUBCHEM: return "PubChem";
+            case DB_DRUGBANK: return "DrugBank";
+            case DB_LIPIDMAPS: return "LipidMaps";
+            case DB_WIKIPEDIA: return "Wikipedia";
+
+            default:
+                return "";
+        }
+    }, $ids);
+}

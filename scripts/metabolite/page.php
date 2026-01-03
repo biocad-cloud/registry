@@ -21,6 +21,18 @@ class metabolite_page {
             ->limit(6)
             ->select(["hashcode","MIN(synonym) AS synonym","COUNT(*) AS refers","MIN(lang) AS language","GROUP_CONCAT(DISTINCT db_source) AS db_source"])
             ;
+        $synonyms = array_map(function($name) {
+            $dbs = explode(",", $name["db_source"]);
+            $dbs = enum_to_dbnames($dbs);
+
+            return [
+                "name"=>$name["synonym"],
+                "lang"=>$name["language"],
+                "db_source"=> Strings::Join($dbs,",")
+            ];
+        }, $synonyms);
+
+        $page["synonyms"] = $synonyms;
 
         return $page;
     }
