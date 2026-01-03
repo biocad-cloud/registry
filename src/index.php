@@ -15,6 +15,14 @@ class App {
     }
 
     /**
+     * Symbol resolver
+    */
+    public function s($ref) {
+        include APP_PATH . "/scripts/resolver.php";
+        resolver::resolve($ref);
+    }
+
+    /**
      * @access *
      * @uses view
     */
