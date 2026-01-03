@@ -13,6 +13,9 @@ class metabolite_page {
             ;
         $page["title"] = $page["name"];
         $page["id"] = "BioCAD" . str_pad($id,11,'0', STR_PAD_LEFT);
+        $synonyms = new Table(["cad_registry"=>"synonym"]);
+
+
         return $page;
     }
 }
