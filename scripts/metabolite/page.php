@@ -41,6 +41,13 @@ class metabolite_page {
         if (strlen($page["biocyc"]) >0)       $page["biocyc"]       = "<a href='https://www.biocyc.org/compound?id={$page["biocyc"]}'>{$page["biocyc"]}</a>";  
         if (strlen($page["lipidmaps_id"]) >0) $page["lipidmaps_id"] = "<a href='https://lipidmaps.org/databases/lmsd/{$page["lipidmaps_id"]}'>{$page["lipidmaps_id"]}</a>";  
 
+        if (!Utils::isDbNull($page["topic"])) {
+            $page["topic"] = array_map(function($topic) {
+                return "<span class='badge' style='background-color:{$topic["color"]}'>{$topic["term"]}</span>";
+            }, $page["topic"]);
+            $page["topic"] = Strings::Join($page["topic"]," ");
+        }
+
         return $page;
     }
 
