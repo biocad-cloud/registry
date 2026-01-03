@@ -46,6 +46,7 @@ class metabolite_page {
 
     public static function page_json($id) {
         $id = Regex::Match($id, "\d+");
+        $model_id = (new Table(["cad_registry"=>"registry_resolver"]))->where(["type"=>ENTITY_METABOLITE,"symbol_id"=>$id])->find();
         $page = new Table(["cad_registry"=>"metabolites"]);
         $page = $page
             ->left_join("struct_data")
@@ -63,6 +64,22 @@ class metabolite_page {
             ->select(["hashcode","MIN(synonym) AS synonym","COUNT(*) AS refers","MIN(lang) AS language","GROUP_CONCAT(DISTINCT db_source) AS db_source"])
             ;
         $page["synonyms"] = $synonyms;
+
+        if (!Utils::isDbNull($model_id)) {
+            unset($model_id["symbol_id"]);
+            unset($model_id["type"]);
+            unset($model_id["add_time"]);
+            unset($model_id["note"]);
+
+            $page["registry_model"] = $model_id;
+            $page["topic"] = (new Table(["cad_registry"=>"topic"]))
+                ->left_join("vocabulary")
+                ->on(["vocabulary"=>"id","topic"=>"topic_id"])
+                ->where(["model_id"=>$model_id["id"]])
+                ->distinct()
+                ->select(["`vocabulary`.term","`vocabulary`.color"])
+                ;   
+        }
 
         return $page;
     }
