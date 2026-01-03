@@ -36,15 +36,13 @@
                 Formula: {$formula} ({$exact_mass})<br />
                 SMILES: <code>{$smiles}</code>
               </p>
+
+              {$synonyms}
             </div>
             <div class="col">
-              <div id="smiles_drawer" style="width:400px;height:350px;">
-              
-              </div>
+              <canvas id="smiles_drawer" width="400px" height="350px" role="img" focusable="false"></canvas>
             </div>
           </div>
-
-          {$synonyms}
 
           <h4>Note</h4>
           <p>{$note}</p>
@@ -74,8 +72,29 @@
   ${./includes/footer.html}
 </body>
 
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
 <script>
-  
+  let input = document.getElementById("smiles").innerText;
+  let options = {
+    width: 400,
+    height: 350
+  };
+
+  console.log(input);
+
+  // Initialize the drawer to draw to canvas
+  let smilesDrawer = new SmilesDrawer.Drawer(options);
+  // Alternatively, initialize the SVG drawer:
+  // let svgDrawer = new SmilesDrawer.SvgDrawer(options);
+  // Clean the input (remove unrecognized characters, such as spaces and tabs) and parse it
+  SmilesDrawer.parse(input, function (tree) {
+    // Draw to the canvas
+    smilesDrawer.draw(tree, "smiles_drawer", "light", false);
+    // Alternatively, draw to SVG:
+    // svgDrawer.draw(tree, 'output-svg', 'dark', false);
+  }, function (err) {
+    console.log(err);
+  });  
 </script>
 
 </html>
