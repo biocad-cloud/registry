@@ -31,8 +31,13 @@ class metabolite_page {
                 "db_source"=> Strings::Join($dbs,",")
             ];
         }, $synonyms);
+        $langs = [];
 
-        $page["synonyms"] = $synonyms;
+        foreach ($synonyms as $item) {
+            $langs[$item['lang']][] = "<span title='{$item["db_source"]}'>{$item["name"]}</span>";
+        }
+
+        $page["synonyms"] = $langs;
 
         return $page;
     }
