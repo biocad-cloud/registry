@@ -43,7 +43,7 @@ class metabolite_page {
 
         if (!Utils::isDbNull($page["topic"])) {
             $page["topic"] = array_map(function($topic) {
-                return "<span class='badge' style='background-color:{$topic["color"]}'>{$topic["term"]}</span>";
+                return "<span class='badge' style='background-color:{$topic["color"]};'><a style='color: white;' href='/metabolites/?topic={$topic["term"]}'>{$topic["term"]}</a></span>";
             }, $page["topic"]);
             $page["topic"] = Strings::Join($page["topic"]," ");
         }
