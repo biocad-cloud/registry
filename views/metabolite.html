@@ -21,12 +21,21 @@
       <!-- Section Title -->
       <div class="container section-title">
         <h2>{$name} (<i>{$id}</i>)</h2>
-        <p>{$note}</p>
+        <p>{$tags}</p>
       </div><!-- End Section Title -->
 
       <div class="container">
 
+        <p>
+          Formula: {$formula} ({$exact_mass})<br />
+          SMILES: <code>{$smiles}</code>
+        </p>
 
+        {$synonyms}
+
+        <h3>Note</h3>
+        <p>{$note}</p>
+        <br />
 
       </div>
 
