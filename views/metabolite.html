@@ -25,17 +25,26 @@
       </div><!-- End Section Title -->
 
       <div class="container">
+        <div class="shadow p-3 mb-5 bg-body rounded">
+          <h3>Metabolite Information</h3>
 
-        <p>
-          Formula: {$formula} ({$exact_mass})<br />
-          SMILES: <code>{$smiles}</code>
-        </p>
+          <div class="row">
+            <div class="col">
+              <p>
+                Formula: {$formula} ({$exact_mass})<br />
+                SMILES: <code>{$smiles}</code>
+              </p>
+            </div>
+            <div class="col">
+              
+            </div>
+          </div>
 
-        {$synonyms}
+          {$synonyms}
 
-        <h4>Note</h4>
-        <p>{$note}</p>
-        <br />
+          <h4>Note</h4>
+          <p>{$note}</p>
+        </div>
 
         <h3>DBLinks</h3>
 
