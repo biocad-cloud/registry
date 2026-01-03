@@ -31,4 +31,14 @@ class App {
         include APP_PATH . "/scripts/metabolite/page.php";
         View::Display(metabolite_page::page_data($id));
     }
+
+    /**
+     * Resource Downloads
+     * 
+     * @access *
+     * @uses view
+    */
+    public function downloads() {
+        View::Display();
+    }
 }
