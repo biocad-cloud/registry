@@ -107,6 +107,14 @@
           <li>Wikipedia: {$wikipedia}</li>
         </ul>
 
+        <h3>Class / Ontology</h3>
+
+        <ul>
+          <foreach @ontology>
+            <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]] @ontology["term"]</a></li>
+          </foreach>
+        </ul>
+
       </div>
 
     </section>

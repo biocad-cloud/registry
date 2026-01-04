@@ -76,6 +76,13 @@ class metabolite_page {
             ->on(["compartment_enrich"=>"location_id","compartment_location"=>"id"])
             ->where(["metabolite_id"=>$id])
             ->select(["`compartment_location`.id","name","fullname","compartment_location.note"]);
+        $page["ontology"] = (new Table(["cad_registry"=>"metabolite_class"]))
+            ->left_join("ontology")
+            ->on(["ontology"=>"id","metabolite_class" => "class_id"])
+            ->left_join("vocabulary")
+            ->on(["vocabulary"=>"id","ontology" => "ontology_id"])
+            ->where(["metabolite_id"=>$id])
+            ->select(["class_id","term_id","`ontology`.term","`vocabulary`.term AS ontology"]);
 
         if (!Utils::isDbNull($model_id)) {
             unset($model_id["symbol_id"]);
