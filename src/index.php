@@ -42,6 +42,11 @@ class App {
         View::Display(location_list::get_list());
     }
 
+    public function compartment($name) {
+        include APP_PATH . "/scripts/compartments/page.php";
+        View::Display(compartment_location::location_data($name));
+    }
+
     /**
      * @access *
      * @uses view
