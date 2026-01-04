@@ -32,6 +32,17 @@ class App {
     }
 
     /**
+     * Subcellular locations
+     * 
+     * @access *
+     * @uses view
+    */
+    public function compartments() {
+        include APP_PATH . "/scripts/compartments/list.php";
+        View::Display(location_list::get_list());
+    }
+
+    /**
      * @access *
      * @uses view
     */
