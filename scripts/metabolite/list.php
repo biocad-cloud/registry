@@ -2,7 +2,7 @@
 
 class metabolite_list {
 
-    public static function getList($page, $topic = null, $list=null, $loc=null, $page_size = 20) {
+    public static function getList($page, $topic = null, $list=null, $loc=null, $ontology=null,$page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
         $page_num = $page;
@@ -13,7 +13,9 @@ class metabolite_list {
         } else if (!Utils::isDbNull($list)) {
             $page = self::page_idset($list,$offset,$page_size);
         } else if (!Utils::isDbNull($loc)) {
-            $page = self::page_locs(urldecode($loc),$offset,$page_size);            
+            $page = self::page_locs(urldecode($loc),$offset,$page_size);   
+        } else if (!Utils::isDbNull($ontology)) {
+            $page = self::page_ontology($ontology,$offset,$page_size);         
         } else {
             $page = self::page_list($offset, $page_size);
         }
@@ -42,6 +44,40 @@ class metabolite_list {
         }
 
         return $data;
+    }
+
+    private static function page_ontology($class_id,$offset,$page_size) {
+        $list = (new Table(["cad_registry"=>"metabolite_class"]))
+            ->where(["class_id"=>$class_id])
+            ->distinct()
+            ->order_by("metabolite_id")
+            ->limit($offset,$page_size)
+            ->project("metabolite_id")
+            ;
+
+        if (count($list) == 0) {
+            return [];
+        } else {
+            $list = Strings::Join($list,",");
+        }
+        
+        $sql = "SELECT 
+        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
+        metabolites.id as uid,
+        name,
+        IF(formula = '', 'n/a', formula) AS formula,
+        ROUND(exact_mass, 4) AS exact_mass,
+        smiles,
+        metabolites.note
+    FROM
+        cad_registry.metabolites
+            LEFT JOIN
+        struct_data ON struct_data.metabolite_id = metabolites.id
+    WHERE metabolites.id IN ({$list})
+    ORDER BY metabolites.id
+    LIMIT {$offset}, {$page_size}"
+            ;      
+        return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
     }
 
     private static function page_locs($loc, $offset, $page_size) {
