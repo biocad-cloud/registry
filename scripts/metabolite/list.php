@@ -10,6 +10,8 @@ class metabolite_list {
 
         if (!Utils::isDbNull($topic)) {
             $page = self::page_topic($topic,$offset,$page_size);
+        } else if (!Utils::isDbNull($list)) {
+            $page = self::page_idset($list,$offset,$page_size);
         } else {
             $page = self::page_list($offset, $page_size);
         }
@@ -38,6 +40,30 @@ class metabolite_list {
         }
 
         return $data;
+    }
+
+    private static function page_idset($list,$offset, $page_size) {
+        $list = array_map(function($id) {
+            return Regex::Match($id, "\d+");
+        }, explode(",",$list));
+        $list = Strings::Join($list,",");
+        $sql = "SELECT 
+        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
+        metabolites.id as uid,
+        name,
+        IF(formula = '', 'n/a', formula) AS formula,
+        ROUND(exact_mass, 4) AS exact_mass,
+        smiles,
+        metabolites.note
+    FROM
+        cad_registry.metabolites
+            LEFT JOIN
+        struct_data ON struct_data.metabolite_id = metabolites.id
+    WHERE metabolites.id IN ({$list})
+    ORDER BY metabolites.id
+    LIMIT {$offset}, {$page_size}"
+            ;      
+            return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
     }
 
     private static function page_topic($topic, $offset, $page_size) {
