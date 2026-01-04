@@ -71,6 +71,11 @@ class metabolite_page {
             ->select(["hashcode","MIN(synonym) AS synonym","COUNT(*) AS refers","MIN(lang) AS language","GROUP_CONCAT(DISTINCT db_source) AS db_source"])
             ;
         $page["synonyms"] = $synonyms;
+        $page["subcellular_locations"] = (new Table(["cad_registry"=>"compartment_enrich"]))
+            ->left_join("compartment_location")
+            ->on(["compartment_enrich"=>"location_id","compartment_location"=>"id"])
+            ->where(["metabolite_id"=>$id])
+            ->select(["`compartment_location`.id","name","fullname","compartment_location.note"]);
 
         if (!Utils::isDbNull($model_id)) {
             unset($model_id["symbol_id"]);
