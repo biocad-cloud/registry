@@ -5,17 +5,17 @@ define("APP_VIEWS", __DIR__ . "/../views/");
 return [
 
     'DB_TYPE' => 'mysql',
-    'DB_HOST' => '192.168.3.2',
+    'DB_HOST' => '192.168.3.15',
     'DB_NAME' => 'cad_registry',
-    'DB_USER' => 'root',
+    'DB_USER' => 'xieguigang',
     'DB_PWD'  => '123456',
     'DB_PORT' => '3306',
 
     "cad_registry" => [
         'DB_TYPE' => 'mysql',
-        'DB_HOST' => '192.168.3.2',
+        'DB_HOST' => '192.168.3.15',
         'DB_NAME' => 'cad_registry',
-        'DB_USER' => 'root',
+        'DB_USER' => 'xieguigang',
         'DB_PWD'  => '123456',
         'DB_PORT' => '3306'
     ],
