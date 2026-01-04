@@ -20,6 +20,7 @@ class compartment_location {
             ;
 
         $loc["metabolite"] = $metabolites;
+        $loc["title"] = $loc["fullname"];
 
         return $loc;
     }
