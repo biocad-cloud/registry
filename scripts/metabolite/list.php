@@ -2,16 +2,18 @@
 
 class metabolite_list {
 
-    public static function getList($page, $topic = null, $list=null, $page_size = 20) {
+    public static function getList($page, $topic = null, $list=null, $loc=null, $page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
         $page_num = $page;
         $page = null;
 
         if (!Utils::isDbNull($topic)) {
-            $page = self::page_topic($topic,$offset,$page_size);
+            $page = self::page_topic(urldecode($topic),$offset,$page_size);
         } else if (!Utils::isDbNull($list)) {
             $page = self::page_idset($list,$offset,$page_size);
+        } else if (!Utils::isDbNull($loc)) {
+            $page = self::page_locs(urldecode($loc),$offset,$page_size);            
         } else {
             $page = self::page_list($offset, $page_size);
         }
@@ -42,6 +44,30 @@ class metabolite_list {
         return $data;
     }
 
+    private static function page_locs($loc, $offset, $page_size) {
+        $loc = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=>$loc])->find();
+        $sql="SELECT 
+        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
+        metabolites.id as uid,
+        name,
+        IF(formula = '', 'n/a', formula) AS formula,
+        ROUND(exact_mass, 4) AS exact_mass,
+        smiles,
+        metabolites.note
+    FROM
+        cad_registry.compartment_enrich
+            LEFT JOIN
+        metabolites ON compartment_enrich.metabolite_id = metabolites.id
+            LEFT JOIN
+        struct_data ON struct_data.metabolite_id = metabolites.id
+    WHERE
+        location_id = {$loc["id"]}
+    ORDER BY metabolites.id
+    LIMIT {$offset}, {$page_size}";
+
+        return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
+    }
+
     private static function page_idset($list,$offset, $page_size) {
         $list = array_map(function($id) {
             return Regex::Match($id, "\d+");
@@ -67,7 +93,6 @@ class metabolite_list {
     }
 
     private static function page_topic($topic, $offset, $page_size) {
-        $topic = urldecode($topic);
         $model_id = (new Table(["cad_registry"=>"topic"]))
             ->left_join("vocabulary")
             ->on(["vocabulary"=>"id","topic"=>"topic_id"])
