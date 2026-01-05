@@ -12,9 +12,9 @@ define("DB_KEGG", 6);
 define("DB_BIOCYC", 7);
 define("DB_MESH", 8);
 define("DB_WIKIPEDIA", 9);
-define("DB_REFMET", 11);
+define("DB_REFMET", 0);
 define("DB_DRUGBANK", 10);
-define("DB_CLASSYFIRE", 12);
+define("DB_CLASSYFIRE", 0);
 
 function enum_to_dbnames($ids) {
     return array_map(function($id) {
