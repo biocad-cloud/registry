@@ -51,6 +51,15 @@ class App {
      * @access *
      * @uses view
     */
+    public function motif($id) {
+        include APP_PATH . "/scripts/motifs/page.php";
+        View::Display(motif_data::getdata($id));
+    }
+
+    /**
+     * @access *
+     * @uses view
+    */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
         View::Display(metabolite_page::page_data($id));
