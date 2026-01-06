@@ -71,7 +71,11 @@ class App {
     */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
-        View::Display(metabolite_page::page_data($id));
+
+        $id = metabolite_page::resolve_id($id);
+        $data = metabolite_page::page_data($id);
+
+        View::Display($data);
     }
 
     /**

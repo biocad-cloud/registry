@@ -2,6 +2,27 @@
 
 class metabolite_page {
     
+    public static function resolve_id($id) {
+        if (StringHelpers::IsPattern($id, "(BioCAD)?\d+")) {
+            // is int biocad registry id of metabolite
+            return $id;
+        } else {
+            $db = new Table(["cad_registry"=>"metabolites"]);
+            $q = $db->where([
+                "cas_id|hmdb_id|lipidmaps_id|kegg_id|drugbank_id|biocyc|mesh_id|wikipedia" => $id
+            ])
+            ->order_by("id")
+            ->findfield("id")
+            ;
+
+            if (Utils::isDbNull($q)) {
+                RFC7231Error::err404("Sorry, no id mapping for '{$id}' in biocad metabolite registry.");
+            } else {
+                return $q;
+            }
+        }
+    }
+
     public static function page_data($id) {
         $page = self::page_json($id);
         $page["title"] = $page["name"];
