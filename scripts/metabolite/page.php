@@ -18,7 +18,10 @@ class metabolite_page {
             if (Utils::isDbNull($q)) {
                 RFC7231Error::err404("Sorry, no id mapping for '{$id}' in biocad metabolite registry.");
             } else {
-                return $q;
+                $q = "BioCAD" . str_pad($q, 11, '0', STR_PAD_LEFT);
+                $url = "/metabolite/{$q}";
+
+                Redirect($url);
             }
         }
     }
