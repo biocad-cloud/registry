@@ -60,6 +60,15 @@ class App {
      * @access *
      * @uses view
     */
+    public function motifs($page=1,$page_size=10) {
+        include APP_PATH . "/scripts/motifs/list.php";
+        View::Display(motif_list::get_list($page, $page_size));
+    }
+
+    /**
+     * @access *
+     * @uses view
+    */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
         View::Display(metabolite_page::page_data($id));
