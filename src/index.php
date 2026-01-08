@@ -51,9 +51,19 @@ class App {
      * @access *
      * @uses view
     */
-    public function motif($id) {
+    public function motif($id = null, $family = null) {
         include APP_PATH . "/scripts/motifs/page.php";
-        View::Display(motif_data::getdata($id));
+
+        if (Utils::isDbNull($id) && Utils::isDbNull($family)) {
+            RFC7231Error::err400("Both motif id and motif family parameter should not be empty!");
+        }
+
+        if (!Utils::isDbNull($id)) {
+            View::Show(APP_VIEWS . "/motif_id.html", motif_data::getdata($id));
+        } else {
+            View::Show(APP_VIEWS . "/motif_family.html", motif_data::getfamily(urldecode($family)));
+        }
+        
     }
 
     /**

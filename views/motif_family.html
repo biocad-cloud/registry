@@ -28,6 +28,15 @@
 
         <h3>{$family}</h3>
         
+        <div class="row">
+          <div class="col">
+            <ul>
+              <foreach @motif>
+                <li><a href='/motif/?id=@motif["id"]'>@motif["name"]</a></li>
+              </foreach>              
+            </ul>
+          </div>
+        </div>
 
 
       </div>
