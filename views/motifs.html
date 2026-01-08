@@ -20,13 +20,35 @@
 
       <!-- Section Title -->
       <div class="container section-title">
-        <h2>Frequently Asked Questions</h2>
+        <h2>TFBS Motif Families</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
       <div class="container">
 
+        <div class="row">
+          <div class="col">
+            <ul>
+              <foreach @motif>
+                <li><a href='/motif/?family=@motif["family_id"]'>@motif["family"] (@motif["size"] clusters)</a></li>
+              </foreach>
+            </ul>
+          </div>
+        </div>
 
+        <div class="row">
+          <div class="col">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{$a_1}">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="{$a_1}">{$n1}</a></li>
+                <li class="page-item"><a class="page-link" href="{$a_2}">{$n2}</a></li>
+                <li class="page-item"><a class="page-link" href="{$a_3}">{$n3}</a></li>
+                <li class="page-item"><a class="page-link" href="{$a_3}">Next</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
 
       </div>
 
