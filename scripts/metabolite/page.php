@@ -54,6 +54,7 @@ class metabolite_page {
         }
 
         $page["synonyms"] = $synonyms;
+        $page["exact_mass"] = round($page["exact_mass"],4);
 
         if (strlen($page["cas_id"]) > 0)      $page["cas_id"]       = "<a href='https://commonchemistry.cas.org/detail?cas_rn={$page["cas_id"]}'>{$page["cas_id"]}</a>";
         if (strlen($page["pubchem_cid"]) > 0) $page["pubchem_cid"]  = "<a href='https://pubchem.ncbi.nlm.nih.gov/compound/{$page["pubchem_cid"]}'>{$page["pubchem_cid"]}</a>";

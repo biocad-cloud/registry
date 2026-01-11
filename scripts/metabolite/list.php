@@ -2,7 +2,7 @@
 
 class metabolite_list {
 
-    public static function getList($page, $topic = null, $list=null, $loc=null, $ontology=null,$page_size = 20) {
+    public static function getList($page, $topic = null, $list=null, $loc=null, $ontology=null, $exact_mass=null, $page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
         $offset = ($page -1) * $page_size;
         $page_num = $page;
@@ -15,7 +15,9 @@ class metabolite_list {
         } else if (!Utils::isDbNull($loc)) {
             $page = self::page_locs(urldecode($loc),$offset,$page_size);   
         } else if (!Utils::isDbNull($ontology)) {
-            $page = self::page_ontology($ontology,$offset,$page_size);         
+            $page = self::page_ontology($ontology,$offset,$page_size);   
+        } else if (!Utils::isDbNull($exact_mass)) {
+            $page = self::page_exactmass($exact_mass, $offset,$page_size);           
         } else {
             $page = self::page_list($offset, $page_size);
         }
@@ -44,6 +46,28 @@ class metabolite_list {
         }
 
         return $data;
+    }
+
+    private static function page_exactmass($mass, $offset, $page_size) {
+        $min = $mass - 0.01;
+        $max = $mass + 0.01;
+        $sql = "SELECT 
+        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
+        metabolites.id as uid,
+        name,
+        IF(formula = '', 'n/a', formula) AS formula,
+        ROUND(exact_mass, 4) AS exact_mass,
+        smiles,
+        metabolites.note
+    FROM
+        cad_registry.metabolites
+            LEFT JOIN
+        struct_data ON struct_data.metabolite_id = metabolites.id
+    WHERE exact_mass BETWEEN {$min} AND {$max} 
+    ORDER BY metabolites.id
+    LIMIT {$offset}, {$page_size}"
+            ;      
+            return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
     }
 
     private static function page_ontology($class_id,$offset,$page_size) {
