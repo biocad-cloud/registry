@@ -108,6 +108,13 @@ class metabolite_page {
             ->on(["vocabulary"=>"id","ontology" => "ontology_id"])
             ->where(["metabolite_id"=>$id])
             ->select(["class_id","term_id","`ontology`.term","`vocabulary`.term AS ontology"]);
+        $page["db_xrefs"] = (new Table(["cad_registry"=>"db_xrefs"]))
+            ->left_join("vocabulary")
+            ->on(["db_xrefs"=>"db_name","vocabulary"=>"id"])
+            ->where(["obj_id"=>$id,"type"=> ENTITY_METABOLITE ])
+            ->distinct()
+            ->select(["term AS db_name", "db_xref"])
+            ;
 
         if (!Utils::isDbNull($model_id)) {
             unset($model_id["symbol_id"]);

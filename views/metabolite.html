@@ -96,19 +96,35 @@
 
         <br />
 
-        <h3>DBLinks</h3>
+        <div class="row">
+          <div class="col">
 
-        <ul>
-          <li>CAS Registry Number: {$cas_id}</li>
-          <li>PubChem CID: {$pubchem_cid}</li>
-          <li>ChEBI: {$chebi_id}</li>
-          <li>HMDB: {$hmdb_id}</li>
-          <li>LipidMaps: {$lipidmaps_id}</li>
-          <li>KEGG: {$kegg_id}</li>
-          <li>BioCyc: {$biocyc}</li>
-          <li>NCBI MeSH: {$mesh_id}</li>
-          <li>Wikipedia: {$wikipedia}</li>
-        </ul>
+            <h3>DBLinks</h3>
+
+            <ul>
+              <li>CAS Registry Number: {$cas_id}</li>
+              <li>PubChem CID: {$pubchem_cid}</li>
+              <li>ChEBI: {$chebi_id}</li>
+              <li>HMDB: {$hmdb_id}</li>
+              <li>LipidMaps: {$lipidmaps_id}</li>
+              <li>KEGG: {$kegg_id}</li>
+              <li>BioCyc: {$biocyc}</li>
+              <li>NCBI MeSH: {$mesh_id}</li>
+              <li>Wikipedia: {$wikipedia}</li>
+            </ul>
+
+            <summary>
+              <h6>Other DBLinks</h6>
+              <details>
+                <ul>
+                  <foreach @db_xrefs>
+                    <li><strong>@db_xrefs["db_name"]:</strong> <i>@db_xrefs["db_xref"]</i></li>
+                  </foreach>
+                </ul>
+              </details>
+            </summary>
+          </div>
+        </div>
 
         <h3>Class / Ontology</h3>
 
