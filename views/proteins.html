@@ -20,7 +20,7 @@
 
       <!-- Section Title -->
       <div class="container section-title">
-        <h2>TFBS Motif Families</h2>
+        <h2>Protein Models</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -28,13 +28,22 @@
 
         <div class="row">
           <div class="col">
-            <ul>
-              <foreach @motif>
-                <li><a href='/motif/?family=@motif["family_id"]'>@motif["family"] (@motif["size"] clusters)</a></li>
-              </foreach>
-            </ul>
+
+            <foreach @protein>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">@protein["name"]</h5>
+                  <p class="card-text">@protein["note"]</p>
+                  <a href='/protein/?id=@protein["id"]' class="btn btn-primary">View Model</a>
+                </div>
+              </div>
+
+              <br />
+            </foreach>
+
           </div>
         </div>
+
 
         ${./includes/paging.html}
 
