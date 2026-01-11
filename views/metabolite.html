@@ -33,7 +33,8 @@
           <div class="row">
             <div class="col">
               <p>
-                Formula: {$formula} (<a href="/metabolites/?exact_mass={$exact_mass}">{$exact_mass}</a>)<br />
+                Formula: <a href="/metabolites/?formula={$formula}">{$formula}</a> (<a
+                  href="/metabolites/?exact_mass={$exact_mass}">{$exact_mass}</a>)<br />
                 SMILES: <code>{$smiles}</code>
               </p>
 
@@ -75,7 +76,8 @@
 
             </div>
             <div class="col">
-              <canvas id="smiles_drawer" width="400px" height="350px" role="img" focusable="false"></canvas>
+              <canvas id="smiles_drawer" width="400px" height="350px" role="img" focusable="false"
+                style="float:right;"></canvas>
             </div>
           </div>
 
@@ -86,7 +88,8 @@
         <div class="row">
           <div class="col">
             <foreach @subcellular_locations>
-              <span class="badge rounded-pill text-bg-info"><a href='/metabolites/?loc=@subcellular_locations["name"]' style="color: white; text-decoration: none;">@subcellular_locations["fullname"]</a></span>
+              <span class="badge rounded-pill text-bg-info"><a href='/metabolites/?loc=@subcellular_locations["name"]'
+                  style="color: white; text-decoration: none;">@subcellular_locations["fullname"]</a></span>
             </foreach>
           </div>
         </div>
@@ -111,7 +114,8 @@
 
         <ul>
           <foreach @ontology>
-            <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]] @ontology["term"]</a></li>
+            <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]]
+                @ontology["term"]</a></li>
           </foreach>
         </ul>
 

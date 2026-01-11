@@ -39,7 +39,7 @@
                     <div class="card-body">
                       <h5 class="card-title"><a href='/metabolite/@page["id"]'>@page["name"]</a> (<i>@page["id"]</i>)
                       </h5>
-                      <h6 class="card-subtitle mb-2 text-body-secondary">Formula: @page["formula"] (Exact Mass:
+                      <h6 class="card-subtitle mb-2 text-body-secondary">Formula: <a href='/metabolites/?formula=@page["formula"]'>@page["formula"]</a> (Exact Mass:
                         <a href='/metabolites/?exact_mass=@page["exact_mass"]'>@page["exact_mass"]</a>)</h6>
 
                       <div class="row">
@@ -47,7 +47,7 @@
                           <p class="card-text">@page["note"]</p>
                         </div>
                         <div class="col">
-                          <canvas class="smiles_drawer" width="400px" height="350px" role="img" focusable="false"
+                          <canvas class="smiles_drawer" width="400px" height="350px" role="img" focusable="false" style="float:right;"
                             data='@page["smiles"]'>
                           </canvas>
                         </div>
