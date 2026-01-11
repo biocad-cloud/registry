@@ -41,6 +41,15 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+    */
+    public function protein($id) {
+        include APP_PATH . "/scripts/protein/page.php";
+        View::Display(model_data::protein_model($id));
+    }
+
+    /**
      * Subcellular locations
      * 
      * @access *

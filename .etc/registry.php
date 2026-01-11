@@ -2,6 +2,7 @@
 
 # constant from cad_registry.vocabulary table
 define("ENTITY_METABOLITE", 11);
+define("ENTITY_PROTEIN", 73);
 
 define("DB_CAS", 1);
 define("DB_PUBCHEM", 2);
