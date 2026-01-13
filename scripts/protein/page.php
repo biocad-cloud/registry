@@ -19,7 +19,10 @@ class model_data {
 
         $ec = [];
         
-        foreach($prot["dblink"] as $db => $xref) {
+        foreach($prot["dblink"] as $xref) {
+            $db = $xref["db_name"];
+            $xref = $xref["db_xref"];
+        
             if ($db == "EC Number") {
                 array_push($ec, $xref);
             }
@@ -32,11 +35,14 @@ class model_data {
                 ->on(["protein_data"=>"id","db_xrefs" => "obj_id"])
                 ->where(["type"=> FASTA_PROTEIN,"db_xref"=>in($ec)])
                 ->order_by(["name","`function`"], true)
-                ->limit(20)
+                ->limit(10)
                 ->select(["protein_data.id",
                 "protein_data.source_id",
                 "protein_data.name",
-                "protein_data.function"])
+                "protein_data.function",
+                "IF(CHAR_LENGTH(sequence) > 100,
+                CONCAT(MID(sequence, 1, 100), '...'),
+                sequence) as sequence"])
                 ;
             # reactions
             $prot["reaction"] = (new Table(["cad_registry"=>"db_xrefs"]))
@@ -45,7 +51,7 @@ class model_data {
                 ->left_join("vocabulary")
                 ->on(["vocabulary"=>"id","reaction"=>"db_source"])
                 ->where(["type"=> ENTITY_REACTION,"`db_xrefs`.`db_xref`"=>in($ec)])
-                ->limit(20)
+                ->limit(10)
                 ->select(["reaction.id",
                 "reaction.db_xref",
                 "term AS db_source",

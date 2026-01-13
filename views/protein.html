@@ -38,6 +38,50 @@
           </foreach>
         </ul>
 
+        <h5>Proteins</h5>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>protein id</th>
+              <th>name</th>
+              <th>function</th>
+              <th>fasta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @fasta>
+              <tr>
+                <td><a href='/protein/fasta/?id=@fasta["id"]'>@fasta["source_id"]</a></td>
+                <td>@fasta["name"]</td>
+                <td>@fasta["function"]</td>
+                <td><code>@fasta["sequence"]</code></td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
+        <h5>Reactions</h5>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>reaction id</th>
+              <th>name</th>
+              <th>note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @reaction>
+              <tr>
+                <td><a href='/reaction/?id=@reaction["id"]'>@reaction["db_source"]:@reaction["db_xref"]</a></td>
+                <td>@reaction["name"]</td>
+                <td>@reaction["note"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
       </div>
 
     </section>
