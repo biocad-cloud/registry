@@ -123,9 +123,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function reactions($id=null, $page=1) {
+    public function reactions($metabolite=null, $page=1) {
         include APP_PATH . "/scripts/reaction/list.php";
-        View::Display(reaction_list::get_list($id,$page));
+        View::Display(reaction_list::get_list($metabolite,$page));
     }
 
     /**
