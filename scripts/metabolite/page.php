@@ -132,6 +132,23 @@ class metabolite_page {
                 ;   
         }
 
+        $network = (new Table(["cad_registry"=>"metabolic_network"]))
+            ->where(["species_id"=>$id])
+            ->distinct()
+            ->limit(20)
+            ->project("reaction_id");
+
+        if (count($network) > 0) {
+            $page["network"] = (new Table(["cad_registry"=>"reaction"]))
+                ->left_join("vocabulary")
+                ->on(["vocabulary"=>"id", "reaction"=> "db_source"])
+                ->where(["`reaction`.id" => in($network)])
+                ->select(["reaction.id", "term AS db_name", "db_xref", "name", "ec_number"])
+                ;
+        } else {
+            $page["network"] = [];
+        }
+
         return $page;
     }
 }

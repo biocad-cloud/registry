@@ -218,58 +218,34 @@
                   <div class="content-area">
                     <div class="content-badge">
                       <i class="bi bi-compass"></i>
-                      <span>Strategic Planning</span>
+                      <span>Metabolic Network</span>
                     </div>
-                    <h3>Data-Driven Business Strategy</h3>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                      deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-                      provident.</p>
+                    
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>EC Number</th>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <foreach @network>
+                          <tr>
+                            <td><a href='/reaction/?id=@network["id"]'>@network["db_name"]:@network["db_xref"]</a></td>
+                            <td>@network["ec_number"]</td>
+                            <td>@network["name"]</td>
+                          </tr>
+                        </foreach>
+                      </tbody>
+                    </table>
 
-                    <div class="highlight-stats">
-                      <div class="stat-item">
-                        <span class="stat-value">234%</span>
-                        <span class="stat-label">Growth Rate</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-value">156</span>
-                        <span class="stat-label">Strategies</span>
-                      </div>
-                    </div>
-
-                    <div class="feature-points">
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Similique sunt in culpa qui officia deserunt</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Mollitia animi id est laborum et dolorum fuga</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Et harum quidem rerum facilis est expedita</span>
-                      </div>
-                    </div>
-
-                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
-                      View Strategy <i class="bi bi-arrow-up-right"></i>
+                    <a href="/reactions/?metabolite={$id}" class="explore-link">
+                      View More <i class="bi bi-arrow-up-right"></i>
                     </a>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="visual-content">
-                    <img src="./index_files/features-4.webp" alt="" class="img-fluid">
-                    <div class="floating-element">
-                      <div class="floating-card">
-                        <i class="bi bi-graph-up-arrow"></i>
-                        <div class="card-info">
-                          <span>Growth</span>
-                          <strong>+189% ROI</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
 
