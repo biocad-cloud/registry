@@ -35,9 +35,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function proteins($page =1) {
+    public function proteins($ec=null,$page =1) {
         include APP_PATH . "/scripts/protein/list.php";
-        View::Display(model_list::list_page($page));
+        View::Display(model_list::list_page($ec,$page));
     }
 
     /**
