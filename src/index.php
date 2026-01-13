@@ -137,4 +137,14 @@ class App {
     public function downloads() {
         View::Display();
     }
+
+    /**
+     * Privacy Policy
+     * 
+     * @access *
+     * @uses view
+    */
+    public function privacy() {
+        View::Display();
+    }
 }
