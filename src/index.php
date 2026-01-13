@@ -60,6 +60,10 @@ class App {
         View::Display(location_list::get_list());
     }
 
+    /**
+     * @access *
+     * @uses view
+    */
     public function compartment($name) {
         include APP_PATH . "/scripts/compartments/page.php";
         View::Display(compartment_location::location_data($name));
@@ -106,9 +110,22 @@ class App {
         View::Display($data);
     }
 
+    /**
+     * @access *
+     * @uses view
+    */
     public function reaction($id) {
         include APP_PATH . "/scripts/reaction/page.php";
         View::Display(reaction_model::get_data($id));        
+    }
+
+    /**
+     * @access *
+     * @uses view
+    */
+    public function reactions($id=null, $page=1) {
+        include APP_PATH . "/scripts/reaction/list.php";
+        View::Display(reaction_list::get_list($id,$page));
     }
 
     /**
