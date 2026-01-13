@@ -1,5 +1,7 @@
 <?php
 
+include_once APP_PATH . "/scripts/resolver.php";
+
 class model_data {
 
     public static function protein_model($id) {
@@ -17,6 +19,7 @@ class model_data {
                 ;
         }
 
+        # query by ec number as id
         $ec = [];
         
         foreach($prot["dblink"] as $xref) {
@@ -27,6 +30,9 @@ class model_data {
                 array_push($ec, $xref);
             }
         }
+
+        # build internal link for ec number
+        $prot["dblink"] = resolver::internal_link($prot["dblink"]);
 
         if (count($ec) > 0) {
             # protein sequence

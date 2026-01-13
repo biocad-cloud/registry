@@ -1,5 +1,7 @@
 <?php
 
+include_once APP_PATH . "/scripts/resolver.php";
+
 class reaction_model {
 
     public static function get_data($id) {
@@ -18,6 +20,7 @@ class reaction_model {
         $left = self::get_network($id, RXN_LEFT);
         $right = self::get_network($id, RXN_RIGHT);
         $rxn["equation"] = self::equation($left, $right);
+        $rxn["dblink"] = resolver::internal_link($rxn["dblink"]);
 
         if (strlen( $rxn["hashcode"]) > 0 ) {
             $rxn["alias"] = (new table(["cad_registry"=>"reaction"]))
