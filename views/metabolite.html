@@ -93,51 +93,315 @@
             </foreach>
           </div>
         </div>
-
-        <br />
-
-        <div class="row">
-          <div class="col">
-
-            <h3>DBLinks</h3>
-
-            <ul>
-              <li>CAS Registry Number: {$cas_id}</li>
-              <li>PubChem CID: {$pubchem_cid}</li>
-              <li>ChEBI: {$chebi_id}</li>
-              <li>HMDB: {$hmdb_id}</li>
-              <li>LipidMaps: {$lipidmaps_id}</li>
-              <li>KEGG: {$kegg_id}</li>
-              <li>BioCyc: {$biocyc}</li>
-              <li>NCBI MeSH: {$mesh_id}</li>
-              <li>Wikipedia: {$wikipedia}</li>
-            </ul>
-
-            <summary>
-              <h6>Other DBLinks</h6>
-              <details>
-                <ul>
-                  <foreach @db_xrefs>
-                    <li><strong>@db_xrefs["db_name"]:</strong> <i>@db_xrefs["db_xref"]</i></li>
-                  </foreach>
-                </ul>
-              </details>
-            </summary>
-          </div>
-        </div>
-
-        <h3>Class / Ontology</h3>
-
-        <ul>
-          <foreach @ontology>
-            <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]]
-                @ontology["term"]</a></li>
-          </foreach>
-        </ul>
-
+      
       </div>
 
     </section>
+
+    <!-- Tabs Section -->
+    <section id="tabs" class="tabs section">
+
+      <div class="container">
+
+        <div class="tabs-wrapper">
+          <div class="tabs-header">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tabs-tab-1" aria-selected="true"
+                  role="tab">
+                  <div class="tab-content-preview">
+                    <span class="tab-number">01</span>
+                    <div class="tab-text">
+                      <h6>Entity</h6>
+                      <small>Entity Information</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-2" aria-selected="false"
+                  tabindex="-1" role="tab">
+                  <div class="tab-content-preview">
+                    <span class="tab-number">02</span>
+                    <div class="tab-text">
+                      <h6>Metabolic</h6>
+                      <small>Metabolic Network</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-3" aria-selected="false"
+                  tabindex="-1" role="tab">
+                  <div class="tab-content-preview">
+                    <span class="tab-number">03</span>
+                    <div class="tab-text">
+                      <h6>Performance</h6>
+                      <small>Optimal results</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tabs-tab-4" aria-selected="false"
+                  tabindex="-1" role="tab">
+                  <div class="tab-content-preview">
+                    <span class="tab-number">04</span>
+                    <div class="tab-text">
+                      <h6>Integration</h6>
+                      <small>Seamless workflow</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tab-content">
+
+            <div class="tab-pane fade active show" id="tabs-tab-1" role="tabpanel">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="content-area">
+                    <div class="content-badge">
+                      <i class="bi bi-lightbulb"></i>
+                      <span>Entity Information</span>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col">
+            
+                        <h3>DBLinks</h3>
+            
+                        <ul>
+                          <li>CAS Registry Number: {$cas_id}</li>
+                          <li>PubChem CID: {$pubchem_cid}</li>
+                          <li>ChEBI: {$chebi_id}</li>
+                          <li>HMDB: {$hmdb_id}</li>
+                          <li>LipidMaps: {$lipidmaps_id}</li>
+                          <li>KEGG: {$kegg_id}</li>
+                          <li>BioCyc: {$biocyc}</li>
+                          <li>NCBI MeSH: {$mesh_id}</li>
+                          <li>Wikipedia: {$wikipedia}</li>
+                        </ul>
+            
+                        <summary>
+                          <h6>Other DBLinks</h6>
+                          <details>
+                            <ul>
+                              <foreach @db_xrefs>
+                                <li><strong>@db_xrefs["db_name"]:</strong> <i>@db_xrefs["db_xref"]</i></li>
+                              </foreach>
+                            </ul>
+                          </details>
+                        </summary>
+                      </div>
+                    </div>
+            
+                    <h3>Class / Ontology</h3>
+            
+                    <ul>
+                      <foreach @ontology>
+                        <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]]
+                            @ontology["term"]</a></li>
+                      </foreach>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabs-tab-2" role="tabpanel">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="content-area">
+                    <div class="content-badge">
+                      <i class="bi bi-compass"></i>
+                      <span>Strategic Planning</span>
+                    </div>
+                    <h3>Data-Driven Business Strategy</h3>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                      deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                      provident.</p>
+
+                    <div class="highlight-stats">
+                      <div class="stat-item">
+                        <span class="stat-value">234%</span>
+                        <span class="stat-label">Growth Rate</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-value">156</span>
+                        <span class="stat-label">Strategies</span>
+                      </div>
+                    </div>
+
+                    <div class="feature-points">
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Similique sunt in culpa qui officia deserunt</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Mollitia animi id est laborum et dolorum fuga</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Et harum quidem rerum facilis est expedita</span>
+                      </div>
+                    </div>
+
+                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
+                      View Strategy <i class="bi bi-arrow-up-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="visual-content">
+                    <img src="./index_files/features-4.webp" alt="" class="img-fluid">
+                    <div class="floating-element">
+                      <div class="floating-card">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <div class="card-info">
+                          <span>Growth</span>
+                          <strong>+189% ROI</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabs-tab-3" role="tabpanel">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="content-area">
+                    <div class="content-badge">
+                      <i class="bi bi-speedometer2"></i>
+                      <span>High Performance</span>
+                    </div>
+                    <h3>Optimized System Performance</h3>
+                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet
+                      voluptates repudiandae sint et molestiae non recusandae itaque earum rerum hic tenetur sapiente
+                      delectus.</p>
+
+                    <div class="highlight-stats">
+                      <div class="stat-item">
+                        <span class="stat-value">99.8%</span>
+                        <span class="stat-label">System Uptime</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-value">2.4s</span>
+                        <span class="stat-label">Load Time</span>
+                      </div>
+                    </div>
+
+                    <div class="feature-points">
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Ut aut reiciendis voluptatibus maiores alias</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Consequatur aut perferendis doloribus asperiores</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Repellat nam libero tempore cum soluta nobis</span>
+                      </div>
+                    </div>
+
+                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
+                      Check Performance <i class="bi bi-arrow-up-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="visual-content">
+                    <img src="./index_files/features-1.webp" alt="" class="img-fluid">
+                    <div class="floating-element">
+                      <div class="floating-card">
+                        <i class="bi bi-cpu"></i>
+                        <div class="card-info">
+                          <span>Power</span>
+                          <strong>128 Cores</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabs-tab-4" role="tabpanel">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="content-area">
+                    <div class="content-badge">
+                      <i class="bi bi-puzzle"></i>
+                      <span>Smart Integration</span>
+                    </div>
+                    <h3>Seamless Workflow Integration</h3>
+                    <p>Eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus omnis
+                      voluptas assumenda est omnis dolor repellendus temporibus autem quibusdam et aut officiis debitis.
+                    </p>
+
+                    <div class="highlight-stats">
+                      <div class="stat-item">
+                        <span class="stat-value">450+</span>
+                        <span class="stat-label">Integrations</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-value">85%</span>
+                        <span class="stat-label">Automation</span>
+                      </div>
+                    </div>
+
+                    <div class="feature-points">
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Rerum necessitatibus saepe eveniet voluptates</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Repudiandae sint et molestiae non recusandae</span>
+                      </div>
+                      <div class="point-item">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>Itaque earum rerum hic tenetur sapiente</span>
+                      </div>
+                    </div>
+
+                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
+                      Start Integration <i class="bi bi-arrow-up-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="visual-content">
+                    <img src="./index_files/features-5.webp" alt="" class="img-fluid">
+                    <div class="floating-element">
+                      <div class="floating-card">
+                        <i class="bi bi-link-45deg"></i>
+                        <div class="card-info">
+                          <span>Connected</span>
+                          <strong>24/7 Sync</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Tabs Section -->
+
 
 
   </main>
