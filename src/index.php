@@ -106,6 +106,11 @@ class App {
         View::Display($data);
     }
 
+    public function reaction($id) {
+        include APP_PATH . "/scripts/reaction/page.php";
+        View::Display(reaction_model::get_data($id));        
+    }
+
     /**
      * Resource Downloads
      * 

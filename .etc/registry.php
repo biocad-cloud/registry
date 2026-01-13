@@ -8,6 +8,9 @@ define("ENTITY_REACTION", 77);
 define("FASTA_PROTEIN", 74);
 define("FASTA_NUCLEOTIDE", 75);
 
+define("RXN_LEFT", 78);
+define("RXN_RIGHT", 79);
+
 define("DB_CAS", 1);
 define("DB_PUBCHEM", 2);
 define("DB_CHEBI", 3);
