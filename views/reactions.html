@@ -39,7 +39,7 @@
             <foreach @network>
               <tr>
                 <td><a href='/reaction/?id=@network["id"]'>@network["db_name"]:@network["db_xref"]</a></td>
-                <td>@network["ec_number"]</td>
+                <td><a href='/proteins/?ec=@network["ec_number"]'>@network["ec_number"]</a></td>
                 <td>@network["name"]</td>
               </tr>
             </foreach>
