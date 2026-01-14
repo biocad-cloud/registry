@@ -32,3 +32,143 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 ======================================================== -->
+
+<style type="text/css">
+    .nav-search-form {
+        --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --bs-body-font-family: var(--bs-font-sans-serif);
+        --bs-body-font-size: 1rem;
+        --bs-body-font-weight: 400;
+        --bs-body-line-height: 1.5;
+        --bs-body-color: #212529;
+        --bs-body-bg: #fff;
+        --bs-heading-color: inherit;
+        --bs-link-color-rgb: 13, 110, 253;
+        --bs-link-hover-color-rgb: 10, 88, 202;
+        --bs-code-color: #d63384;
+        font-size: var(--bs-body-font-size);
+        font-weight: var(--bs-body-font-weight);
+        line-height: var(--bs-body-line-height);
+        text-align: var(--bs-body-text-align);
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        color: #444;
+        font-family: Roboto, sans-serif;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        box-sizing: border-box;
+    }
+
+    .search-form {
+        --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --bs-body-font-family: var(--bs-font-sans-serif);
+        --bs-body-font-size: 1rem;
+        --bs-body-font-weight: 400;
+        --bs-body-line-height: 1.5;
+        --bs-body-color: #212529;
+        --bs-body-bg: #fff;
+        --bs-heading-color: inherit;
+        --bs-link-color-rgb: 13, 110, 253;
+        --bs-link-hover-color-rgb: 10, 88, 202;
+        --bs-code-color: #d63384;
+        font-size: var(--bs-body-font-size);
+        font-weight: var(--bs-body-font-weight);
+        line-height: var(--bs-body-line-height);
+        text-align: var(--bs-body-text-align);
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        color: #444;
+        font-family: Roboto, sans-serif;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        box-sizing: border-box;
+        display: flex !important;
+        align-items: center !important;
+        min-width: 240px;
+    }
+
+    .search-form>input {
+        --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --bs-body-font-family: var(--bs-font-sans-serif);
+        --bs-body-font-size: 1rem;
+        --bs-body-font-weight: 400;
+        --bs-body-line-height: 1.5;
+        --bs-body-color: #212529;
+        --bs-body-bg: #fff;
+        --bs-heading-color: inherit;
+        --bs-link-color-rgb: 13, 110, 253;
+        --bs-link-hover-color-rgb: 10, 88, 202;
+        --bs-code-color: #d63384;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        box-sizing: border-box;
+        margin: 0;
+        font-family: inherit;
+        line-height: inherit;
+        font-size: 14px;
+        color: #023b6d;
+        border: 1px solid rgba(2, 59, 109, .2);
+        padding: 7px 38px 7px 14px;
+        transition: .3s;
+        width: 100%;
+        border-radius: 50px;
+    }
+
+    .search-form>button {
+        --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --bs-body-font-family: var(--bs-font-sans-serif);
+        --bs-body-font-size: 1rem;
+        --bs-body-font-weight: 400;
+        --bs-body-line-height: 1.5;
+        --bs-body-color: #212529;
+        --bs-body-bg: #fff;
+        --bs-heading-color: inherit;
+        --bs-link-color-rgb: 13, 110, 253;
+        --bs-link-hover-color-rgb: 10, 88, 202;
+        --bs-code-color: #d63384;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        box-sizing: border-box;
+        border-radius: 0;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        text-transform: none;
+        -webkit-appearance: button;
+        border: 0;
+        padding: 0;
+        margin-left: -32px;
+        background: 0 0;
+        transition: .3s;
+        cursor: pointer;
+    }
+
+    .icon-search {
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        text-transform: none;
+        cursor: pointer;
+        fill: currentcolor;
+        box-sizing: border-box;
+        vertical-align: middle;
+        color: rgba(2, 59, 109, .4);
+        width: 20px;
+        height: 20px;
+        margin-top: -2px;
+        transition: .3s;
+    }
+</style>
