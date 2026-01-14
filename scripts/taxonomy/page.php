@@ -27,6 +27,29 @@ class ncbi_taxonomy {
             $tax["childs"] = [];
         }
         
+        $prot_data = FASTA_PROTEIN;
+        $ec_number = EC_NUMBER;
+        $sql = "SELECT 
+        protein_data.id,
+        source_id,
+        source_db,
+        term as db_name,
+        name,
+        `function`,
+        db_xref AS ec_number
+    FROM
+        cad_registry.protein_data
+            LEFT JOIN
+        db_xrefs ON db_xrefs.obj_id = protein_data.id
+            AND db_xrefs.type = {$prot_data}
+            AND db_xrefs.db_name = {$ec_number}
+            LEFT JOIN
+        vocabulary ON vocabulary.id = protein_data.source_db
+    WHERE
+        ncbi_taxid = {$id}
+            AND NOT db_xref IS NULL";
+        $tax["enzyme"] = (new Table(["cad_registry"=>"protein_data"]))->exec($sql);
+
         return $tax;
     }
 

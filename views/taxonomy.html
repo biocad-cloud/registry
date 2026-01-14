@@ -27,8 +27,10 @@
       <div class="container">
 
         <p>taxonomy name: {$name} ({$rank_name})<br />
-        ancestor: <a href="/taxonomy/?id={$ancestor}">{$parent_name} ({$parent_rank})</a>
+          ancestor: <a href="/taxonomy/?id={$ancestor}">{$parent_name} ({$parent_rank})</a>
         </p>
+
+        <h5>Child Taxonomy</h5>
 
         <table class="table">
           <thead>
@@ -44,6 +46,30 @@
                 <td><a href='/taxonomy/?id=@childs["id"]'>@childs["name"]</a></td>
                 <td>@childs["rank_name"]</td>
                 <td>@childs["note"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
+
+        <h5>Enzyme Proteins</h5>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>protein id</th>
+              <th>name</th>
+              <th>ec_number</th>
+              <th>function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @enzyme>
+              <tr>
+                <td><a href='/protein/fasta/?id=@enzyme["id"]'>@enzyme["source_id"] [@enzyme["db_name"]]</a></td>
+                <td>@enzyme["name"]</td>
+                <td><a href='/proteins/?ec=@enzyme["ec_number"]'>@enzyme["ec_number"]</a></td>
+                <td>@enzyme["function"]</td>
               </tr>
             </foreach>
           </tbody>
