@@ -129,6 +129,15 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+    */
+    public function taxonomy($id) {
+        include APP_PATH . "/scripts/taxonomy/page.php";
+        View::Display(ncbi_taxonomy::taxon_data($id));
+    }
+
+    /**
      * Resource Downloads
      * 
      * @access *

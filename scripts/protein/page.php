@@ -39,6 +39,8 @@ class model_data {
             $prot["fasta"] = (new Table(["cad_registry"=>"db_xrefs"]))
                 ->left_join("protein_data")
                 ->on(["protein_data"=>"id","db_xrefs" => "obj_id"])
+                ->left_join("ncbi_taxonomy")
+                ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
                 ->where(["type"=> FASTA_PROTEIN,"db_xref"=>in($ec)])
                 ->order_by(["name","`function`"], true)
                 ->limit(10)
@@ -46,9 +48,8 @@ class model_data {
                 "protein_data.source_id",
                 "protein_data.name",
                 "protein_data.function",
-                "IF(CHAR_LENGTH(sequence) > 100,
-                CONCAT(MID(sequence, 1, 100), '...'),
-                sequence) as sequence"])
+                "ncbi_taxid",
+                "ncbi_taxonomy.name as taxname"])
                 ;
             # reactions
             $prot["reaction"] = (new Table(["cad_registry"=>"db_xrefs"]))

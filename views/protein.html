@@ -46,7 +46,7 @@
               <th>protein id</th>
               <th>name</th>
               <th>function</th>
-              <th>fasta</th>
+              <th>taxonomy source</th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +55,7 @@
                 <td><a href='/protein/fasta/?id=@fasta["id"]'>@fasta["source_id"]</a></td>
                 <td>@fasta["name"]</td>
                 <td>@fasta["function"]</td>
-                <td><code>@fasta["sequence"]</code></td>
+                <td><a href='/taxonomy/?id=@fasta["ncbi_taxid"]'>@fasta["taxname"]</a></td>
               </tr>
             </foreach>
           </tbody>
