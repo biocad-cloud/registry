@@ -164,4 +164,12 @@ class App {
     public function privacy() {
         View::Display();
     }
+
+    /**
+     * @access *
+     * @uses view
+    */
+    public function search($q) {
+        View::Display((include APP_PATH . "/scripts/search.php")->get_result(urldecode($q)));
+    }
 }

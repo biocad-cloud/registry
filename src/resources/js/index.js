@@ -66,9 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Navigating to:", targetUrl);
 
     // 创建一个临时的 Toast 提示用户 (因为没有引入 toast css，这里用简单的 log 代替，实际请取消下面注释)
-    // window.location.href = targetUrl;
-
-    alert(`模拟跳转至: ${targetUrl}\n(实际部署时请使用 window.location.href)`);
+    window.location.href = targetUrl;
   }
 
   // 3. 事件监听：获得焦点显示下拉框
