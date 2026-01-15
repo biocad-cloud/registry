@@ -6,6 +6,11 @@
   ${./includes/head.html}
 
   <link href="/resources/css/index.css" rel="stylesheet">
+  <style type="text/css">
+    .header {
+      background-color: white;
+    }
+  </style>
 </head>
 
 <body class="index-page scrolled">
@@ -20,11 +25,7 @@
 
     <section id="data" class="section">
 
-      <!-- Section Title -->
-      <div class="container section-title">
-        <h2>Frequently Asked Questions</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+      <div style="min-height: 5vh;"></div>
 
       <div class="main-container container">
         <!-- 网站标题区域 -->
@@ -38,8 +39,8 @@
           <form id="searchForm" class="search-form" action="#" method="get" autocomplete="off">
             <div class="input-group">
               <!-- 输入框 -->
-              <input type="text" class="form-control search-input" id="searchInput" placeholder="请输入 SQL 语句、表名或关键字..."
-                aria-label="Search content">
+              <input type="text" class="form-control search-input" id="searchInput"
+                style="background-color: transparent;" placeholder="请输入 SQL 语句、表名或关键字..." aria-label="Search content">
 
               <!-- 搜索按钮 (融入右侧) -->
               <button class="search-btn" type="button" id="searchButton" aria-label="Search">
@@ -52,8 +53,10 @@
               <div class="suggestions-header">
                 <i class="bi bi-fire me-1"></i> 热门搜索
               </div>
-              <div id="suggestionsList">
-                <!-- 列表项将由 JS 动态生成 -->
+              <!-- 滚动容器 -->
+              <div class="suggestions-list-wrapper" id="suggestionsListWrapper">
+                <!-- 15个词条将渲染在这里 -->
+                <div id="suggestionsList"></div>
               </div>
             </div>
           </form>
