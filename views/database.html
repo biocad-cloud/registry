@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  ${./includes/head.html}
+
+  <link href="/resources/css/index.css" rel="stylesheet">
+</head>
+
+<body class="index-page scrolled">
+  ${./includes/nav.html}
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <main class="main">
+
+    <section id="data" class="section">
+
+      <!-- Section Title -->
+      <div class="container section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+      </div><!-- End Section Title -->
+
+      <div class="main-container container">
+        <!-- 网站标题区域 -->
+        <header class="site-branding">
+          <h1 class="site-title">DataSearch</h1>
+          <p class="site-subtitle">探索海量数据库资源</p>
+        </header>
+
+        <!-- 搜索核心区域 -->
+        <div class="search-wrapper">
+          <form id="searchForm" class="search-form" action="#" method="get" autocomplete="off">
+            <div class="input-group">
+              <!-- 输入框 -->
+              <input type="text" class="form-control search-input" id="searchInput" placeholder="请输入 SQL 语句、表名或关键字..."
+                aria-label="Search content">
+
+              <!-- 搜索按钮 (融入右侧) -->
+              <button class="search-btn" type="button" id="searchButton" aria-label="Search">
+                <i class="bi bi-search search-icon"></i>
+              </button>
+            </div>
+
+            <!-- 热门搜索下拉框 (模拟后台数据) -->
+            <div class="suggestions-dropdown" id="suggestionsBox">
+              <div class="suggestions-header">
+                <i class="bi bi-fire me-1"></i> 热门搜索
+              </div>
+              <div id="suggestionsList">
+                <!-- 列表项将由 JS 动态生成 -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+
+  </main>
+
+  ${./includes/footer.html}
+</body>
+
+<script type="text/javascript" src="/resources/js/index.js"></script>
+
+</html>

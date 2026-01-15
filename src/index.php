@@ -138,6 +138,14 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+    */
+    public function database() {
+        View::Display();
+    }
+
+    /**
      * Resource Downloads
      * 
      * @access *
