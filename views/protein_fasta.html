@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  ${./includes/head.html}
+
+  <style type="text/css">
+    /* 针对用户原始HTML的隐藏处理 */
+    #original-content-placeholder {
+      display: none;
+    }
+
+    /* 统计信息 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .stat-item {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .stat-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* 序列可视化区域 */
+    #visual-container {
+      font-family: var(--mono-font);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      align-content: flex-start;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+
+    /* 氨基酸块样式 */
+    .aa-block {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s, box-shadow 0.1s;
+      position: relative;
+      color: #000;
+      /* 默认黑色文字，根据背景调整 */
+      text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .aa-block:hover {
+      transform: scale(1.2);
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      border: 1px solid #333;
+    }
+
+    /* 图例区域 */
+    .legend-container {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+    }
+
+    /* 提示框 */
+    #tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      z-index: 1000;
+      white-space: nowrap;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="index-page scrolled">
+  ${./includes/nav.html}
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <main class="main">
+
+    <section id="data" class="section">
+
+      <!-- Section Title -->
+      <div class="container section-title">
+        <h2>{$title}</h2>
+        <p>{$function}</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row">
+          <div class="col-6">
+            <div id="original-content-placeholder">
+              <p class="text-break">
+                > {$title} [{$function}]<br />
+                <span id="fasta_seq">{$sequence}</span>
+              </p>
+            </div>
+            <!-- 视觉展示区域 -->
+            <section class="card visual-section">
+              <div class="card-header">
+                <span>彩色序列视图</span>
+                <button class="btn btn-outline" onclick="copySequence()">复制纯文本</button>
+              </div>
+              <div id="visual-container">
+                <span style="color: #999; padding: 20px;">请在左侧输入序列并点击“更新视图”...</span>
+              </div>
+            </section>
+
+            <div class="card-header" style="margin-top: 20px;">
+              <span>统计信息</span>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">序列长度</span>
+                <span class="stat-value" id="stat-length">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">疏水性残基</span>
+                <span class="stat-value" id="stat-hydro">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">极性残基</span>
+                <span class="stat-value" id="stat-polar">0</span>
+              </div>
+            </div>
+
+            <div class="card-header" style="margin-top: 20px;">
+              <span>图例</span>
+            </div>
+            <div id="legend" class="legend-container">
+              <!-- 图例将通过JS生成 -->
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  <!-- 隐藏的提示框 -->
+  <div id="tooltip"></div>
+
+  ${./includes/footer.html}
+</body>
+
+<script type="text/javascript" src="/resources/js/prot_fasta.js"></script>
+
+</html>
