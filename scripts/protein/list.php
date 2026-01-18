@@ -2,6 +2,28 @@
 
 class model_list {
 
+    public static function list_cc($cc, $page=1,$page_size = 100) {
+        $offset = ($page-1) * $page_size;
+        $data = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=>$cc])->find();
+
+        if (Utils::isDbNull($data)) {
+            RFC7231Error::err404("the subcellular compartment you requested could not be found!");
+        } else {
+            $data["protein"] = (new Table(["cad_registry"=>"subcellular_location"]))
+                ->left_join("protein_data")
+                ->on(["subcellular_location"=>"protein_id","protein_data"=>"id"])
+                ->left_join("ncbi_taxonomy")
+                ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
+                ->where(["location_id"=>$data["id"]])
+                ->order_by("protein_data.id")
+                ->limit($offset,$page_size)
+                ->select(["protein_data.id","protein_data.name",
+            "ncbi_taxonomy.name AS taxname"]);
+        }
+
+        return list_nav($data, $page);
+    }
+
     public static function list_page($ec,$page, $page_size = 10) {
         $offset = ($page-1) * $page_size;
         $list = null;
