@@ -153,9 +153,12 @@
           </div>
           <div class="col">
 
-            <div class="card-header" style="margin-top: 20px;">
-              <span>统计信息</span>
-            </div>
+            <br />
+            <br />
+            <br />
+
+            <h5>统计信息</h5>
+
             <div class="stats-grid">
               <div class="stat-item">
                 <span class="stat-label">序列长度</span>
@@ -171,15 +174,15 @@
               </div>
             </div>
 
-            <div class="card-header" style="margin-top: 20px;">
-              <span>Legend</span>
-            </div>
+
+            <h5>Legend</h5>
+
             <div id="legend" class="legend-container">
               <!-- 图例将通过JS生成 -->
             </div>
           </div>
         </div>
-     
+
         <div class="row">
           <div class="col">
             <h5>Metadata</h5>
@@ -188,9 +191,30 @@
               Organism Source: <a href="/taxonomy/?id={$ncbi_taxid}">{$ncbi_taxid} - {$taxname}</a><br />
               EC Number: {$ec_numbers}
             </p>
+
+            <h5>Reactions</h5>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>reaction id</th>
+                  <th>name</th>
+                  <th>note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach @reaction>
+                  <tr>
+                    <td><a href='/reaction/?id=@reaction["id"]'>@reaction["db_source"]:@reaction["db_xref"]</a></td>
+                    <td>@reaction["name"]</td>
+                    <td>@reaction["note"]</td>
+                  </tr>
+                </foreach>
+              </tbody>
+            </table>
           </div>
         </div>
-        
+
       </div>
 
     </section>
