@@ -32,7 +32,6 @@ const AMINO_ACIDS = {
   "-": { color: "#ffffff", name: "Gap", group: "Other" },
 };
 
-const inputEl = document.getElementById("fastaInput");
 const containerEl = document.getElementById("visual-container");
 const tooltipEl = document.getElementById("tooltip");
 
@@ -54,26 +53,17 @@ function init() {
   if (originalSeqSpan) {
     initialSequence = originalSeqSpan.innerText.trim();
     console.log("提取到用户指定ID的序列，长度:", initialSequence.length);
-    // 将提取的序列放入输入框供用户查看/编辑
-    inputEl.value = initialSequence;
   } else {
-    // 如果没有找到ID，给一个默认示例（如果输入框为空）
-    if (!inputEl.value) {
-      inputEl.value =
-        ">Example Sequence\nMVHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH";
-    }
   }
 
   // 执行首次渲染
-  visualize();
+  visualize(initialSequence);
 }
 
 /**
  * 核心可视化函数
  */
-function visualize() {
-  const rawInput = inputEl.value;
-
+function visualize(rawInput) {
   // 清理数据：移除FASTA头部（以>开头的行）和所有空白符
   let cleanSeq = rawInput.replace(/^>.*$/gm, "").replace(/\s/g, "");
 
@@ -243,24 +233,6 @@ function copyChar(e) {
     .catch((err) => {
       console.error("无法复制", err);
     });
-}
-
-/**
- * 复制整个纯文本序列
- */
-function copySequence() {
-  const seq = inputEl.value.replace(/^>.*$/gm, "").replace(/\s/g, "");
-  if (!seq) return;
-
-  navigator.clipboard.writeText(seq).then(() => {
-    // 简单的用户反馈 (非 alert)
-    const btn = document.querySelector(".btn-outline");
-    const originalText = btn.textContent;
-    btn.textContent = "已复制!";
-    setTimeout(() => {
-      btn.textContent = originalText;
-    }, 2000);
-  });
 }
 
 // 启动程序

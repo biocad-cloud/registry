@@ -115,6 +115,8 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   </style>
+
+  <script type="plain/text" id="fasta_seq">{$sequence}</script>
 </head>
 
 <body class="index-page scrolled">
@@ -138,23 +140,18 @@
       <div class="container">
 
         <div class="row">
-          <div class="col-6">
-            <div id="original-content-placeholder">
-              <p class="text-break">
-                > {$title} [{$function}]<br />
-                <span id="fasta_seq">{$sequence}</span>
-              </p>
-            </div>
+          <div class="col-8">
             <!-- 视觉展示区域 -->
-            <section class="card visual-section">
-              <div class="card-header">
-                <span>彩色序列视图</span>
-                <button class="btn btn-outline" onclick="copySequence()">复制纯文本</button>
+            <section class="visual-section">
+              <div>
+                <strong> > {$title} [{$function}]</strong>
               </div>
               <div id="visual-container">
                 <span style="color: #999; padding: 20px;">请在左侧输入序列并点击“更新视图”...</span>
               </div>
             </section>
+          </div>
+          <div class="col">
 
             <div class="card-header" style="margin-top: 20px;">
               <span>统计信息</span>
@@ -175,16 +172,25 @@
             </div>
 
             <div class="card-header" style="margin-top: 20px;">
-              <span>图例</span>
+              <span>Legend</span>
             </div>
             <div id="legend" class="legend-container">
               <!-- 图例将通过JS生成 -->
             </div>
           </div>
         </div>
+     
+        <div class="row">
+          <div class="col">
+            <h5>Metadata</h5>
 
-
-
+            <p>
+              Organism Source: <a href="/taxonomy/?id={$ncbi_taxid}">{$ncbi_taxid} - {$taxname}</a><br />
+              EC Number: {$ec_numbers}
+            </p>
+          </div>
+        </div>
+        
       </div>
 
     </section>
