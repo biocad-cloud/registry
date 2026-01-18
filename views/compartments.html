@@ -30,6 +30,7 @@
           <thead>
             <tr>
               <th>Location</th>
+              <th>Location(zh-cn)</th>
               <th>Info</th>
             </tr>
           </thead>
@@ -37,11 +38,15 @@
             <foreach @loc>
               <tr>
                 <td><a href='/compartment/?name=@loc["name"]'>@loc["fullname"]</a></td>
+                <td>@loc["zh_name"]</td>
                 <td>@loc["note"]</td>
               </tr>
             </foreach>
           </tbody>
         </table>
+
+
+        ${./includes/paging.html}
 
       </div>
 
