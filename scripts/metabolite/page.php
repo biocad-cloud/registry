@@ -2,6 +2,16 @@
 
 class metabolite_page {
     
+    public static function resolve_main($id) {
+        $db = new Table(["cad_registry"=>"metabolites"]);
+        $id = Regex::Match($id, "\d+");
+        $meta = $db->where(["id"=>$id])->findfield("main_id");
+        return $meta;
+    }
+
+    /**
+     * cast the possible external db_xref to biocad registry id 
+    */
     public static function resolve_id($id) {
         if (StringHelpers::IsPattern($id, "(BioCAD)?\d+")) {
             // is int biocad registry id of metabolite

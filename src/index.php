@@ -105,9 +105,13 @@ class App {
         include APP_PATH . "/scripts/metabolite/page.php";
 
         $id = metabolite_page::resolve_id($id);
-        $data = metabolite_page::page_data($id);
+        $main_id = metabolite_page::resolve_main($id);
 
-        View::Display($data);
+        if ($main_id > 0) {
+            Redirect("/metabolite/BioCAD" . str_pad($main_id,11,"0", STR_PAD_LEFT));
+        } else {
+            View::Display(metabolite_page::page_data($id));
+        }       
     }
 
     /**
