@@ -19,6 +19,7 @@ class prot_fasta {
             ->left_join("compartment_location")
             ->on(["compartment_location"=>"id","subcellular_location"=>"location_id"])
             ->where(["protein_id"=>$id])
+            ->distinct()
             ->select("compartment_location.*")
             ;
 
