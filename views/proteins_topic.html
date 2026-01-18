@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  ${./includes/head.html}
+</head>
+
+<body class="index-page scrolled">
+  ${./includes/nav.html}
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <main class="main">
+
+    <section id="data" class="section">
+
+      <!-- Section Title -->
+      <div class="container section-title">
+        <h2>{$term}</h2>
+        <p>{$note}</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <h3>Protein List</h3>
+
+        <div class="row">
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>name</th>
+                  <th>Taxonomy</th>
+                  <th>Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach @protein>
+                  <tr>
+                    <td><a href='/protein/fasta/?id=@protein["id"]'>@protein["source_id"]</a></td>
+                    <td>@protein["name"]</td>
+                    <td><a href='/taxonomy/?id=@protein["ncbi_taxid"]'>@protein["taxname"]</a></td>
+                    <td>@protein["function"]</td>
+                  </tr>
+
+                </foreach>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        ${./includes/paging.html}
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  ${./includes/footer.html}
+</body>
+
+</html>

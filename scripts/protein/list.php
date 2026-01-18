@@ -2,6 +2,28 @@
 
 class model_list {
 
+    public static function list_topic($topic,$page=1,$page_size = 35){
+        $offset = ($page-1) * $page_size;
+        $data = (new Table(["cad_registry"=>"vocabulary"]))->where(["category" => 'UniProt Keyword', "term" => urldecode($topic)])->find();
+
+        if (Utils::isDbNull($data)) {
+            RFC7231Error::err404("the protein keyword topic you requested could not be found!");
+        } else {
+            $data["protein"] = (new Table(["cad_registry"=>"topic"]))
+                ->left_join("protein_data")
+                ->on(["topic"=>"model_id","protein_data"=>"id"])
+                ->left_join("ncbi_taxonomy")
+                ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
+                ->where(["topic_id"=>$data["id"], "type"=>FASTA_PROTEIN])
+                ->order_by("`protein_data`.id")
+                ->limit($offset,$page_size)
+                ->select(["protein_data.id","protein_data.name","source_id","`function`","ncbi_taxid",
+            "ncbi_taxonomy.name AS taxname"]);
+        }
+
+        return list_nav($data, $page);
+    }
+
     public static function list_cc($cc, $page=1,$page_size = 35) {
         $offset = ($page-1) * $page_size;
         $data = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=> urldecode( $cc)])->find();

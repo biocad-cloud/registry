@@ -22,7 +22,17 @@ class prot_fasta {
             ->distinct()
             ->select("compartment_location.*")
             ;
-
+        $seq["topic"] = (new Table(["cad_registry"=>"topic"]))
+            ->left_join("vocabulary")
+            ->on(["vocabulary"=>"id","topic" => "topic_id"])
+            ->where(["type"=>FASTA_PROTEIN,"model_id"=>$id])
+            ->distinct()
+            ->select("vocabulary.*")
+            ;
+        $seq["topic"] = Strings::Join(array_map(function($topic) {
+            return "<span class='badge' style='background-color:{$topic["color"]};'><a style='color: white;' href='/proteins/?topic={$topic["term"]}'>{$topic["term"]}</a></span>";
+        }, $seq["topic"]));
+        
         if (count($ec) > 0) {
             $rxns = (new Table(["cad_registry"=>"db_xrefs"]))->where(["type"=>ENTITY_REACTION,"db_name"=>EC_NUMBER,"db_xref"=>in($ec)])->project("obj_id");
 

@@ -35,11 +35,13 @@ class App {
      * @access *
      * @uses view
     */
-    public function proteins($ec=null,$cc=null, $page =1) {
+    public function proteins($ec=null,$cc=null,$topic=null, $page =1) {
         include APP_PATH . "/scripts/protein/list.php";
 
         if (!Utils::isDbNull($cc)) {
             View::Show(APP_VIEWS . "/proteins_subcellular.html", model_list::list_cc($cc,$page));
+        } else if (!Utils::isDbNull($topic)) {
+            View::Show(APP_VIEWS . "/proteins_topic.html", model_list::list_topic($topic,$page));
         } else {
             View::Display(model_list::list_page($ec,$page));
         }        
