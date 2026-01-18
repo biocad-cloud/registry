@@ -15,6 +15,12 @@ class prot_fasta {
             ->project("db_xref")
             ;
         $rxns = [];
+        $cc = (new Table(["cad_registry"=>"subcellular_location"]))
+            ->left_join("compartment_location")
+            ->on(["compartment_location"=>"id","subcellular_location"=>"location_id"])
+            ->where(["protein_id"=>$id])
+            ->select("compartment_location.*")
+            ;
 
         if (count($ec) > 0) {
             $rxns = (new Table(["cad_registry"=>"db_xrefs"]))->where(["type"=>ENTITY_REACTION,"db_name"=>EC_NUMBER,"db_xref"=>in($ec)])->project("obj_id");
@@ -29,6 +35,7 @@ class prot_fasta {
             }
         }
 
+        $seq["subcellular_locations"] = $cc;
         $seq["reaction"] = $rxns;
         $seq["title"] = $seq["name"] . " - " . $seq["taxname"];
         $seq["ec_numbers"] = Strings::Join(array_map(function($ec) {
