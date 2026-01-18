@@ -49,9 +49,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function protein($id) {
+    public function protein($id,$page=1) {
         include APP_PATH . "/scripts/protein/page.php";
-        View::Display(model_data::protein_model($id));
+        View::Display(model_data::protein_model($id,$page));
     }
 
     /**

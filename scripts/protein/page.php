@@ -4,7 +4,7 @@ include_once APP_PATH . "/scripts/resolver.php";
 
 class model_data {
 
-    public static function protein_model($id) {
+    public static function protein_model($id,$page,$page_size = 10) {
         $prot = (new Table(["cad_registry"=>"protein"]))->where(["id"=>$id])->find();
 
         if (Utils::isDbNull($prot)) {
@@ -36,6 +36,7 @@ class model_data {
 
         if (count($ec) > 0) {
             # protein sequence
+            $offset = ($page-1)*$page_size;
             $prot["fasta"] = (new Table(["cad_registry"=>"db_xrefs"]))
                 ->left_join("protein_data")
                 ->on(["protein_data"=>"id","db_xrefs" => "obj_id"])
@@ -43,7 +44,7 @@ class model_data {
                 ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
                 ->where(["type"=> FASTA_PROTEIN,"db_xref"=>in($ec)])
                 ->order_by(["name","`function`"], true)
-                ->limit(10)
+                ->limit($offset,$page_size)
                 ->select(["protein_data.id",
                 "protein_data.source_id",
                 "protein_data.name",
@@ -70,6 +71,6 @@ class model_data {
             $prot["reaction"] = [];
         }
 
-        return $prot;
+        return list_nav( $prot,$page);
     }
 }

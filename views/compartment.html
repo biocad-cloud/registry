@@ -30,11 +30,14 @@
 
         <p>
           <foreach @metabolite>
-            <a href='/metabolite/@metabolite["id"]' title='@metabolite["formula"] [@metabolite["exact_mass"]]'>@metabolite["name"]</a>; 
+            <a href='/metabolite/@metabolite["id"]'
+              title='@metabolite["formula"] [@metabolite["exact_mass"]]'>@metabolite["name"]</a>;
           </foreach>
 
           <br />
-          <a href="/metabolites/?loc={$name}">View full list</a>
+          <strong>
+            <a href="/metabolites/?loc={$name}" class="explore-link">
+              View full list <i class="bi bi-arrow-up-right"></i></a></strong>
         </p>
 
       </div>
