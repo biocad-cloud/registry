@@ -2,7 +2,7 @@
 
 class ncbi_taxonomy {
 
-    public static function taxon_data($id) {
+    public static function taxon_data($id,$page=1,$page_size = 35) {
         $id = Regex::Match($id, "\d+");
         $tax = self::find_tax($id);
         $tax["title"] = "{$tax["name"]} ({$tax["rank_name"]})";
@@ -10,6 +10,7 @@ class ncbi_taxonomy {
         $tax["parent_name"] = $parent["name"];
         $tax["parent_rank"] = $parent["rank_name"];
         $childs = json_decode($tax["childs"], true);
+        $prot_offset = ($page-1) * $page_size;
 
         if (!Utils::isDbNull($childs)) {
             if (count($childs) > 0) {
@@ -47,10 +48,12 @@ class ncbi_taxonomy {
         vocabulary ON vocabulary.id = protein_data.source_db
     WHERE
         ncbi_taxid = {$id}
-            AND NOT db_xref IS NULL";
+            AND NOT db_xref IS NULL
+    LIMIT {$prot_offset},{$page_size}
+            ";
         $tax["enzyme"] = (new Table(["cad_registry"=>"protein_data"]))->exec($sql);
 
-        return $tax;
+        return list_nav( $tax,$page);
     }
 
     private static function find_tax($q) {

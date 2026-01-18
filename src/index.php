@@ -150,9 +150,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function taxonomy($id) {
+    public function taxonomy($id,$page=1) {
         include APP_PATH . "/scripts/taxonomy/page.php";
-        View::Display(ncbi_taxonomy::taxon_data($id));
+        View::Display(ncbi_taxonomy::taxon_data($id,$page));
     }
 
     /**

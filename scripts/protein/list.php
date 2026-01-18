@@ -2,9 +2,10 @@
 
 class model_list {
 
-    public static function list_cc($cc, $page=1,$page_size = 100) {
+    public static function list_cc($cc, $page=1,$page_size = 35) {
         $offset = ($page-1) * $page_size;
-        $data = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=>$cc])->find();
+        $data = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=> urldecode( $cc)])->find();
+        $data["cc"] = $cc;
 
         if (Utils::isDbNull($data)) {
             RFC7231Error::err404("the subcellular compartment you requested could not be found!");
@@ -17,7 +18,7 @@ class model_list {
                 ->where(["location_id"=>$data["id"]])
                 ->order_by("`protein_data`.id")
                 ->limit($offset,$page_size)
-                ->select(["protein_data.id","protein_data.name",
+                ->select(["protein_data.id","protein_data.name","source_id","`function`","ncbi_taxid",
             "ncbi_taxonomy.name AS taxname"]);
         }
 

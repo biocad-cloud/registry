@@ -25,10 +25,44 @@
       </div><!-- End Section Title -->
 
       <div class="container">
+        <div class="row">
+          <div class="col">
+            <a href="/compartment/?name={$cc}" class="explore-link">
+              View SubCellular Compartment Model<i class="bi bi-arrow-up-right"></i>
+          </div>
+        </div>
 
-        <foreach @protein>
-          <a href='/protein/fasta/?id=@protein["id"]' title='@protein["taxname"]'>@protein["name"]</a>
-        </foreach>
+        <hr />
+
+        <h3>Protein List</h3>
+
+        <div class="row">
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>name</th>
+                  <th>Taxonomy</th>
+                  <th>Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach @protein>
+                  <tr>
+                    <td><a href='/protein/fasta/?id=@protein["id"]'>@protein["source_id"]</a></td>
+                    <td>@protein["name"]</td>
+                    <td><a href='/taxonomy/?id=@protein["ncbi_taxid"]'>@protein["taxname"]</a></td>
+                    <td>@protein["function"]</td>
+                  </tr>
+
+                </foreach>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        ${./includes/paging.html}
 
       </div>
 
