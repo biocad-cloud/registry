@@ -93,7 +93,7 @@
             </foreach>
           </div>
         </div>
-      
+
       </div>
 
     </section>
@@ -136,8 +136,8 @@
                   <div class="tab-content-preview">
                     <span class="tab-number">03</span>
                     <div class="tab-text">
-                      <h6>Performance</h6>
-                      <small>Optimal results</small>
+                      <h6>Mass Spectrum</h6>
+                      <small>LCMS MSn Mass Spectrum</small>
                     </div>
                   </div>
                 </a>
@@ -167,12 +167,12 @@
                       <i class="bi bi-lightbulb"></i>
                       <span>Entity Information</span>
                     </div>
-  
+
                     <div class="row">
                       <div class="col">
-            
+
                         <h3>DBLinks</h3>
-            
+
                         <ul>
                           <li>CAS Registry Number: {$cas_id}</li>
                           <li>PubChem CID: {$pubchem_cid}</li>
@@ -184,7 +184,7 @@
                           <li>NCBI MeSH: {$mesh_id}</li>
                           <li>Wikipedia: {$wikipedia}</li>
                         </ul>
-            
+
                         <summary>
                           <h6>Other DBLinks</h6>
                           <details>
@@ -197,12 +197,13 @@
                         </summary>
                       </div>
                     </div>
-            
+
                     <h3>Class / Ontology</h3>
-            
+
                     <ul>
                       <foreach @ontology>
-                        <li>@ontology["ontology"]: <a href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]]
+                        <li>@ontology["ontology"]: <a
+                            href='/metabolites/?ontology=@ontology["class_id"]'>[@ontology["term_id"]]
                             @ontology["term"]</a></li>
                       </foreach>
                     </ul>
@@ -220,7 +221,7 @@
                       <i class="bi bi-compass"></i>
                       <span>Metabolic Network</span>
                     </div>
-                    
+
                     <table class="table">
                       <thead>
                         <tr>
@@ -255,58 +256,41 @@
                   <div class="content-area">
                     <div class="content-badge">
                       <i class="bi bi-speedometer2"></i>
-                      <span>High Performance</span>
-                    </div>
-                    <h3>Optimized System Performance</h3>
-                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet
-                      voluptates repudiandae sint et molestiae non recusandae itaque earum rerum hic tenetur sapiente
-                      delectus.</p>
-
-                    <div class="highlight-stats">
-                      <div class="stat-item">
-                        <span class="stat-value">99.8%</span>
-                        <span class="stat-label">System Uptime</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-value">2.4s</span>
-                        <span class="stat-label">Load Time</span>
-                      </div>
+                      <span>Mass Spectrum</span>
                     </div>
 
-                    <div class="feature-points">
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Ut aut reiciendis voluptatibus maiores alias</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Consequatur aut perferendis doloribus asperiores</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Repellat nam libero tempore cum soluta nobis</span>
+                    <div class="row">
+                      <div class="col">
+
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Adducts</th>
+                              <th>Collision Energy</th>
+                              <th>Spash-ID</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <foreach @spectrum>
+                              <tr>
+                                <td>@spectrum["adduct"]</td>
+                                <td>@spectrum["energy"]</td>
+                                <td><a href="#" data='@spectrum["splash_id"]'
+                                    onclick="javascript:void(0);">@spectrum["splash_id"]</a></td>
+                              </tr>
+                            </foreach>
+                          </tbody>
+                        </table>
+
+                        <a href="/spectrum/?metab={$id}" class="explore-link">
+                          View All Mass Spectrum <i class="bi bi-arrow-up-right"></i>
+                        </a>
                       </div>
                     </div>
 
-                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
-                      Check Performance <i class="bi bi-arrow-up-right"></i>
-                    </a>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="visual-content">
-                    <img src="./index_files/features-1.webp" alt="" class="img-fluid">
-                    <div class="floating-element">
-                      <div class="floating-card">
-                        <i class="bi bi-cpu"></i>
-                        <div class="card-info">
-                          <span>Power</span>
-                          <strong>128 Cores</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
 
