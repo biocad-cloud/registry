@@ -20,6 +20,15 @@ return [
         'DB_PORT' => '3306'
     ],
 
+    "mzvault" => [
+        'DB_TYPE' => 'mysql',
+        'DB_HOST' => '192.168.3.15',
+        'DB_NAME' => 'mzvault',
+        'DB_USER' => 'xieguigang',
+        'DB_PWD'  => '123456',
+        'DB_PORT' => '3306'
+    ],
+
     "ERR_HANDLER_DISABLE" => "FALSE",
 	"RFC7231"       => APP_VIEWS . "/http_errors/",
     "CACHE" => FALSE,
