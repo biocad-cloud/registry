@@ -15,7 +15,7 @@ class model_list {
                 ->left_join("ncbi_taxonomy")
                 ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
                 ->where(["location_id"=>$data["id"]])
-                ->order_by("protein_data.id")
+                ->order_by("`protein_data`.id")
                 ->limit($offset,$page_size)
                 ->select(["protein_data.id","protein_data.name",
             "ncbi_taxonomy.name AS taxname"]);
