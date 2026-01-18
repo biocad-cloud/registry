@@ -55,9 +55,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function compartments() {
+    public function compartments($page=1) {
         include APP_PATH . "/scripts/compartments/list.php";
-        View::Display(location_list::get_list());
+        View::Display(location_list::get_list($page));
     }
 
     /**
