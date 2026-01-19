@@ -30,11 +30,11 @@
           <div class="col">
 
             <foreach @protein>
-              <div class="card">
+              <div class="card shadow-sm p-3 mb-5 rounded" style="border:none;">
                 <div class="card-body">
                   <h5 class="card-title">@protein["name"]</h5>
                   <p class="card-text">@protein["note"]</p>
-                  <a href='/protein/?id=@protein["id"]' class="btn btn-primary">View Model</a>
+                  <a href='/protein/?id=@protein["id"]'><i class="bi bi-arrow-up-right"></i> View Protein Model</a>
                 </div>
               </div>
 

@@ -53,7 +53,7 @@ class motif_data {
         }
     }
 
-    public static function getfamily($family,$page=1,$page_size=10) {
+    public static function getfamily($family,$page=1,$page_size=6) {
         $offset = ($page-1) * $page_size;
         $data = (new Table(["cad_registry"=>"motif"]))
             ->where(["family" => $family])
