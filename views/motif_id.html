@@ -62,6 +62,30 @@
       overflow: hidden;
       /* 确保内部内容不溢出圆角 */
       background-color: var(--card-bg);
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    /* 【新增】美化滚动条样式 (Webkit内核浏览器: Chrome, Edge, Safari) */
+    #visualization-container::-webkit-scrollbar {
+      width: 8px;
+      /* 滚动条宽度 */
+    }
+
+    #visualization-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      /* 轨道背景 */
+    }
+
+    #visualization-container::-webkit-scrollbar-thumb {
+      background: #ccc;
+      /* 滑块颜色 */
+      border-radius: 4px;
+    }
+
+    #visualization-container::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+      /* 鼠标悬停滑块颜色 */
     }
 
     /* 单个序列行的样式 */
