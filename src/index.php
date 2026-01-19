@@ -192,4 +192,20 @@ class App {
     public function search($q) {
         View::Display((include APP_PATH . "/scripts/search.php")->get_result(urldecode($q)));
     }
+
+    /**
+     * @access *
+     * @uses view
+    */
+    public function about() {
+        View::Display();
+    }
+
+    /**
+     * @access *
+     * @uses view
+    */
+    public function license() {
+        View::Display();
+    }
 }
