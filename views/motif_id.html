@@ -233,33 +233,32 @@
             <div id="visualization-container">
             </div>
 
-            <div class="section">
-              <div class="section-title">数据统计</div>
-              <div class="stats">
-                <div class="stat-box">
-                  <div class="stat-label">序列数量</div>
-                  <div class="stat-value" id="seq-count">0</div>
-                </div>
-                <div class="stat-box">
-                  <div class="stat-label">序列长度</div>
-                  <div class="stat-value" id="seq-length">0</div>
-                </div>
-                <div class="stat-box">
-                  <div class="stat-label">位点总数</div>
-                  <div class="stat-value" id="total-sites">0</div>
-                </div>
-                <div class="stat-box">
-                  <div class="stat-label">GC含量</div>
-                  <div class="stat-value" id="gc-content">0%</div>
-                </div>
-              </div>
-            </div>
 
-            <div class="row" style="width:80%;">
-              <div class="col">
-                {$logo}
+            <figure class="figure" style="width:60%;">
+
+              <div style="width:100%; text-align: center; margin-left: 25%;">
+                <div class="row figure-img img-fluid rounded">
+
+                  {$logo}
+
+                </div>
               </div>
-            </div>
+
+              <blockquote class="blockquote">
+                <p>序列数量: <span id="seq-count">0</span>,
+                  序列长度:
+                  <span id="seq-length">0</span>,
+                  位点总数:
+                  <span id="total-sites">0</span>,
+                  GC含量:
+                  <span id="gc-content">0%</span>
+                </p>
+              </blockquote>
+              <figcaption class="blockquote-footer">数据统计
+              </figcaption>
+            </figure>
+
+
           </div>
         </div>
 
