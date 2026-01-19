@@ -19,4 +19,15 @@ class App {
 
         controller::success(metabolite_page::page_data($id));
     }
+
+    /**
+     * @uses file
+     * @access *
+    */
+    public function motif($logo) {
+        $id = Regex::Match($logo, "\d+");
+        $logo = (new Table(["cad_registry"=>"motif"]))->where(["id"=>$id])->findfield("logo");
+
+        echo $logo;
+    }
 }

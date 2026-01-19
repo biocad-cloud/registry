@@ -59,7 +59,7 @@ let sequences = [];
 document.addEventListener("DOMContentLoaded", function () {
   loadSequences();
   calculatePWM();
-  generateMEMEFormat();
+  // generateMEMEFormat();
 });
 
 // 加载序列数据
@@ -166,10 +166,10 @@ function calculatePWM() {
   };
 
   // 显示计算结果
-  displayPWMResult();
+  // displayPWMResult();
 
   // 生成MEME格式
-  generateMEMEFormat();
+  // generateMEMEFormat();
 }
 
 // 显示PWM计算结果
