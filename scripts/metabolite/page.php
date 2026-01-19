@@ -136,7 +136,7 @@ class metabolite_page {
             $page["topic"] = (new Table(["cad_registry"=>"topic"]))
                 ->left_join("vocabulary")
                 ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-                ->where(["model_id"=>$model_id["id"]])
+                ->where(["model_id"=>$model_id["id"], "type"=>in(0,ENTITY_METABOLITE)])
                 ->distinct()
                 ->select(["`vocabulary`.term","`vocabulary`.color"])
                 ;   

@@ -159,7 +159,7 @@ class metabolite_list {
         $model_id = (new Table(["cad_registry"=>"topic"]))
             ->left_join("vocabulary")
             ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-            ->where(["category"=>"Topic", "term"=>$topic])
+            ->where(["category"=>"Topic", "term"=>$topic, "type"=>in(0, ENTITY_METABOLITE)])
             ->limit($offset,$page_size)
             ->distinct()
             ->project("model_id")
@@ -228,7 +228,7 @@ LIMIT {$offset}, {$page_size}"
             $data["topic"] = (new Table(["cad_registry"=>"topic"]))
                 ->left_join("vocabulary")
                 ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-                ->where(["model_id"=>$model["id"]])
+                ->where(["model_id"=>$model["id"], "type"=>in(0,ENTITY_METABOLITE)])
                 ->distinct()
                 ->select(["`vocabulary`.term","`vocabulary`.color"])
                 ;   
