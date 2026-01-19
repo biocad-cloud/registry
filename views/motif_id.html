@@ -62,7 +62,7 @@
       overflow: hidden;
       /* 确保内部内容不溢出圆角 */
       background-color: var(--card-bg);
-      max-height: 600px;
+      max-height: 550px;
       overflow-y: auto;
     }
 
@@ -231,6 +231,28 @@
           <div class="col">
             <!-- 结果显示区域 -->
             <div id="visualization-container">
+            </div>
+
+            <div class="section">
+              <div class="section-title">数据统计</div>
+              <div class="stats">
+                <div class="stat-box">
+                  <div class="stat-label">序列数量</div>
+                  <div class="stat-value" id="seq-count">0</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">序列长度</div>
+                  <div class="stat-value" id="seq-length">0</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">位点总数</div>
+                  <div class="stat-value" id="total-sites">0</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">GC含量</div>
+                  <div class="stat-value" id="gc-content">0%</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
