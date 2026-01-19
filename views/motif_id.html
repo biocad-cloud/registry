@@ -28,8 +28,13 @@
 
         <h3>{$family}</h3>
         
-        
+        <h5>Organism Source</h5>
 
+        <ul>
+          <foreach @tax>
+            <li><a href='/taxonomy/?id=@tax["id"]'>@tax["name"]</a></li>
+          </foreach>
+        </ul>
 
       </div>
 
