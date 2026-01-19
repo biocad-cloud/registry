@@ -114,9 +114,10 @@ function calculatePWM() {
   // 验证所有序列长度是否一致
   const allSameLength = sequences.every((seq) => seq.length === length);
   if (!allSameLength) {
-    alert("所有序列长度必须一致才能计算PWM矩阵");
+    // alert("所有序列长度必须一致才能计算PWM矩阵");
     return;
   }
+  return;
 
   // 初始化计数矩阵 [位置][碱基索引]
   // 碱基顺序: A=0, C=1, G=2, T=3
