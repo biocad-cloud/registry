@@ -89,7 +89,7 @@ class App {
      * @access *
      * @uses view
     */
-    public function motif($id = null, $family = null) {
+    public function motif($id = null, $family = null,$page=1) {
         include APP_PATH . "/scripts/motifs/page.php";
 
         if (Utils::isDbNull($id) && Utils::isDbNull($family)) {
@@ -99,7 +99,7 @@ class App {
         if (!Utils::isDbNull($id)) {
             View::Show(APP_VIEWS . "/motif_id.html", motif_data::getdata($id));
         } else {
-            View::Show(APP_VIEWS . "/motif_family.html", motif_data::getfamily(urldecode($family)));
+            View::Show(APP_VIEWS . "/motif_family.html", motif_data::getfamily(urldecode($family), $page));
         }
         
     }

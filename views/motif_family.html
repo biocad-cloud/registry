@@ -26,19 +26,29 @@
 
       <div class="container">
 
-        <h3>{$family}</h3>
-        
+        <h3>Motif Clusters</h3>
+
         <div class="row">
           <div class="col">
-            <ul>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:40%">Motif Name</th>
+                  <th style="width:60%">Sequence Logo</th>
+                </tr>
+              </thead>
               <foreach @motif>
-                <li><a href='/motif/?id=@motif["id"]'>@motif["name"]</a></li>
-              </foreach>              
-            </ul>
+                <tr>
+                  <td><a href='/motif/?id=@motif["id"]'>@motif["name"]</a><br />@motif["note"]</td>
+                  <td>@motif["logo"]</td>
+                </tr>
+              </foreach>
+              </ul>
+            </table>
           </div>
         </div>
 
-
+        ${./includes/paging.html}
       </div>
 
     </section>

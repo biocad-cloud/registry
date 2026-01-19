@@ -30,19 +30,24 @@ class motif_data {
         }
     }
 
-    public static function getfamily($family) {
-        $data = (new Table(["cad_registry"=>"motif"]))->where(["family" => $family])->select(["id","name","logo"]);
+    public static function getfamily($family,$page=1,$page_size=10) {
+        $offset = ($page-1) * $page_size;
+        $data = (new Table(["cad_registry"=>"motif"]))
+            ->where(["family" => $family])
+            ->limit($offset,$page_size)
+            ->select(["id","name","logo","width","note"])
+            ;
 
         for($i =0;$i < count($data); $i++) {
             $data[$i]["logo"] = self::svg_str($data[$i]["logo"]);
         }
 
-        return [
-            "motif"=>$data,
+        return list_nav( [
+            "motif"=> $data,
             "family"=>$family,
             "title"=>$family,
             "note"=> count($data) . " clusters",
             "name" => $family            
-        ];
+        ], $page);
     }
 }
