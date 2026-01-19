@@ -10,7 +10,27 @@ class motif_data {
         $motif["tax"] = (new Table(["cad_registry"=>"ncbi_taxonomy"]))->where(["id"=>in($tax_id)])->select();
         $motif["site"] = json_encode($motif["site"]);      
         $motif["logo"] = self::svg_str($motif["logo"]);
-
+        $motif["TF"] = (new Table(["cad_registry"=>"regulatory_network"]))
+            ->left_join("protein_data")
+            ->on(["protein_data"=>"id", "regulatory_network"=> "regulator"])
+            ->left_join("ncbi_taxonomy")
+            ->on(["ncbi_taxonomy"=>"id", "protein_data"=> "ncbi_taxid"])
+            ->where(["motif_site"=>$id])
+            ->select(["`effector_name`",
+            "effector",
+            "IF(effects > 0,
+                IF(effects > 0.5,
+                    'activator',
+                    'activator (conditional inhibitor)'),
+                IF(effects < - 0.5,
+                    'inhibitor',
+                    'inhibitor (conditional activator)')) AS effects",
+            "`protein_data`.id",
+            "`protein_data`.name",
+            "`function`","ncbi_taxid",
+            "ncbi_taxonomy.name AS taxname"])
+            ;
+        
         return $motif;
     }
 

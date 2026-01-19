@@ -280,6 +280,14 @@
           </foreach>
         </ul>
 
+        <h5>Transcript Factors</h5>
+
+        <ul>
+          <foreach @TF>
+            <li><a href='/protein/fasta/?id=@TF["id"]'>@TF["name"] [@TF["function"]  @TF["effects"]]</a> - <a href='/taxonomy/?id=@TF["ncbi_taxid"]'>@TF["taxname"]</a></li>
+          </foreach>
+        </ul>
+
       </div>
 
     </section>
