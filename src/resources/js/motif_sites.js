@@ -58,7 +58,6 @@ let sequences = [];
 // 页面加载完成后初始化
 document.addEventListener("DOMContentLoaded", function () {
   loadSequences();
-  displaySequences();
   calculatePWM();
   generateMEMEFormat();
 });
@@ -99,29 +98,6 @@ function updateStatistics() {
     });
     const gcContent = ((gcCount / totalBases) * 100).toFixed(1);
     document.getElementById("gc-content").textContent = gcContent + "%";
-  }
-}
-
-// 显示序列表格
-function displaySequences() {
-  const rawDataElement = document.getElementById("sites");
-  if (rawDataElement) {
-    try {
-      const sitesData = JSON.parse(rawDataElement.textContent);
-      const tableBody = document.getElementById("sequence-table-body");
-
-      sitesData.forEach((item) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-                    <td>${item.name}</td>
-                    <td style="font-family: monospace;">${item.sequence}</td>
-                    <td>${item.sequence.length}</td>
-                `;
-        tableBody.appendChild(row);
-      });
-    } catch (error) {
-      console.error("显示序列表格失败:", error);
-    }
   }
 }
 
