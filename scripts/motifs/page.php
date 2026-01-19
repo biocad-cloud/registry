@@ -46,7 +46,7 @@ class motif_data {
             "motif"=> $data,
             "family"=>$family,
             "title"=>$family,
-            "note"=> count($data) . " clusters",
+            "note"=> count($data) . " clusters on data page {$page}",
             "name" => $family            
         ], $page);
     }
