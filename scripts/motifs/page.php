@@ -8,6 +8,7 @@ class motif_data {
         $motif["site"] = (new Table(["cad_registry"=>"nucleotide_data"]))->where(["is_motif"=>1, "model_id"=>$id])->select(["name","sequence","organism_source AS ncbi_taxid"]);
         $tax_id = array_column($motif["site"], "ncbi_taxid");
         $motif["tax"] = (new Table(["cad_registry"=>"ncbi_taxonomy"]))->where(["id"=>in($tax_id)])->select();
+        $motif["site"] = json_encode($motif["site"]);
 
         return $motif;
     }
