@@ -66,7 +66,7 @@ class App {
     }
 
     /**
-     * Subcellular locations
+     * Subcellular Locations
      * 
      * @access *
      * @uses view
@@ -105,6 +105,8 @@ class App {
     }
 
     /**
+     * Motifs Database
+     * 
      * @access *
      * @uses view
     */
@@ -158,6 +160,8 @@ class App {
     }
 
     /**
+     * Data Search
+     * 
      * @access *
      * @uses view
     */
@@ -186,6 +190,8 @@ class App {
     }
 
     /**
+     * Search 
+     * 
      * @access *
      * @uses view
     */
@@ -194,6 +200,8 @@ class App {
     }
 
     /**
+     * About 
+     * 
      * @access *
      * @uses view
     */
@@ -202,6 +210,8 @@ class App {
     }
 
     /**
+     * License
+     * 
      * @access *
      * @uses view
     */

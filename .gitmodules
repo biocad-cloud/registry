@@ -4,3 +4,6 @@
 [submodule "framework/LogoViewer"]
 	path = framework/LogoViewer
 	url = https://github.com/biocad-cloud/logo-viewer.git
+[submodule "framework/IconCaptcha"]
+	path = framework/IconCaptcha
+	url = https://github.com/fabianwennink/IconCaptcha-PHP.git
