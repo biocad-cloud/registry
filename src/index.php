@@ -218,4 +218,14 @@ class App {
     public function license() {
         View::Display();
     }
+
+    /**
+     * User Login
+     * 
+     * @access *
+     * @uses view
+    */
+    public function login() {
+        View::Display();
+    }
 }
