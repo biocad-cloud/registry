@@ -13,6 +13,10 @@ class page_idset extends page_view {
             return Regex::Match($id, "\d+");
         }, explode(",",$term));
     }
+
+    public function desc($term) {
+        return "a custom set of the metabolites with given id collection";
+    }
 }
 
 return (function($page, $page_size) {

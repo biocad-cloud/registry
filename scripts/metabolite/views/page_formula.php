@@ -15,6 +15,10 @@ class page_formula extends page_view {
             ->project("id")
             ;
     }
+
+    public function desc($term) {
+        return "all metabolites that has the same formula '{$term}'";
+    }
 }
 
 return (function($page, $page_size) {

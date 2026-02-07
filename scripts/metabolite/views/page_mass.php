@@ -20,6 +20,10 @@ class page_mass extends page_view {
             ->project("id")
             ;
     }
+
+    public function desc($term) {
+        return "metabolites which its exact mass nearly {$term} with tolerance error 0.01 da.";
+    }
 }
 
 return (function($page, $page_size) {

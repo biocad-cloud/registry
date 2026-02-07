@@ -14,6 +14,10 @@ class page_list extends page_view {
             ->project("id")
             ;
     }
+
+    public function desc($term) {
+        return "View list of the metabolites in data page {$this->page}";
+    }
 }
 
 return (function($page, $page_size) {
