@@ -9,7 +9,7 @@ class page_mass extends page_view {
     }
 
     public function q($term) {
-        $mass = Conversion::Val($term);
+        $mass = Conversion::CDbl($term);
         $da = 0.01;
         $min = $mass - $da;
         $max = $mass + $da;
