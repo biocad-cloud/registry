@@ -24,8 +24,9 @@ class page_search extends page_view {
         cad_registry.metabolites
     WHERE
         MATCH (name , note) AGAINST ('{$term}' IN BOOLEAN MODE)
+    ORDER BY MATCH (name , note) AGAINST ('{$term}' IN BOOLEAN MODE) DESC
     LIMIT {$this->offset},{$this->page_size}
-    ", true);
+    ;", true);
 
         if (Utils::isDbNull($data)) {
             return [];
