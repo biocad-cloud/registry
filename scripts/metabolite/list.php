@@ -62,7 +62,7 @@ class metabolite_list {
             $data = $page->metabolites($model_id);
             $data["page"] = array_map(function($meta) {
                 return metabolite_list::link_topics($meta);
-            }, $page);
+            }, $data);
 
             return $data;
         }
