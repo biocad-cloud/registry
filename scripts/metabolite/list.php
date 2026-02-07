@@ -20,7 +20,22 @@ class metabolite_list {
                                      $ontology   = null,
                                      $exact_mass = null,
                                      $formula    = null) {
-        
+
+        if (!Utils::isDbNull($topic)) {
+            return ["topic", $topic];
+        } else if (!Utils::isDbNull($list)) {
+            return ["list", $list];
+        } else if (!Utils::isDbNull($location)) {
+            return ["location", $location];   
+        } else if (!Utils::isDbNull($ontology)) {
+            return ["ontology", $ontology];   
+        } else if (!Utils::isDbNull($exact_mass)) {
+            return ["exact_mass", $exact_mass];      
+        } else if (!Utils::isDbNull($formula)) {
+            return ["formula", $formula];     
+        } else {
+            return ["", null];
+        }
     }
 
     private static function load_page($q, $page, $page_size) {

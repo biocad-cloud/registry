@@ -36,9 +36,13 @@ class App {
 
         include APP_PATH . "/scripts/metabolite/list.php";
 
+        $q = metabolite_list::makeQuery($topic, $list, 
+            $location, $ontology, $exact_mass,
+            $formula
+        );
+        $data = metabolite_list::getList($q[0], $q[1], $page);
 
-
-        View::Display(metabolite_list::getList($page, $topic,$list,$loc,$ontology,$exact_mass,$formula));
+        View::Display($data);
     }
 
     /**
