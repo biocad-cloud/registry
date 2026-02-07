@@ -2,10 +2,10 @@
 
 class metabolite_list {
 
-    public static function getList($q, $page, $page_size = 20) {
+    public static function getList($q, $term, $page, $page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
         $page_num = $page;
-        $page = self::page_data($q, $page, $page_size);
+        $page = self::page_data($q, $term, $page, $page_size);
 
         if (!Utils::isDbNull($topic)) {
             
@@ -26,20 +26,18 @@ class metabolite_list {
         return list_nav( $data, $page_num);
     }
 
-    private static function page_data($q, $page, $page_size) {
-        $page = null;
-
-        switch($q["name"]) {
-            case "topic": 
-                $page = include_once (__DIR__ . "/views/page_topic.php")($page, $page_size);
-                break;
+    private static function load_page($q, $page, $page_size) {
+        switch($q) {
+            case "topic": return (include_once __DIR__ . "/views/page_topic.php")($page, $page_size);
 
             default:
-                RFC7231Error::err500("Unknown query type!");
-                break;
+                return (include_once __DIR__ . "/views/page_list.php")($page, $page_size);
         }
+    }
 
-        $model_id = $page->q($topic);
+    private static function page_data($q, $term, $page, $page_size) {
+        $page = self::load_page($q, $page, $page_size);
+        $model_id = $page->q($term);
         
         if (count($model_id) == 0) {
             return [];
@@ -175,26 +173,6 @@ class metabolite_list {
     LIMIT {$offset}, {$page_size}"
             ;      
             return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
-    }
-
-    private static function page_list($offset, $page_size) {
-        $list = new Table(["cad_registry"=>"metabolites"]);
-        $sql = "SELECT 
-    CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
-    metabolites.id as uid,
-    name,
-    IF(formula = '', 'n/a', formula) AS formula,
-    ROUND(exact_mass, 4) AS exact_mass,
-    smiles,
-    metabolites.note
-FROM
-    cad_registry.metabolites
-        LEFT JOIN
-    struct_data ON struct_data.metabolite_id = metabolites.id
-ORDER BY metabolites.id
-LIMIT {$offset}, {$page_size}"
-        ;       
-        return $list->exec($sql);
     }
 
     private static function link_topics($data) {
