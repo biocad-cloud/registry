@@ -7,22 +7,6 @@ class metabolite_list {
         $page_num = $page;
         $page = self::page_data($q, $term, $page, $page_size);
 
-        if (!Utils::isDbNull($topic)) {
-            
-        } else if (!Utils::isDbNull($list)) {
-            $page = self::page_idset($list,$offset,$page_size);
-        } else if (!Utils::isDbNull($loc)) {
-            $page = self::page_locs(urldecode($loc),$offset,$page_size);   
-        } else if (!Utils::isDbNull($ontology)) {
-            $page = self::page_ontology($ontology,$offset,$page_size);   
-        } else if (!Utils::isDbNull($exact_mass)) {
-            $page = self::page_exactmass($exact_mass, $offset,$page_size);      
-        } else if (!Utils::isDbNull($formula)) {
-            $page = self::page_formula($formula,$offset,$page_size);     
-        } else {
-            $page = self::page_list($offset, $page_size);
-        }
-
         return list_nav( $data, $page_num);
     }
 
@@ -33,6 +17,7 @@ class metabolite_list {
             case "exact_mass": return (include_once __DIR__ . "/views/page_mass.php")($page, $page_size);
             case "ontology": return (include_once __DIR__ . "/views/page_ontology.php")($page, $page_size);
             case "location": return (include_once __DIR__ . "/views/page_cc.php")($page, $page_size);
+            case "list": return (include_once __DIR__ . "/views/page_idset.php")($page, $page_size);
 
             default:
                 return (include_once __DIR__ . "/views/page_list.php")($page, $page_size);
@@ -53,54 +38,6 @@ class metabolite_list {
 
             return $data;
         }
-    }
-
-    private static function page_locs($loc, $offset, $page_size) {
-        $loc = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=>$loc])->find();
-        $sql="SELECT 
-        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
-        metabolites.id as uid,
-        name,
-        IF(formula = '', 'n/a', formula) AS formula,
-        ROUND(exact_mass, 4) AS exact_mass,
-        smiles,
-        metabolites.note
-    FROM
-        cad_registry.compartment_enrich
-            LEFT JOIN
-        metabolites ON compartment_enrich.metabolite_id = metabolites.id
-            LEFT JOIN
-        struct_data ON struct_data.metabolite_id = metabolites.id
-    WHERE
-        location_id = {$loc["id"]}
-    ORDER BY metabolites.id
-    LIMIT {$offset}, {$page_size}";
-
-        return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
-    }
-
-    private static function page_idset($list,$offset, $page_size) {
-        $list = array_map(function($id) {
-            return Regex::Match($id, "\d+");
-        }, explode(",",$list));
-        $list = Strings::Join($list,",");
-        $sql = "SELECT 
-        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
-        metabolites.id as uid,
-        name,
-        IF(formula = '', 'n/a', formula) AS formula,
-        ROUND(exact_mass, 4) AS exact_mass,
-        smiles,
-        metabolites.note
-    FROM
-        cad_registry.metabolites
-            LEFT JOIN
-        struct_data ON struct_data.metabolite_id = metabolites.id
-    WHERE metabolites.id IN ({$list})
-    ORDER BY metabolites.id
-    LIMIT {$offset}, {$page_size}"
-            ;      
-            return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
     }
 
     private static function link_topics($data) {
