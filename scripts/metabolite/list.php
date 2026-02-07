@@ -12,7 +12,8 @@ class metabolite_list {
 
         if (count($data) == 1) {
             # no data
-            RFC7231Error::err204("Sorry, no related data could be found.");
+            $data["desc"] = "no related data could be found.";
+            $data["page"] = [];
         }
 
         return list_nav( $data, $page);
