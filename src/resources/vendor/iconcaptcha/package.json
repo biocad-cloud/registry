@@ -1,0 +1,37 @@
+{
+  "name": "iconcaptcha-widget",
+  "version": "4.0.2",
+  "description": "IconCaptcha is a self-hosted, customizable, easy-to-implement and user-friendly captcha.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "gulp": "gulp",
+    "watch": "gulp watch"
+  },
+  "author": "Fabian Wennink",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabianwennink/IconCaptcha-Widget.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "autoprefixer": "^10.2.6",
+    "babelify": "^10.0.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-uglify": "^3.0.2",
+    "postcss": "^8.3.0",
+    "sass": "^1.37.5"
+  },
+  "browserslist": [
+    ">0.25%",
+    "ie >= 10",
+    "last 5 version"
+  ]
+}
