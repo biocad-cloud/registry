@@ -28,6 +28,16 @@ class page_topic extends page_view {
                 ;
         }
     }
+
+    public function desc($term) {
+        $term = (new Table(["cad_registry"=>"vocabulary"]))
+            ->where(["category"=>"Topic", 
+                     "term"=> urldecode($term)])
+            ->find()
+            ;
+            
+        return $term["note"];
+    }
 }
 
 return (function($page, $page_size) {

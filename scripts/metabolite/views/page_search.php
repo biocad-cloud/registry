@@ -34,6 +34,11 @@ class page_search extends page_view {
             return Table::project_column($data, "id");
         }
     }
+
+    public function desc($term) {
+        $term = urldecode($term);
+        return "metabolite search result of query '{$term}'";
+    }
 }
 
 return (function($page, $page_size) {

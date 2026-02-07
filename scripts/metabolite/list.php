@@ -66,6 +66,7 @@ class metabolite_list {
             $data = ["page" => array_map(function($meta) {
                 return metabolite_list::link_topics($meta);
             }, $data)];
+            $data["desc"] = $page->desc($term);
 
             return $data;
         }

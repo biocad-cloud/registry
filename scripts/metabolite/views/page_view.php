@@ -28,6 +28,11 @@ abstract class page_view {
     */
     public abstract function q($term);
 
+    /**
+     * @return string a html text about the given term
+    */
+    public abstract function desc($term);
+
     public function metabolites($model_id) {
         $model_id = Strings::Join($model_id,",");
         $list = new Table(["cad_registry"=>"metabolites"]);
