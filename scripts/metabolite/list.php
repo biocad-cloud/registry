@@ -2,12 +2,25 @@
 
 class metabolite_list {
 
-    public static function getList($q, $term, $page, $page_size = 20) {
+    public static function getList($q, 
+                                   $term, 
+                                   $page      = 1,                                    
+                                   $page_size = 20) {
+
         $data = ["title" => "Metabolites Page {$page}"];
         $page_num = $page;
         $page = self::page_data($q, $term, $page, $page_size);
 
         return list_nav( $data, $page_num);
+    }
+
+    public static function makeQuery($topic      = null, 
+                                     $list       = null, 
+                                     $location   = null,
+                                     $ontology   = null,
+                                     $exact_mass = null,
+                                     $formula    = null) {
+        
     }
 
     private static function load_page($q, $page, $page_size) {
