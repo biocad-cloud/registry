@@ -32,6 +32,7 @@ class metabolite_list {
             case "formula": return (include_once __DIR__ . "/views/page_formula.php")($page, $page_size);
             case "exact_mass": return (include_once __DIR__ . "/views/page_mass.php")($page, $page_size);
             case "ontology": return (include_once __DIR__ . "/views/page_ontology.php")($page, $page_size);
+            case "location": return (include_once __DIR__ . "/views/page_cc.php")($page, $page_size);
 
             default:
                 return (include_once __DIR__ . "/views/page_list.php")($page, $page_size);
