@@ -6,10 +6,9 @@ class metabolite_list {
                                    $term, 
                                    $page      = 1,                                    
                                    $page_size = 20) {
-        $data = [
-            "title" => "Metabolites Page {$page}",
-            "page"  => self::page_data($q, $term, $page, $page_size)
-        ];
+
+        $data = self::page_data($q, $term, $page, $page_size);
+        $data["title"] = "Metabolites Page {$page}";
 
         return list_nav( $data, $page);
     }
@@ -60,9 +59,9 @@ class metabolite_list {
             return [];
         } else {
             $data = $page->metabolites($model_id);
-            $data["page"] = array_map(function($meta) {
+            $data = ["page" => array_map(function($meta) {
                 return metabolite_list::link_topics($meta);
-            }, $data);
+            }, $data)];
 
             return $data;
         }
