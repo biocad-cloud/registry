@@ -2,14 +2,13 @@
 
 class metabolite_list {
 
-    public static function getList($page, $topic = null, $list=null, $loc=null, $ontology=null, $exact_mass=null, $formula=null, $page_size = 20) {
+    public static function getList($q, $page, $page_size = 20) {
         $data = ["title" => "Metabolites Page {$page}"];
-        $offset = ($page -1) * $page_size;
         $page_num = $page;
-        $page = null;
+        $page = self::page_data($q, $page, $page_size);
 
         if (!Utils::isDbNull($topic)) {
-            $page = self::page_topic(urldecode($topic),$offset,$page_size);
+            
         } else if (!Utils::isDbNull($list)) {
             $page = self::page_idset($list,$offset,$page_size);
         } else if (!Utils::isDbNull($loc)) {
@@ -24,11 +23,34 @@ class metabolite_list {
             $page = self::page_list($offset, $page_size);
         }
 
-        $data["page"] = array_map(function($meta) {
-            return metabolite_list::link_topics($meta);
-        }, $page);
-
         return list_nav( $data, $page_num);
+    }
+
+    private static function page_data($q, $page, $page_size) {
+        $page = null;
+
+        switch($q["name"]) {
+            case "topic": 
+                $page = include_once (__DIR__ . "/views/page_topic.php")($page, $page_size);
+                break;
+
+            default:
+                RFC7231Error::err500("Unknown query type!");
+                break;
+        }
+
+        $model_id = $page->q($topic);
+        
+        if (count($model_id) == 0) {
+            return [];
+        } else {
+            $data = $page->metabolites($model_id);
+            $data["page"] = array_map(function($meta) {
+                return metabolite_list::link_topics($meta);
+            }, $page);
+
+            return $data;
+        }
     }
 
     private static function page_formula($formula, $offset, $page_size) {
@@ -153,46 +175,6 @@ class metabolite_list {
     LIMIT {$offset}, {$page_size}"
             ;      
             return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
-    }
-
-    private static function page_topic($topic, $offset, $page_size) {
-        $model_id = (new Table(["cad_registry"=>"topic"]))
-            ->left_join("vocabulary")
-            ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-            ->where(["category"=>"Topic", "term"=>$topic, "type"=>in(0, ENTITY_METABOLITE)])
-            ->limit($offset,$page_size)
-            ->distinct()
-            ->project("model_id")
-            ;
-        if (count($model_id) == 0) {
-            return [];
-        } 
-        $model_id = (new Table(["cad_registry"=>"registry_resolver"]))
-            ->where(["id"=> in($model_id)])
-            ->distinct()
-            ->project("symbol_id")
-            ;
-        if (count($model_id) == 0) {
-            return [];
-        } 
-        $model_id = Strings::Join($model_id,",");
-        $list = new Table(["cad_registry"=>"metabolites"]);
-            $sql = "SELECT 
-        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
-        metabolites.id as uid,
-        name,
-        IF(formula = '', 'n/a', formula) AS formula,
-        ROUND(exact_mass, 4) AS exact_mass,
-        smiles,
-        metabolites.note
-    FROM
-        cad_registry.metabolites
-            LEFT JOIN
-        struct_data ON struct_data.metabolite_id = metabolites.id
-    WHERE metabolites.id IN ({$model_id})
-    ORDER BY metabolites.id"
-            ;      
-            return $list->exec($sql);
     }
 
     private static function page_list($offset, $page_size) {
