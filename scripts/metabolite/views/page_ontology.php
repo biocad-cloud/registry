@@ -21,7 +21,7 @@ class page_ontology extends page_view {
     public function desc($term) {
         $term = (new Table(["cad_registry"=>"ontology"]))->where(["id"=>$term])->find();
 
-        if (!Utils::isDbNull($term)) {
+        if (Utils::isDbNull($term)) {
             RFC7231Error::err404("missing ontology term inside database!");
         } else {
             $parent = (new Table(["cad_registry"=>"ontology_relation"]))
@@ -35,14 +35,14 @@ class page_ontology extends page_view {
                 return "metabolites belongs to ontology term {$term["term_id"]}({$term["term"]})";
             } else {
                 $parent = array_map(function($term) {
-                    return "<li>ontology term {$term["term_id"]}({$term["term"]})</li>";
+                    return "parent ontology term <a href='/metabolites/?ontology={$term["id"]}'>{$term["term_id"]}({$term["term"]})</a>;";
                 }, $parent);
-                $parent = Strings::Join($parent, "");
+                $parent = Strings::Join($parent, "<br />");
 
-                return "metabolites belongs to ontology term {$term["term_id"]}({$term["term"]}), parent ontology terms:<br/>
-                <ul>
-                {$parent}
-                </ul>";
+                return "metabolites belongs to ontology term {$term["term_id"]}({$term["term"]}), parent ontology terms:
+                <br/>
+                <br/>
+                {$parent}";
             }
         }
     }
