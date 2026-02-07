@@ -25,6 +25,15 @@ class page_cc extends page_view {
             ->project("metabolite_id")
             ; 
     }
+
+    public function desc($term) {
+        $loc = (new Table(["cad_registry"=>"compartment_location"]))
+            ->where(["name"=>urldecode($term)])
+            ->find()
+            ;
+
+        return $loc["note"];
+    }
 }
 
 return (function($page, $page_size) {
