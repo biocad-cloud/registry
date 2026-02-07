@@ -10,6 +10,11 @@ class metabolite_list {
         $data = self::page_data($q, $term, $page, $page_size);
         $data["title"] = "Metabolites Page {$page}";
 
+        if (count($data) == 1) {
+            # no data
+            RFC7231Error::err204("Sorry, no related data could be found.");
+        }
+
         return list_nav( $data, $page);
     }
 
