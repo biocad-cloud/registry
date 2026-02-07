@@ -79,7 +79,10 @@ class metabolite_list {
     }
 
     private static function link_topics($data) {
-        $model = (new Table(["cad_registry"=>"registry_resolver"]))->where(["type" => ENTITY_METABOLITE, "symbol_id"=>$data["uid"]])->find();
+        $model = (new Table(["cad_registry"=>"registry_resolver"]))
+            ->where(["type" => ENTITY_METABOLITE, "symbol_id"=>$data["uid"]])
+            ->find()
+            ;
 
         if (!Utils::isDbNull($model)) {
             unset($model["symbol_id"]);
