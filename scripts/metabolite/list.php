@@ -18,7 +18,8 @@ class metabolite_list {
                                      $location   = null,
                                      $ontology   = null,
                                      $exact_mass = null,
-                                     $formula    = null) {
+                                     $formula    = null, 
+                                     $search     = null) {
 
         if (!Utils::isDbNull($topic)) {
             return ["topic", $topic];
@@ -31,7 +32,9 @@ class metabolite_list {
         } else if (!Utils::isDbNull($exact_mass)) {
             return ["exact_mass", $exact_mass];      
         } else if (!Utils::isDbNull($formula)) {
-            return ["formula", $formula];     
+            return ["formula", $formula];   
+        } else if (!Utils::isDbNull($search)) {
+            return ["search", $search];        
         } else {
             return ["", null];
         }
@@ -45,6 +48,7 @@ class metabolite_list {
             case "ontology": return (include_once __DIR__ . "/views/page_ontology.php")($page, $page_size);
             case "location": return (include_once __DIR__ . "/views/page_cc.php")($page, $page_size);
             case "list": return (include_once __DIR__ . "/views/page_idset.php")($page, $page_size);
+            case "search": return (include_once __DIR__ . "/views/page_search.php")($page, $page_size);
 
             default:
                 return (include_once __DIR__ . "/views/page_list.php")($page, $page_size);
