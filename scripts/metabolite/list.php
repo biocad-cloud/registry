@@ -28,7 +28,8 @@ class metabolite_list {
 
     private static function load_page($q, $page, $page_size) {
         switch($q) {
-            case "topic": return (include_once __DIR__ . "/views/page_topic.php")($page, $page_size);
+            case "topic":   return (include_once __DIR__ . "/views/page_topic.php")($page, $page_size);
+            case "formula": return (include_once __DIR__ . "/views/page_formula.php")($page, $page_size);
 
             default:
                 return (include_once __DIR__ . "/views/page_list.php")($page, $page_size);
@@ -49,26 +50,6 @@ class metabolite_list {
 
             return $data;
         }
-    }
-
-    private static function page_formula($formula, $offset, $page_size) {
-        $sql = "SELECT 
-        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id,
-        metabolites.id as uid,
-        name,
-        IF(formula = '', 'n/a', formula) AS formula,
-        ROUND(exact_mass, 4) AS exact_mass,
-        smiles,
-        metabolites.note
-    FROM
-        cad_registry.metabolites
-            LEFT JOIN
-        struct_data ON struct_data.metabolite_id = metabolites.id
-    WHERE formula = '{$formula}'
-    ORDER BY metabolites.id
-    LIMIT {$offset}, {$page_size}"
-            ;      
-            return (new Table(["cad_registry"=>"metabolites"]))->exec($sql);
     }
 
     private static function page_exactmass($mass, $offset, $page_size) {
