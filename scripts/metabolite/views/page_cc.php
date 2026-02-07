@@ -14,11 +14,15 @@ class page_cc extends page_view {
             ->find()
             ;
 
+        if (Utils::isDbNull($loc)) {
+            RFC7231Error::err404("Could not found the sub-cellular location '{$term}'!");
+        }
+
         return (new Table(["cad_registry"=>"compartment_enrich"]))
             ->where(["location_id"=>$loc["id"]])
             ->limit($this->offset,$this->page_size)
             ->distinct()
-            ->project("`compartment_enrich`.`metabolite_id`")
+            ->project("metabolite_id")
             ; 
     }
 }

@@ -10,7 +10,7 @@ class metabolite_list {
             "title" => "Metabolites Page {$page}",
             "page"  => self::page_data($q, $term, $page, $page_size)
         ];
-        
+
         return list_nav( $data, $page);
     }
 
