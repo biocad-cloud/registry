@@ -21,6 +21,29 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses api
+    */
+    public function metabolites($page       = 1, 
+                                $topic      = null, 
+                                $list       = null, 
+                                $location   = null,
+                                $ontology   = null,
+                                $exact_mass = null,
+                                $formula    = null) {
+
+        include APP_PATH . "/scripts/metabolite/list.php";
+
+        $q = metabolite_list::makeQuery($topic, $list, 
+            $location, $ontology, $exact_mass,
+            $formula
+        );
+        $data = metabolite_list::getList($q[0], $q[1], $page);
+
+        controller::success($data);
+    }
+
+    /**
      * @uses file
      * @access *
     */
