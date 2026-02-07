@@ -6,12 +6,12 @@ class metabolite_list {
                                    $term, 
                                    $page      = 1,                                    
                                    $page_size = 20) {
-
-        $data = ["title" => "Metabolites Page {$page}"];
-        $page_num = $page;
-        $page = self::page_data($q, $term, $page, $page_size);
-
-        return list_nav( $data, $page_num);
+        $data = [
+            "title" => "Metabolites Page {$page}",
+            "page"  => self::page_data($q, $term, $page, $page_size)
+        ];
+        
+        return list_nav( $data, $page);
     }
 
     public static function makeQuery($topic      = null, 
