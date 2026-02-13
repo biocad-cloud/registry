@@ -40,6 +40,20 @@
               View full list <i class="bi bi-arrow-up-right"></i></a></strong>
         </p>
 
+        <h3>Proteins</h3>
+
+        <p>
+          <foreach @protein>
+            <a href='/protein/fasta/?id=@protein["id"]'
+              title='@protein["source_id"]'>@protein["name"]</a>;
+          </foreach>
+
+          <br />
+          <strong>
+            <a href="/proteins/?cc={$name}" class="explore-link">
+              View full list <i class="bi bi-arrow-up-right"></i></a></strong>
+        </p>
+
       </div>
 
     </section>
