@@ -10,9 +10,13 @@ class resolver {
         $links = [];
 
         foreach($dblinks as $xref) {
-            if ($xref["db_name"] == "EC Number") {
-                $id = $xref["db_xref"];
-                $xref["db_xref"] = "<a href='/proteins/?ec={$id}'>{$id}</a>";
+            $db = $xref["db_name"];
+            $id = $xref["db_xref"];
+
+            if ($db == "EC Number") {
+                $xref["db_xref"] = "<a href='/enzyme?ec={$id}'>{$id}</a>";
+            } else if ($db == "KEGG") {
+                $xref["db_xref"] = "<a href='https://www.kegg.jp/entry/{$id}'>{$id}</a>";
             }
 
             array_push($links, $xref);

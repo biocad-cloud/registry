@@ -75,6 +75,15 @@ class App {
      * @access *
      * @uses view
     */
+    public function enzyme($ec) {
+        include_once APP_PATH . "/scripts/enzyme/page.php";
+        View::Display(enzyme_data::data($ec));
+    }
+
+    /**
+     * @access *
+     * @uses view
+    */
     public function protein_fasta($id) {
         include APP_PATH . "/scripts/protein/fasta.php";
         View::Display(prot_fasta::seqinfo($id));
