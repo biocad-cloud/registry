@@ -26,7 +26,32 @@
 
       <div class="container">
 
-
+        <table class="table">
+          <thead>
+            <tr>
+              <th>enzyme</th>
+              <th>lambda</th>
+              <th>metabolic reaction</th>
+              <th>buffer</th>
+              <th>ph</th>
+              <th>temperature</th>
+              <th>note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @law>
+              <tr>
+                <td><span title='@law["ec_number"]'>@law["enzyme_id"] [@law["enzyme_name"]]</span></td>
+                <td>@law["lambda"]</td>
+                <td><a href='/reaction/?id=@law["metabolic_node"]'>@law["reaction_name"]</a></td>
+                <td>@law["buffer"]</td>
+                <td>@law["ph"]</td>
+                <td>@law["temperature"]</td>
+                <td>@law["note"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
 
       </div>
 
