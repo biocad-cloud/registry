@@ -16,6 +16,8 @@ class App {
 
     /**
      * Symbol resolver
+     * 
+     * @access *
     */
     public function s($ref) {
         include APP_PATH . "/scripts/resolver.php";
