@@ -23,6 +23,7 @@ class search {
                 break;
 
             default:
+                breakpoint([$refer,$q]);
                 return self::global_search($q);
         }
     }
