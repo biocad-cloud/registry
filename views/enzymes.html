@@ -20,13 +20,76 @@
 
       <!-- Section Title -->
       <div class="container section-title">
-        <h2>Frequently Asked Questions</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <h2>EC Number Browser</h2>
+        <p>An EC number is a unique numerical identifier (such as EC 1.1.1.1) assigned to an enzyme based on the
+          specific chemical reaction it catalyzes, rather than its name.</p>
       </div><!-- End Section Title -->
 
       <div class="container">
 
+        <div class="bg-atmosphere"></div>
+        <div class="bg-grid"></div>
 
+        <div class="main-container">
+          <header class="page-header">
+            <h1 class="page-title">Enzyme Commission Number Browser</h1>
+            <p class="page-subtitle">Hierarchical classification of metabolic enzymes</p>
+          </header>
+
+          <div class="search-container">
+            <div class="search-box">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="search-input" id="searchInput"
+                placeholder="Search by EC number (e.g. 1.1.1.1)...">
+            </div>
+          </div>
+
+          <div class="stats-bar">
+            <div class="stat-item">
+              <div class="stat-value" id="totalEnzymes">--</div>
+              <div class="stat-label">Total Enzymes</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="loadedNodes">0</div>
+              <div class="stat-label">Nodes Loaded</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">7</div>
+              <div class="stat-label">Main Classes</div>
+            </div>
+          </div>
+
+          <div class="tree-container">
+            <div class="tree-header">
+              <span class="tree-title">EC Classification Tree</span>
+              <div class="tree-actions">
+                <button class="btn-tree-action" id="expandAll">Expand All</button>
+                <button class="btn-tree-action" id="collapseAll">Collapse All</button>
+              </div>
+            </div>
+            <ul class="tree-root" id="treeRoot"></ul>
+          </div>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="detail-overlay" id="detailOverlay"></div>
+        <aside class="detail-panel" id="detailPanel">
+          <div class="detail-header">
+            <button class="detail-close" id="detailClose">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="detail-ec" id="detailEc"></div>
+            <div class="detail-name" id="detailName"></div>
+          </div>
+          <div class="detail-body" id="detailBody"></div>
+        </aside>
 
       </div>
 

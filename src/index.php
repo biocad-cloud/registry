@@ -81,6 +81,16 @@ class App {
     }
 
     /**
+     * Metabolic Enzyme Database
+     * 
+     * @access *
+     * @uses view
+    */
+    public function enzymes() {
+        View::Display();
+    }
+
+    /**
      * @access *
      * @uses view
     */
