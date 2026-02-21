@@ -73,7 +73,9 @@ const elements = {
 // API Functions
 // ============================================
 async function fetchEnzymeData(ecPath) {
-  const url = `${API_BASE_URL}?q=${ecPath.toString().replace(/^\.+|\.+$/g, '')}`;
+  const url = `${API_BASE_URL}?q=${ecPath
+    .toString()
+    .replace(/^\.+|\.+$/g, "")}`;
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -83,6 +85,34 @@ async function fetchEnzymeData(ecPath) {
     console.error("API Error:", error);
     return null;
   }
+}
+
+// ============================================
+// EC Number Label Generator
+// ============================================
+function generateEcPlaceholder(level, parentPath, nodeId) {
+  /**
+   * 根据节点层级和路径生成EC编号占位符
+   * level === 'class'       → nodeId.-.-.-
+   * level === 'subclass'    → parentPath.nodeId.-.-
+   * level === 'subcategory' → parentPath.nodeId.-
+   */
+  const parts = [];
+
+  if (level === "class") {
+    // 第一级: 1.-.-.-
+    parts.push(nodeId, "-", "-", "-");
+  } else if (level === "subclass") {
+    // 第二级: 1.1.-.-
+    // parentPath 此时是 class id (如 "1")
+    parts.push(parentPath, nodeId, "-", "-");
+  } else if (level === "subcategory") {
+    // 第三级: 1.1.1.-
+    // parentPath 此时是 "class.subclass" (如 "1.1")
+    parts.push(parentPath, nodeId, "-");
+  }
+
+  return parts.join(".");
 }
 
 // ============================================
@@ -163,7 +193,18 @@ function createTreeNode(nodeData, level, parentPath) {
   } else {
     const title = document.createElement("div");
     title.className = "node-title";
-    title.textContent = nodeData.name || `Subclass ${nodeData.id}`;
+
+    if (nodeData.name) {
+      title.textContent = nodeData.name;
+    } else {
+      const ecPlaceholder = generateEcPlaceholder(
+        level,
+        parentPath,
+        nodeData.id
+      );
+      title.innerHTML = `<span class="node-ec-placeholder">${ecPlaceholder}</span>`;
+    }
+
     label.appendChild(title);
 
     if (nodeData.description) {
