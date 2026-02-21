@@ -37,7 +37,7 @@ class motif_data {
         return $motif;
     }
 
-    private static function svg_str($dataUri) {
+    public static function svg_str($dataUri) {
         // 1. 去除头部信息 (data:image/svg+xml;base64,)
         // 使用逗号作为分隔符，取第二部分 (索引为1)
         $parts = explode(',',$dataUri);

@@ -150,7 +150,17 @@ class App {
     */
     public function motifs($page=1,$q=null,$page_size=10) {
         include APP_PATH . "/scripts/motifs/list.php";
-        View::Display(motif_list::get_list($page, $q, $page_size));
+
+        $data = motif_list::get_list($page, $q, $page_size);
+
+        if (Utils::isDbNull($q)) {
+            View::Display($data);
+        } else {
+            $data["name"] = "Search Result";
+            $data["note"] = "Motif search resul of query '{$q}'.";
+
+            View::Show(APP_VIEWS . "/motif_family.html", $data);
+        }        
     }
 
     /**
