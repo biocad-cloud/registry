@@ -339,41 +339,42 @@ async function loadChildren(nodeKey, level, container) {
 // Enzyme Detail Panel
 // ============================================
 function showEnzymeDetail(enzyme) {
-  state.currentDetail = enzyme;
+  // state.currentDetail = enzyme;
 
-  elements.detailEc.textContent = enzyme.ec_number;
-  elements.detailName.textContent = enzyme.recommended_name || "Unknown Enzyme";
+  // elements.detailEc.textContent = enzyme.ec_number;
+  // elements.detailName.textContent = enzyme.recommended_name || "Unknown Enzyme";
 
-  let bodyHTML = "";
+  // let bodyHTML = "";
 
-  if (enzyme.systematic_name) {
-    bodyHTML += `
-            <div class="detail-section">
-                <div class="detail-label">Systematic Name</div>
-                <div class="detail-value">${enzyme.systematic_name}</div>
-            </div>
-        `;
-  }
+  // if (enzyme.systematic_name) {
+  //   bodyHTML += `
+  //           <div class="detail-section">
+  //               <div class="detail-label">Systematic Name</div>
+  //               <div class="detail-value">${enzyme.systematic_name}</div>
+  //           </div>
+  //       `;
+  // }
 
-  if (enzyme.note) {
-    bodyHTML += `
-            <div class="detail-section">
-                <div class="detail-label">Notes</div>
-                <div class="detail-value">${enzyme.note}</div>
-            </div>
-        `;
-  }
+  // if (enzyme.note) {
+  //   bodyHTML += `
+  //           <div class="detail-section">
+  //               <div class="detail-label">Notes</div>
+  //               <div class="detail-value">${enzyme.note}</div>
+  //           </div>
+  //       `;
+  // }
 
-  bodyHTML += `
-        <div class="detail-section">
-            <div class="detail-label">Database ID</div>
-            <div class="detail-value">${enzyme.id}</div>
-        </div>
-    `;
+  // bodyHTML += `
+  //       <div class="detail-section">
+  //           <div class="detail-label">Database ID</div>
+  //           <div class="detail-value">${enzyme.id}</div>
+  //       </div>
+  //   `;
 
-  elements.detailBody.innerHTML = bodyHTML;
-  elements.detailPanel.classList.add("open");
-  elements.detailOverlay.classList.add("visible");
+  // elements.detailBody.innerHTML = bodyHTML;
+  // elements.detailPanel.classList.add("open");
+  // elements.detailOverlay.classList.add("visible");
+  window.location.href = `/enzyme/?id=${enzyme.id}`;
 }
 
 function closeDetailPanel() {
