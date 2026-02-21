@@ -511,6 +511,3 @@ document.addEventListener("keydown", (e) => {
 // Initialize
 // ============================================
 initializeTree();
-
-// Set initial stats
-elements.totalEnzymes.textContent = "~7,000+";

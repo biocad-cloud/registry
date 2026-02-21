@@ -87,7 +87,9 @@ class App {
      * @uses view
     */
     public function enzymes() {
-        View::Display();
+        View::Display([
+            "counts" => (new Table(["cad_registry"=>"enzyme"]))->count()
+        ]);
     }
 
     /**
