@@ -66,6 +66,17 @@ class App {
     public function enzyme_data($q) {
         include_once APP_PATH . "/scripts/enzyme/list.php";
 
+        if (!is_array($q)) {
+            $q = Strings::Split($q, "."); 
+        }
+
+        # enzyme_list::expand_mainclass
+        # /registry/enzyme_data/?q=1     
+        # enzyme_list::expand_subclass
+        # /registry/enzyme_data/?q=1.1
+        # enzyme_list::expand_subcategory
+        # /registry/enzyme_data/?q=1.1.1
+
         $class_id    = Utils::ReadValue($q, 0); # first digit in ec number    
         $subclass_id = Utils::ReadValue($q, 1); # second digit in ec number  
         $category_id = Utils::ReadValue($q, 2); # third digit in ec number  

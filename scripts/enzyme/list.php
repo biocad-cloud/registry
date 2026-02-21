@@ -25,6 +25,9 @@ class enzyme_list {
             ;
     }
 
+    /**
+     * @return array returns a table of enzyme query result via enzyme ec number prefix a.b.c
+    */
     public static function expand_subcategory($class_id, $subclass_id, $category_id) {
         return (new Table(["cad_registry"=>"enzyme"]))
             ->where([
