@@ -75,7 +75,7 @@ class App {
      * @access *
      * @uses view
     */
-    public function enzyme($ec) {
+    public function enzyme($ec = null, $id = null) {
         include_once APP_PATH . "/scripts/enzyme/page.php";
         View::Display(enzyme_data::data($ec));
     }
