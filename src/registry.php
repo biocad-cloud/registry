@@ -53,4 +53,29 @@ class App {
 
         echo $logo;
     }
+
+    /**
+     * rest api for load enzyme table
+     * 
+     * @param integer[] $q the ec number query
+     * 
+     * @uses api
+     * @access *
+     * @method get
+    */
+    public function enzyme_data($q) {
+        include_once APP_PATH . "/scripts/enzyme/list.php";
+
+        $class_id    = Utils::ReadValue($q, 0); # first digit in ec number    
+        $subclass_id = Utils::ReadValue($q, 1); # second digit in ec number  
+        $category_id = Utils::ReadValue($q, 2); # third digit in ec number  
+
+        if (Utils::isDbNull($subclass_id )) {
+            controller::success(enzyme_list::expand_mainclass($class_id));
+        } else if (Utils::isDbNull($category_id)) {
+            controller::success(enzyme_list::expand_subclass($class_id, $subclass_id));
+        } else {
+            controller::success(enzyme_list::expand_subcategory($class_id, $subclass_id, $category_id));
+        }
+    }
 }

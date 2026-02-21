@@ -1,0 +1,42 @@
+<?php
+
+class enzyme_list {
+
+    /**
+     * @param integer $class_id the first digit inside the ec number
+     * @return integer[] an array of sub_class id under the main enzyme class
+    */
+    public static function expand_mainclass($class_id) {
+        return (new Table(["cad_registry"=>"enzyme"]))
+            ->where(["enzyme_class" =>$class_id])
+            ->project("sub_class")
+            ;
+    }
+
+    /**
+     * @param integer $class_id the first digit inside the ec number
+     * @param integer $subclass_id the second digit inside the ec number
+     * @return integer[] an array of sub_category id under the main enzyme class.sub_class folder
+    */
+    public static function expand_subclass($class_id, $subclass_id) {
+        return (new Table(["cad_registry"=>"enzyme"]))
+            ->where(["enzyme_class" =>$class_id, "sub_class"=>$subclass_id])
+            ->project("sub_category")
+            ;
+    }
+
+    public static function expand_subcategory($class_id, $subclass_id, $category_id) {
+        return (new Table(["cad_registry"=>"enzyme"]))
+            ->where([
+                "enzyme_class" =>$class_id, 
+                "sub_class"=>$subclass_id,
+                "sub_category" => $category_id
+            ])->select([
+                "id",
+                "CONCAT('{$class_id}.{$subclass_id}.{$category_id}', '.', enzyme_number) AS ec_number",
+                "recommended_name",
+                "systematic_name",
+                "note"
+            ]);
+    }
+}
