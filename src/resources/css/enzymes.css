@@ -1,14 +1,9 @@
 :root {
-  --bg-primary: #0a0f1a;
-  --bg-secondary: #111827;
-  --bg-card: #1a2234;
-  --bg-hover: #243049;
   --accent: #10b981;
   --accent-dim: rgba(16, 185, 129, 0.15);
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --border-color: #2d3a4f;
   --glow: rgba(16, 185, 129, 0.4);
 }
 
