@@ -2,17 +2,28 @@
 
 class motif_list {
 
-    public static function get_list($page,$page_size=15) {
+    public static function get_list($page,$q=null, $page_size=15) {
         $offset = ($page-1) * $page_size;
-        $list = (new Table(["cad_registry"=>"motif"]))
-            ->group_by("family")
-            ->order_by("family")
-            ->limit($offset,$page_size)
-            ->select(["family","count(*) as size"])
-            ;
+        $list = null;
 
-        for($i=0;$i < count($list);$i++) {
-            $list[$i]["family_id"] = urlencode($list[$i]["family"]);
+        if (Utils::isDbNull($q)) {
+            $list = (new Table(["cad_registry"=>"motif"]))
+                ->group_by("family")
+                ->order_by("family")
+                ->limit($offset,$page_size)
+                ->select(["family","count(*) as size"])
+                ;
+
+            for($i=0;$i < count($list);$i++) {
+                $list[$i]["family_id"] = urlencode($list[$i]["family"]);
+            }
+        } else {
+            $q = Table::make_fulltext_strips($q);
+            $list = (new Table(["cad_registry"=>"motif"]))
+                ->where("MATCH (name , note) AGAINST ('{$q}' IN BOOLEAN MODE)")
+                ->limit($offset,$page_size)
+                ->select()
+                ;
         }
 
         $page_num = $page;

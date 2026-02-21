@@ -148,9 +148,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function motifs($page=1,$page_size=10) {
+    public function motifs($page=1,$q=null,$page_size=10) {
         include APP_PATH . "/scripts/motifs/list.php";
-        View::Display(motif_list::get_list($page, $page_size));
+        View::Display(motif_list::get_list($page, $q, $page_size));
     }
 
     /**
