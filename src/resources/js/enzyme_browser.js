@@ -73,7 +73,7 @@ const elements = {
 // API Functions
 // ============================================
 async function fetchEnzymeData(ecPath) {
-  const url = `${API_BASE_URL}?q=${ecPath}`;
+  const url = `${API_BASE_URL}?q=${ecPath.toString().replace(/^\.+|\.+$/g, '')}`;
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
