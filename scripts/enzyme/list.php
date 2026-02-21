@@ -9,6 +9,7 @@ class enzyme_list {
     public static function expand_mainclass($class_id) {
         return (new Table(["cad_registry"=>"enzyme"]))
             ->where(["enzyme_class" =>$class_id])
+            ->distinct()
             ->project("sub_class")
             ;
     }
@@ -21,6 +22,7 @@ class enzyme_list {
     public static function expand_subclass($class_id, $subclass_id) {
         return (new Table(["cad_registry"=>"enzyme"]))
             ->where(["enzyme_class" =>$class_id, "sub_class"=>$subclass_id])
+            ->distinct()
             ->project("sub_category")
             ;
     }
