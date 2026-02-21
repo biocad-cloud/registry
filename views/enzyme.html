@@ -32,22 +32,20 @@
               <th>enzyme</th>
               <th>lambda</th>
               <th>metabolic reaction</th>
-              <th>buffer</th>
-              <th>ph</th>
-              <th>temperature</th>
-              <th>note</th>
+              <th>experiment</th>
+
             </tr>
           </thead>
           <tbody>
             <foreach @law>
               <tr>
-                <td><span title='@law["ec_number"]'>@law["enzyme_id"] [@law["enzyme_name"]]</span></td>
-                <td>@law["lambda"]</td>
+                <td><span title='@law["ec_number"]'>@law["enzyme_id"] [@law["enzyme_name"]]</span><br /><br />
+                  @law["note"]</td>
+                <td><code>@law["lambda"]</code></td>
                 <td><a href='/reaction/?id=@law["metabolic_node"]'>@law["reaction_name"]</a></td>
-                <td>@law["buffer"]</td>
-                <td>@law["ph"]</td>
-                <td>@law["temperature"]</td>
-                <td>@law["note"]</td>
+                <td>buffer: @law["buffer"]<br />
+                  PH: @law["ph"]<br />
+                  Temperature: @law["temperature"]</td>
               </tr>
             </foreach>
           </tbody>
