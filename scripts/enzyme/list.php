@@ -52,7 +52,7 @@ class enzyme_list {
         $data = (new Table(["cad_registry"=>"enzyme"]))
             ->where($q)
             ->limit($offset, $page_size)
-            ->select()
+            ->select(["CONCAT(enzyme_class, '.', sub_class, '.', sub_category, '.', enzyme_number) AS `ec_number`","`enzyme`.*"])
             ;
         
         return list_nav(["enzyme"=>$data] , $page);
