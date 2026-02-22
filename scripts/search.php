@@ -27,6 +27,9 @@ class search {
             case "motifs":
             case "motif":
                 Redirect("/motifs/?q={$encode_q}");
+            case "enzymes":
+            case "enzyme":
+                Redirect("/enzymes/?q={$encode_q}");
 
             default:
                 breakpoint([$refer,$q]);
