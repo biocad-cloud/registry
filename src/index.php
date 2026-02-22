@@ -88,13 +88,17 @@ class App {
      * @access *
      * @uses view
     */
-    public function enzymes($q=null) {
+    public function enzymes($q=null, $page=1) {
         if (Utils::isDbNull($q)) {
             View::Display([
                 "counts" => (new Table(["cad_registry"=>"enzyme"]))->count()
             ]);
         } else {
-            View::Show(APP_VIEWS . "/enzyme_search.html");
+            include APP_PATH . "/scripts/enzyme/list.php";
+
+            $data = enzyme_list::search($q, $page);
+
+            View::Show(APP_VIEWS . "/enzyme_search.html", $data);
         }
     }
 

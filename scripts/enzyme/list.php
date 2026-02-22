@@ -44,4 +44,17 @@ class enzyme_list {
                 "note"
             ]);
     }
+
+    public static function search($q, $page =1, $page_size = 20) {
+        $offset = ($page-1) * $page_size;
+        $q = Table::make_fulltext_strips($q);
+        $q = "MATCH (recommended_name , systematic_name , note) AGAINST ('{$q}' IN BOOLEAN MODE);";
+        $data = (new Table(["cad_registry"=>"enzyme"]))
+            ->where($q)
+            ->limit($offset, $page_size)
+            ->select()
+            ;
+        
+        return list_nav(["enzyme"=>$data] , $page);
+    }
 }
