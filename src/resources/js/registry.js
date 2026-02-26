@@ -47,7 +47,7 @@ var pages;
                 if (msg.code == 0) {
                     var data_1 = $ts(msg.info).Select(function (a) {
                         return {
-                            "Organism Source": "<a href=\"".concat(a.taxid, "\">").concat(a.taxname, "</a>"),
+                            "Organism Source": "<a href=\"/taxonomy/?id=".concat(a.taxid, "\">").concat(a.taxname, "</a>"),
                             "Tissue": a.tissue,
                             "Adducts": a.adducts,
                             "Size": a.size

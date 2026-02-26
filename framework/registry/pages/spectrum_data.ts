@@ -17,7 +17,7 @@ namespace pages {
                 if (msg.code == 0) {
                     let data = $ts(<lcms_exp_result[]>msg.info).Select(a => {
                         return {
-                            "Organism Source": `<a href="${a.taxid}">${a.taxname}</a>`,
+                            "Organism Source": `<a href="/taxonomy/?id=${a.taxid}">${a.taxname}</a>`,
                             "Tissue": a.tissue,
                             "Adducts": a.adducts,
                             "Size": a.size
