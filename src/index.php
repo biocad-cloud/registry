@@ -220,7 +220,8 @@ class App {
      * @uses view
     */
     public function spectrum($metab) {
-        View::Display();
+        include APP_PATH . "/scripts/spectrum/page.php";
+        View::Display(spectrum_data::get_data(Regex::Match($metab,"\d+")));
     }
 
     /**
