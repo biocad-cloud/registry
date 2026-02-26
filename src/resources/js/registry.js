@@ -39,6 +39,24 @@ var pages;
             configurable: true
         });
         spectrum_data.prototype.init = function () {
+            this.load_exp();
+        };
+        spectrum_data.prototype.load_exp = function () {
+            var url = "/registry/experiment_source/";
+            $ts.get(url, function (msg) {
+                if (msg.code == 0) {
+                    var data_1 = $ts(msg.info).Select(function (a) {
+                        return {
+                            "Organism Source": "<a href=\"".concat(a.taxid, "\">").concat(a.taxname, "</a>"),
+                            "Tissue": a.tissue,
+                            "Adducts": a.adducts,
+                            "Size": a.size
+                        };
+                    });
+                    $ts("#exp_table").clear();
+                    $ts.appendTable(data_1, "#exp_table", null, { class: "table" });
+                }
+            });
         };
         return spectrum_data;
     }(Bootstrap));
