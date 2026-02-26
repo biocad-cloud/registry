@@ -89,4 +89,8 @@ class App {
             controller::success(enzyme_list::expand_subcategory($class_id, $subclass_id, $category_id));
         }
     }
+
+    public function spectrum() {
+        
+    }
 }
