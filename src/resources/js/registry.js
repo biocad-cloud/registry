@@ -86,7 +86,7 @@ var pages;
                     var data_2 = $from(msg.info).Select(function (a) {
                         return {
                             "ID": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.id, "</a>"),
-                            "Name": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.name, "</a>"),
+                            "Name": "<a href=\"/spectrum/?metab=".concat(a.id, "\">").concat(a.name, "</a>"),
                             "Formula": a.formula,
                             "Exact Mass": a.exact_mass,
                             "Hits": a.size

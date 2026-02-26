@@ -16,7 +16,7 @@ namespace pages {
                     let data = $from(<metabolite_sources[]>msg.info).Select(a => {
                         return {
                             "ID": `<a href="/metabolite/${a.id}">${a.id}</a>`,
-                            "Name": `<a href="/metabolite/${a.id}">${a.name}</a>`,
+                            "Name": `<a href="/spectrum/?metab=${a.id}">${a.name}</a>`,
                             "Formula": a.formula,
                             "Exact Mass": a.exact_mass,
                             "Hits": a.size

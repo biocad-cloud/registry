@@ -4,7 +4,7 @@ class metabolite {
 
     public static function organism_source($taxid, $top = 150) {
         $sql = "SELECT 
-        metabolites.id, name, formula, exact_mass, size
+        CONCAT('BioCAD', LPAD(metabolites.id, 11, '0')) AS id, name, formula, ROUND(exact_mass, 4) AS exact_mass, size
     FROM
         (SELECT 
             db_xref, COUNT(*) AS size
