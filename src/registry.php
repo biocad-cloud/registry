@@ -94,10 +94,30 @@ class App {
         
     }
 
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
     public function experiment_source() {
         $referer = $_SERVER['HTTP_REFERER'];
-        $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer );
+        $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
+        $referer = $referer["query"]["metab"];
+        $referer = Regex::Match($referer, "\d+");
 
-        breakpoint($referer);
+        $exp = (new Table(["mzvault"=>"annotation"]))
+            ->left_join("spectrum")
+            ->on(["spectrum"=>"annotation_id","annotation"=>"id"])
+            ->left_join("sampleinfo")
+            ->on(["spectrum"=>"sample_id","sampleinfo"=>"id"])
+            ->where([
+                "db_xref"=>$referer,
+                "CHAR_LENGTH(splash_id)"=>gt("0")
+            ])->group_by(["adducts", "taxname" , "taxid" , "tissue"])
+            ->order_by("size", true)
+            ->select(["taxname", "taxid", "tissue", "adducts", "COUNT(*) AS size"])
+            ;
+
+        controller::success($exp);
     }
 }
