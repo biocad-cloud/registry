@@ -93,4 +93,11 @@ class App {
     public function spectrum() {
         
     }
+
+    public function experiment_source() {
+        $referer = $_SERVER['HTTP_REFERER'];
+        $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer );
+
+        breakpoint($referer);
+    }
 }

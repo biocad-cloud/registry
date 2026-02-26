@@ -216,6 +216,14 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+    */
+    public function spectrum($metab) {
+        View::Display();
+    }
+
+    /**
      * Data Search
      * 
      * @access *
