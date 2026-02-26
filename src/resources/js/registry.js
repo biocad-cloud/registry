@@ -18,6 +18,7 @@ var app;
 (function (app) {
     function run() {
         Router.AddAppHandler(new pages.spectrum_data());
+        Router.AddAppHandler(new pages.taxonomy_data());
         Router.RunApp();
     }
     app.run = run;
@@ -61,5 +62,43 @@ var pages;
         return spectrum_data;
     }(Bootstrap));
     pages.spectrum_data = spectrum_data;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var taxonomy_data = /** @class */ (function (_super) {
+        __extends(taxonomy_data, _super);
+        function taxonomy_data() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(taxonomy_data.prototype, "appName", {
+            get: function () {
+                return "taxonomy_data";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        taxonomy_data.prototype.taxid = function () {
+            return $ts.location("id");
+        };
+        taxonomy_data.prototype.init = function () {
+            $ts.get("/registry/organism_source/?taxid=".concat(this.taxid()), function (msg) {
+                if (msg.code == 0) {
+                    var data_2 = $from(msg.info).Select(function (a) {
+                        return {
+                            "ID": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.id, "</a>"),
+                            "Name": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.name, "</a>"),
+                            "Formula": a.formula,
+                            "Exact Mass": a.exact_mass,
+                            "Hits": a.size
+                        };
+                    });
+                    $ts("#metab-source").clear();
+                    $ts.appendTable(data_2, "#metab-source", null, { class: "table" });
+                }
+            });
+        };
+        return taxonomy_data;
+    }(Bootstrap));
+    pages.taxonomy_data = taxonomy_data;
 })(pages || (pages = {}));
 //# sourceMappingURL=registry.js.map

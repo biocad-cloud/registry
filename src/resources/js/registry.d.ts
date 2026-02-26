@@ -15,3 +15,17 @@ declare namespace pages {
         size: number;
     }
 }
+declare namespace pages {
+    class taxonomy_data extends Bootstrap {
+        get appName(): string;
+        taxid(): string;
+        protected init(): void;
+    }
+    interface metabolite_sources {
+        id: number;
+        name: string;
+        formula: string;
+        exact_mass: number;
+        size: number;
+    }
+}

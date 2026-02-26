@@ -120,4 +120,15 @@ class App {
 
         controller::success($exp);
     }
+
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
+    public function organism_source($taxid) {
+        include APP_PATH . "/scripts/taxonomy/metabolites.php";
+        $data = metabolite::organism_source($taxid);
+        controller::success($data);
+    }
 }
