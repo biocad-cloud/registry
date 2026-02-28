@@ -136,21 +136,21 @@ var viewer;
                         lineStyle: { color: '#333' }
                     }
                 },
-                // 数据区域缩放组件，方便查看局部细节
-                dataZoom: [
-                    {
-                        type: 'inside', // 内置型，支持鼠标滚轮缩放
-                        xAxisIndex: 0,
-                        filterMode: 'none'
-                    },
-                    {
-                        type: 'slider', // 滑动条型
-                        xAxisIndex: 0,
-                        bottom: 10,
-                        height: 20,
-                        filterMode: 'none'
-                    }
-                ],
+                // // 数据区域缩放组件，方便查看局部细节
+                // dataZoom: [
+                //     {
+                //         type: 'inside', // 内置型，支持鼠标滚轮缩放
+                //         xAxisIndex: 0,
+                //         filterMode: 'none'
+                //     },
+                //     {
+                //         type: 'slider', // 滑动条型
+                //         xAxisIndex: 0,
+                //         bottom: 10,
+                //         height: 20,
+                //         filterMode: 'none'
+                //     }
+                // ],
                 series: [
                     {
                         type: 'bar',
