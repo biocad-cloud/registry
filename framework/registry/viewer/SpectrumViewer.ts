@@ -135,7 +135,7 @@ namespace viewer {
                     {
                         type: 'bar',
                         data: chartData,
-                        barWidth: 1.5, // 极细的柱宽，模拟质谱棒状图
+                        barWidth: 2, // 极细的柱宽，模拟质谱棒状图
                         itemStyle: {
                             color: '#000', // 经典质谱图通常为黑色线条
                         },
