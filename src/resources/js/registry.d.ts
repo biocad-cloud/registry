@@ -11,7 +11,7 @@ declare namespace pages {
     interface spectrum_data {
         splash_id: string;
         name: string;
-        adduct: string;
+        adducts: string;
         precursor: number;
         mz: number[];
         intensity: number[];

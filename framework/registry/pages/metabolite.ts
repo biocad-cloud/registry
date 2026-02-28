@@ -18,7 +18,7 @@ namespace pages {
                             Adduct: entry.adducts,
                             "m/z": entry.mz,
                             "Num Peaks": entry.npeaks,
-                            "Splash_id": `<a href="#" onclick="javascript:void(0);" class="splash_id" data="splash_id">${entry.splash_id}</a>`
+                            "Splash_id": `<a href="#" onclick="javascript:void(0);" class="splash_id" data="${entry.splash_id}">${entry.splash_id}</a>`
                         };
                     });
 
@@ -43,7 +43,7 @@ namespace pages {
     export interface spectrum_data {
         splash_id: string;
         name: string;
-        adduct: string;
+        adducts: string;
         precursor: number;
 
         mz: number[];

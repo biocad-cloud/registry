@@ -52,7 +52,7 @@ var pages;
                             Adduct: entry.adducts,
                             "m/z": entry.mz,
                             "Num Peaks": entry.npeaks,
-                            "Splash_id": "<a href=\"#\" onclick=\"javascript:void(0);\" class=\"splash_id\" data=\"splash_id\">".concat(entry.splash_id, "</a>")
+                            "Splash_id": "<a href=\"#\" onclick=\"javascript:void(0);\" class=\"splash_id\" data=\"".concat(entry.splash_id, "\">").concat(entry.splash_id, "</a>")
                         };
                     });
                     $ts("#spectrum_list").clear();
