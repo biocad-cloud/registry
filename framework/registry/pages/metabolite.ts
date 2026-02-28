@@ -1,4 +1,8 @@
+/// <reference path="../viewer/SpectrumViewer.ts"/>
+
 namespace pages {
+
+    type SpectrumViewer = viewer.SpectrumViewer;
 
     export class metabolite_data extends Bootstrap {
 
@@ -33,8 +37,10 @@ namespace pages {
             $ts.get(`/registry/spectrum/?splash=${splash_id}`, data => {
                 if (data.code == 0) {
                     let spectrum: spectrum_data = <spectrum_data>data.info;
+                    let display: SpectrumViewer = new viewer.SpectrumViewer();
 
                     // display the spectrum on page
+                    display.renderSpectrum(spectrum);
                 }
             });
         }
@@ -46,8 +52,8 @@ namespace pages {
         adducts: string;
         precursor: number;
 
-        mz: number[];
-        intensity: number[];
+        mz: string[];
+        intensity: string[];
         smiles: string[];
     }
 
