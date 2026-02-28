@@ -98,7 +98,24 @@ class App {
     public function spectrum_list() {
         $referer = $_SERVER['HTTP_REFERER'];
         $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
-        breakpoint($referer);
+
+        if (Utils::isDbNull($referer)) {
+            RFC7231Error::err405("Unknown data entry point to query!");
+        } else {
+            $referer = $referer["path"];
+            $referer = Strings::Split($referer, "/");
+            $referer = $referer[2];
+        }
+
+        $id = Regex::Match($referer, "\d+");
+        $list = (new Table(["mzvault"=>"annotation"]))
+            ->left_join("reference_spectrum")
+            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
+            ->where(["db_xref"=>$id])
+            ->select(["adducts", "ROUND(mz, 4) AS mz", "splash_id", "npeaks"])
+            ;
+        
+        controller::success($list);
     }
 
     /**
@@ -118,8 +135,13 @@ class App {
     public function experiment_source() {
         $referer = $_SERVER['HTTP_REFERER'];
         $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
-        $referer = $referer["query"]["metab"];
-        $referer = Regex::Match($referer, "\d+");
+
+        if (Utils::isDbNull($referer)) {
+            RFC7231Error::err405("Unknown data entry point to query!");
+        } else {
+            $referer = $referer["query"]["metab"];
+            $referer = Regex::Match($referer, "\d+");
+        }
 
         $exp = (new Table(["mzvault"=>"annotation"]))
             ->left_join("spectrum")
