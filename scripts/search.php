@@ -15,6 +15,7 @@ class search {
 
     private static function local_search($refer, $q) {
         $encode_q = urlencode($q);
+        $refer = Strings::Split($refer, "/")[0];
 
         switch(strtolower($refer)) {
             case "compartments":
@@ -27,12 +28,14 @@ class search {
             case "motifs":
             case "motif":
                 Redirect("/motifs/?q={$encode_q}");
+                break;
             case "enzymes":
             case "enzyme":
                 Redirect("/enzymes/?q={$encode_q}");
+                break;
 
             default:
-                breakpoint([$refer,$q]);
+                RFC7231Error::err405("search for '{$q}' on resource controller '{$refer}' has not been implemented yet!");
                 return self::global_search($q);
         }
     }
