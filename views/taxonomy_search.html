@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  ${./includes/head.html}
+</head>
+
+<body class="index-page scrolled">
+  ${./includes/nav.html}
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <main class="main">
+
+    <section id="data" class="section">
+
+      <!-- Section Title -->
+      <div class="container section-title">
+        <h2>Taxonomy List</h2>
+        <p>Taxonomy search result list of query term {$q}</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>taxonomy name</th>
+              <th>rank</th>
+              <th>note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @taxon>
+              <tr>
+                <td><a href='/taxonomy/?id=@taxon["id"]'>@taxon["name"]</a></td>
+                <td>@taxon["rank_name"]</td>
+                <td><span class="d-inline-block text-truncate" style="max-width: 850px;">@taxon["note"]</span></td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  ${./includes/footer.html}
+</body>
+
+</html>

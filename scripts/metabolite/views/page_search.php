@@ -10,13 +10,7 @@ class page_search extends page_view {
 
     public function q($term) {
         $term = urldecode($term);
-        $term = str_replace("'"," ", $term);
-        $term = str_replace('"'," ", $term);
-        $term = str_replace("-"," ", $term);
-        $term = str_replace("+"," ", $term);
-        $term = str_replace("<"," ", $term);
-        $term = str_replace(">"," ", $term);
-        $term = str_replace("?"," ", $term);
+        $term = Table::make_fulltext_strips($term);
 
         $data = (new Table(["cad_registry"=>"metabolites"]))->exec("SELECT 
         id
