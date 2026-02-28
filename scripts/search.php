@@ -21,17 +21,25 @@ class search {
             case "compartments":
                 Redirect("/compartments/?q={$encode_q}");
                 break;
+
             case "metabolites":
             case "metabolite":
                 Redirect("/metabolites/?q={$encode_q}");
                 break;
+
             case "motifs":
             case "motif":
                 Redirect("/motifs/?q={$encode_q}");
                 break;
+
             case "enzymes":
             case "enzyme":
                 Redirect("/enzymes/?q={$encode_q}");
+                break;
+
+            case "taxonomy":
+            case "taxonomy_search":
+                Redirect("/taxonomy_search/?q={$encode_q}");
                 break;
 
             default:

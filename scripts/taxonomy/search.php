@@ -8,7 +8,7 @@ class search {
         $list = (new Table(["cad_registry"=>"ncbi_taxonomy"]))
             ->left_join("vocabulary")
             ->on(["ncbi_taxonomy"=>"rank","vocabulary"=>"id"])
-            ->where("MATCH (name , zh_name , note) AGAINST ('{$term}' IN BOOLEAN MODE)")
+            ->where("MATCH (`ncbi_taxonomy`.name , `ncbi_taxonomy`.zh_name , `ncbi_taxonomy`.note) AGAINST ('{$term}' IN BOOLEAN MODE)")
             ->limit(($page -1) * $page_size, $page_size)
             ->select(["ncbi_taxonomy.*","term as rank_name"])
             ;
