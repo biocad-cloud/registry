@@ -96,6 +96,18 @@ class App {
      * @method get
     */
     public function spectrum_list() {
+        $id = self::db_xref();
+        $list = (new Table(["mzvault"=>"annotation"]))
+            ->left_join("reference_spectrum")
+            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
+            ->where(["db_xref"=>$id])
+            ->select(["adducts", "ROUND(mz, 4) AS mz", "splash_id", "npeaks"])
+            ;
+        
+        controller::success($list);
+    }
+
+    private static function db_xref() {
         $referer = $_SERVER['HTTP_REFERER'];
         $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
 
@@ -107,15 +119,7 @@ class App {
             $referer = $referer[2];
         }
 
-        $id = Regex::Match($referer, "\d+");
-        $list = (new Table(["mzvault"=>"annotation"]))
-            ->left_join("reference_spectrum")
-            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
-            ->where(["db_xref"=>$id])
-            ->select(["adducts", "ROUND(mz, 4) AS mz", "splash_id", "npeaks"])
-            ;
-        
-        controller::success($list);
+        return Regex::Match($referer, "\d+");
     }
 
     /**
@@ -124,7 +128,32 @@ class App {
      * @method get
     */
     public function spectrum($splash) {
+        $id = self::db_xref();
+        $spectrum = (new Table(["mzvault"=>"annotation"]))
+            ->left_join("reference_spectrum")
+            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
+            ->where(["db_xref"=>$id, "splash_id"=>$splash])
+            ->find(["`reference_spectrum`.id",
+            "splash_id",
+            "name",
+            "adducts",
+            "ROUND(mz, 4) AS precursor"])
+            ;
         
+        if (Utils::isDbNull($spectrum)) {
+            RFC7231Error::err404("could not found the spectrum data!");
+        }
+
+        $data = (new Table(["mzvault"=>"reference_peaks"]))
+            ->where(["precursor"=>$spectrum["id"]])
+            ->select(["mz","intensity","smiles"])
+            ;
+
+        $spectrum["mz"] = $data["mz"];
+        $spectrum["intensity"] = $data["intensity"];
+        $spectrum["smiles"] = $data["smiles"];
+
+        controller::success($spectrum);
     }
 
     /**
