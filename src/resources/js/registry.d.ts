@@ -1,6 +1,17 @@
 declare namespace app {
     function run(): void;
 }
+declare namespace viewer {
+    class SpectrumViewer {
+        private chartInstance;
+        private modalInstance;
+        constructor();
+        /**
+         * 渲染质谱图
+         */
+        renderSpectrum(rawData: pages.spectrum_data): void;
+    }
+}
 declare namespace pages {
     class metabolite_data extends Bootstrap {
         get appName(): string;
@@ -13,8 +24,8 @@ declare namespace pages {
         name: string;
         adducts: string;
         precursor: number;
-        mz: number[];
-        intensity: number[];
+        mz: string[];
+        intensity: string[];
         smiles: string[];
     }
     interface spectrum_entry {
