@@ -149,9 +149,9 @@ class App {
             ->select(["mz","intensity","smiles"])
             ;
 
-        $spectrum["mz"] = $data["mz"];
-        $spectrum["intensity"] = $data["intensity"];
-        $spectrum["smiles"] = $data["smiles"];
+        $spectrum["mz"] = array_column($data,"mz");
+        $spectrum["intensity"] = array_column($data,"intensity");
+        $spectrum["smiles"] = array_column($data,"smiles");
 
         controller::success($spectrum);
     }
