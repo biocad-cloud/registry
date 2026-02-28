@@ -24,6 +24,7 @@ class search {
 
             case "metabolites":
             case "metabolite":
+            case "spectrum":
                 Redirect("/metabolites/?q={$encode_q}");
                 break;
 
