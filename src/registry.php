@@ -90,8 +90,24 @@ class App {
         }
     }
 
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
+    public function spectrum_list() {
+        $referer = $_SERVER['HTTP_REFERER'];
+        $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
+        breakpoint($referer);
+    }
+
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
     public function spectrum() {
-        
+
     }
 
     /**

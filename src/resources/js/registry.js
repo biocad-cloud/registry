@@ -19,12 +19,38 @@ var app;
     function run() {
         Router.AddAppHandler(new pages.spectrum_data());
         Router.AddAppHandler(new pages.taxonomy_data());
+        Router.AddAppHandler(new pages.metabolite_data());
         Router.RunApp();
     }
     app.run = run;
 })(app || (app = {}));
 $ts.mode = Modes.debug;
 $ts(app.run);
+var pages;
+(function (pages) {
+    var metabolite_data = /** @class */ (function (_super) {
+        __extends(metabolite_data, _super);
+        function metabolite_data() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(metabolite_data.prototype, "appName", {
+            get: function () {
+                return "metabolite_data";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        metabolite_data.prototype.init = function () {
+            this.load();
+        };
+        metabolite_data.prototype.load = function () {
+            $ts.get("/registry/spectrum_list/", function (msg) {
+            });
+        };
+        return metabolite_data;
+    }(Bootstrap));
+    pages.metabolite_data = metabolite_data;
+})(pages || (pages = {}));
 var pages;
 (function (pages) {
     var spectrum_data = /** @class */ (function (_super) {
