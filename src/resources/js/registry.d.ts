@@ -6,6 +6,22 @@ declare namespace pages {
         get appName(): string;
         protected init(): void;
         private load;
+        private click_splash;
+    }
+    interface spectrum_data {
+        splash_id: string;
+        name: string;
+        adduct: string;
+        precursor: number;
+        mz: number[];
+        intensity: number[];
+        smiles: string[];
+    }
+    interface spectrum_entry {
+        adducts: string;
+        mz: number;
+        npeaks: number;
+        splash_id: string;
     }
 }
 declare namespace pages {

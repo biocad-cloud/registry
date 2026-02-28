@@ -264,25 +264,9 @@
                     <div class="row">
                       <div class="col">
 
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Adducts</th>
-                              <th>Collision Energy</th>
-                              <th>Spash-ID</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <foreach @spectrum>
-                              <tr>
-                                <td>@spectrum["adduct"]</td>
-                                <td>@spectrum["energy"]</td>
-                                <td><a href="#" data='@spectrum["splash_id"]'
-                                    onclick="javascript:void(0);">@spectrum["splash_id"]</a></td>
-                              </tr>
-                            </foreach>
-                          </tbody>
-                        </table>
+                        <div id="spectrum_list">
+
+                        </div>
 
                         <a href="/spectrum/?metab={$id}" class="explore-link">
                           View All Mass Spectrum <i class="bi bi-arrow-up-right"></i>

@@ -44,7 +44,29 @@ var pages;
             this.load();
         };
         metabolite_data.prototype.load = function () {
+            var _this = this;
             $ts.get("/registry/spectrum_list/", function (msg) {
+                if (msg.code == 0) {
+                    var list = $from(msg.info).Select(function (entry) {
+                        return {
+                            Adduct: entry.adducts,
+                            "m/z": entry.mz,
+                            "Num Peaks": entry.npeaks,
+                            "Splash_id": "<a href=\"#\" onclick=\"javascript:void(0);\" class=\"splash_id\" data=\"splash_id\">".concat(entry.splash_id, "</a>")
+                        };
+                    });
+                    $ts("#spectrum_list").clear();
+                    $ts.appendTable(list, "#spectrum_list", null, { class: "table" });
+                    $ts.select(".splash_id").onClick(function (a) { return _this.click_splash(a.getAttribute("data")); });
+                }
+            });
+        };
+        metabolite_data.prototype.click_splash = function (splash_id) {
+            $ts.get("/registry/spectrum/?splash=".concat(splash_id), function (data) {
+                if (data.code == 0) {
+                    var spectrum = data.info;
+                    // display the spectrum on page
+                }
             });
         };
         return metabolite_data;

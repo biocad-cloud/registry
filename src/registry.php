@@ -123,7 +123,7 @@ class App {
      * @uses api
      * @method get
     */
-    public function spectrum() {
+    public function spectrum($splash) {
 
     }
 
