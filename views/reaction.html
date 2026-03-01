@@ -29,7 +29,7 @@
         <h5>{$name}</h5>
         <p>{$equation}</p>
 
-        <h5>DB Links</h5>
+        <h3>DB Links</h3>
 
         <ul>
           <foreach @dblink>
@@ -45,6 +45,60 @@
           </foreach>
         </ul>
 
+        <h3>Metabolites</h3>
+
+        <h5>Substrates</h5>
+
+        <table class="table">
+          <thead>
+            <tr>              
+              <th>metabolite</th>              
+              <th>Structure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @sleft>
+              <tr>
+                <td><a href='/metabolite/@sleft["id"]'>@sleft["name"] [@sleft["loc"]]</a><br />
+                (@sleft["formula"])
+                </td>                
+                <td>
+                  <canvas class="smiles_drawer" width="400px" height="250px" role="img" focusable="false" style="float:right;"
+                  data='@sleft["smiles"]'>
+                </canvas>
+
+                </td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
+        <h5>Products</h5>
+
+        <table class="table">
+          <thead>
+            <tr>              
+              <th>metabolite</th>              
+              <th>Structure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @sright>
+              <tr>
+                <td><a href='/metabolite/@sright["id"]'>@sright["name"] [@sright["loc"]]</a><br />
+                  (@sright["formula"])</td>                
+                <td>
+
+                  <canvas class="smiles_drawer" width="400px" height="250px" role="img" focusable="false" style="float:right;"
+                  data='@sright["smiles"]'>
+                </canvas>
+
+                </td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
       </div>
 
     </section>
@@ -54,5 +108,8 @@
 
   ${./includes/footer.html}
 </body>
+
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
+<script src="/resources/js/smiles_batch_render.js"></script>
 
 </html>

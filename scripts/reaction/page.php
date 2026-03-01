@@ -6,7 +6,12 @@ class reaction_model {
 
     public static function get_data($id) {
         $id = Regex::Match($id,"\d+");
-        $rxn = (new Table(["cad_registry"=>"reaction"]))->left_join("vocabulary")->on(["vocabulary"=>"id","reaction"=>"db_source"])->where(["`reaction`.id"=>$id])->find(["reaction.*","term as db_name"]);
+        $rxn = (new Table(["cad_registry"=>"reaction"]))
+            ->left_join("vocabulary")
+            ->on(["vocabulary"=>"id","reaction"=>"db_source"])
+            ->where(["`reaction`.id"=>$id])
+            ->find(["reaction.*","term as db_name"])
+        ;
         $rxn["title"] = $rxn["name"];
         $rxn["dblink"] = (new Table(["cad_registry"=>"db_xrefs"]))
             ->left_join("vocabulary")
@@ -21,6 +26,9 @@ class reaction_model {
         $right = self::get_network($id, RXN_RIGHT);
         $rxn["equation"] = self::equation($left, $right);
         $rxn["dblink"] = resolver::internal_link($rxn["dblink"]);
+
+        $rxn["sleft"] = $left;
+        $rxn["sright"] = $right;
 
         if (strlen( $rxn["hashcode"]) > 0 ) {
             $rxn["alias"] = (new table(["cad_registry"=>"reaction"]))
@@ -63,12 +71,16 @@ class reaction_model {
             ->on(["metabolites"=>"id","metabolic_network" => "species_id"])
             ->left_join("compartment_location")
             ->on(["compartment_location"=>"id","metabolic_network" => "compartment_id"])
+            ->left_join("struct_data")
+            ->on(["metabolites"=>"id","struct_data"=>"metabolite_id"])
             ->where(["reaction_id"=>$id, "`role`"=> $role])
+            ->distinct()
             ->select(["factor",
-            "symbol_id",
-            "metabolites.id",
-            "metabolites.name",
-            "metabolites.formula",
-            "compartment_location.name as loc"]);
+                "symbol_id",
+                "metabolites.id",
+                "metabolites.name",
+                "metabolites.formula",
+                "compartment_location.name as loc",
+                "smiles"]);
     }
 }
