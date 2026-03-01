@@ -64,9 +64,9 @@
             <foreach @sleft>
               <tr>
                 <td><a href='/metabolite/@sleft["id"]'>@sleft["name"]</a><br /><br />
-                Formula: @sleft["formula"]
+                Formula: <a href='/metabolites/?formula=@sleft["formula"]'>@sleft["formula"]</a>
                 </td>    
-                <td>@sleft["loc"]</td>            
+                <td><a href='/compartment/?name=@sleft["loc"]'>@sleft["loc"]</a></td>            
                 <td>
                   <canvas class="smiles_drawer" width="400px" height="250px" role="img" focusable="false" style="float:right;"
                   data='@sleft["smiles"]'>
@@ -92,9 +92,9 @@
             <foreach @sright>
               <tr>
                 <td><a href='/metabolite/@sright["id"]'>@sright["name"] [@sright["loc"]]</a><br /><br />
-                  Formula: @sright["formula"]</td>   
+                  Formula: <a href='/metabolites/?formula=@sright["formula"]'>@sright["formula"]</a></td>   
                   
-                  <td>@sright["loc"]</td>     
+                  <td><a href='/compartment/?name=@sright["loc"]'>@sright["loc"]</a></td>     
 
                 <td>
 
