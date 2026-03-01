@@ -1,7 +1,8 @@
 let canvas = document.getElementsByClassName("smiles_drawer");
+let h = $ts("@drawer-h") ?? "250";
 let options = {
   width: 400,
-  height: 300,
+  height: parseInt(h)
 };
 // Initialize the drawer to draw to canvas
 let smilesDrawer = new SmilesDrawer.Drawer(options);
