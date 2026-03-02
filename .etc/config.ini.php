@@ -37,6 +37,7 @@ return [
     "APP_TITLE" => "数据之源，洞见之始",
     "APP_VERSION" => "2.3.111.13-alpha",
 	"MVC_VIEW_ROOT" => [
-        "index" => APP_VIEWS
+        "index" => APP_VIEWS,
+        "landscape" => APP_VIEWS . "/landscape"
     ]
 ];
