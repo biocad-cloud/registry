@@ -1,6 +1,7 @@
 namespace pages {
 
     const url_experiment_source = "/mzvault/experiment_source/";
+    const url_annotation_hits = "/mzvault/annotation_hits/";
 
     export class spectrum_data extends Bootstrap {
 
@@ -32,10 +33,17 @@ namespace pages {
         }
 
         private load_pie() {
+            $ts.get(url_annotation_hits, msg => {
+                if (msg.code == 0) {
+                    let anno_hits = <{ organism: viewer.SpeciesData, tissue: viewer.SpeciesData }>msg.info;
 
+                    this.viz_pie(anno_hits.organism, "org_pie");
+                    this.viz_pie(anno_hits.tissue, "tissue_pie");
+                }
+            });
         }
 
-        private viz_pie(rawData: viewer.SpeciesData) {
+        private viz_pie(rawData: viewer.SpeciesData, chart_id: string) {
             // 转换为 ECharts 需要的格式
             const pieData: viewer.PieChartData[] = viewer.toPieData(rawData);
             // 计算总和
@@ -177,7 +185,7 @@ namespace pages {
                 ]
             };
 
-            const chart = viewer.initChart('chart-container', option);
+            const chart = viewer.initChart(chart_id, option);
 
             // 可选：添加点击事件
             chart.on('click', (params: any) => {
