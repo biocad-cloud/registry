@@ -173,12 +173,13 @@ namespace viewer {
                     seriesMap[taxValue] = [];
                 }
                 seriesMap[taxValue].push([
-                    item.x,
-                    item.y,
-                    item.z,
+                    item.x,    // 0
+                    item.y,    // 1
+                    item.z,    // 2
                     item.scientific_name,
                     item.ncbi_taxid,
-                    item.assembly_id
+                    item.assembly_id,
+                    `k__${item.kingdom};p__${item.phylum};c__${item.class};o__${item.order};f__${item.family};g__${item.genus};s__${item.species}`
                 ]);
             });
 
@@ -194,7 +195,8 @@ namespace viewer {
                     genomeData: {
                         scientific_name: d[3],
                         ncbi_taxid: d[4],
-                        assembly_id: d[5]
+                        assembly_id: d[5],
+                        taxonomy: d[6]
                     }
                 })),
                 symbolSize: 3,
@@ -213,16 +215,8 @@ namespace viewer {
                             const g = params.data.genomeData;
                             return `<strong>${g.scientific_name}</strong><br/>
                                 <span style="color:#8b92a5">NCBI TaxID: ${g.ncbi_taxid}</span> <br/>
-                                <br/>
-                                <ul>
-                                <li><span class="taxonomy-rank">Kingdom</span><span class="taxonomy-value">${g.kingdom || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Phylum</span><span class="taxonomy-value">${g.phylum || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Class</span><span class="taxonomy-value">${g.class || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Order</span><span class="taxonomy-value">${g.order || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Family</span><span class="taxonomy-value">${g.family || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Genus</span><span class="taxonomy-value">${g.genus || '-'}</span></li>
-                                <li><span class="taxonomy-rank">Species</span><span class="taxonomy-value">${g.species || '-'}</span></li>
-                                </ul>`;
+                                <span style="color:#8b92a5">Taxonomy: <i>${g.taxonomy}</i></span>
+                                `;
                         }
                         return '';
                     },

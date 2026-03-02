@@ -726,12 +726,13 @@ var viewer;
                     seriesMap[taxValue] = [];
                 }
                 seriesMap[taxValue].push([
-                    item.x,
-                    item.y,
-                    item.z,
+                    item.x, // 0
+                    item.y, // 1
+                    item.z, // 2
                     item.scientific_name,
                     item.ncbi_taxid,
-                    item.assembly_id
+                    item.assembly_id,
+                    "k__".concat(item.kingdom, ";p__").concat(item.phylum, ";c__").concat(item.class, ";o__").concat(item.order, ";f__").concat(item.family, ";g__").concat(item.genus, ";s__").concat(item.species)
                 ]);
             });
             // Create series for each taxonomy group
@@ -748,7 +749,8 @@ var viewer;
                         genomeData: {
                             scientific_name: d[3],
                             ncbi_taxid: d[4],
-                            assembly_id: d[5]
+                            assembly_id: d[5],
+                            taxonomy: d[6]
                         }
                     }); }),
                     symbolSize: 3,
@@ -765,7 +767,7 @@ var viewer;
                     formatter: function (params) {
                         if (params.data && params.data.genomeData) {
                             var g = params.data.genomeData;
-                            return "<strong>".concat(g.scientific_name, "</strong><br/>\n                                <span style=\"color:#8b92a5\">NCBI TaxID: ").concat(g.ncbi_taxid, "</span> <br/>\n                                <br/>\n                                <ul>\n                                <li><span class=\"taxonomy-rank\">Kingdom</span><span class=\"taxonomy-value\">").concat(g.kingdom || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Phylum</span><span class=\"taxonomy-value\">").concat(g.phylum || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Class</span><span class=\"taxonomy-value\">").concat(g.class || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Order</span><span class=\"taxonomy-value\">").concat(g.order || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Family</span><span class=\"taxonomy-value\">").concat(g.family || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Genus</span><span class=\"taxonomy-value\">").concat(g.genus || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Species</span><span class=\"taxonomy-value\">").concat(g.species || '-', "</span></li>\n                                </ul>");
+                            return "<strong>".concat(g.scientific_name, "</strong><br/>\n                                <span style=\"color:#8b92a5\">NCBI TaxID: ").concat(g.ncbi_taxid, "</span> <br/>\n                                <span style=\"color:#8b92a5\">Taxonomy: <i>").concat(g.taxonomy, "</i></span>\n                                ");
                         }
                         return '';
                     },
