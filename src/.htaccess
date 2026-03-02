@@ -25,6 +25,7 @@ Header set Cache-Control: "max-age=0, no-store"
 
 RewriteRule ^registry/([^/]+)/?$ /registry.php?app=$1 [L,QSA,NC]
 RewriteRule ^mzvault/([^/]+)/?$ /mzvault.php?app=$1 [L,QSA,NC]
+RewriteRule ^landscape/([^/]+)/?$ /landscape.php?app=$1 [L,QSA,NC]
 
 RewriteRule ^metabolite/([^/]+)/?$ /index.php?app=metabolite&id=$1 [L,QSA,NC]
 RewriteRule ^protein/fasta/?$ /index.php?app=protein_fasta [L,QSA,NC]
