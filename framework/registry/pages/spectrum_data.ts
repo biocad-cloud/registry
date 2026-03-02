@@ -39,13 +39,13 @@ namespace pages {
                 if (msg.code == 0) {
                     let anno_hits = <{ organism: viewer.SpeciesData, tissue: viewer.SpeciesData }>msg.info;
 
-                    this.viz_pie(anno_hits.organism, "org_pie");
-                    this.viz_pie(anno_hits.tissue, "tissue_pie");
+                    this.viz_pie(anno_hits.organism, "org_pie", '物种分布统计');
+                    this.viz_pie(anno_hits.tissue, "tissue_pie", '来源分布统计');
                 }
             });
         }
 
-        private viz_pie(rawData: viewer.SpeciesData, chart_id: string) {
+        private viz_pie(rawData: viewer.SpeciesData, chart_id: string, title: string) {
             // 转换为 ECharts 需要的格式
             const pieData: viewer.PieChartData[] = viewer.toPieData(rawData);
             // 计算总和
@@ -54,7 +54,7 @@ namespace pages {
             const option: echarts.EChartsOption = {
                 // 标题配置
                 title: {
-                    text: '物种分布统计',
+                    text: title,
                     subtext: `总计: ${total.toFixed(2)}`,
                     left: 'center',
                     top: 20,
@@ -118,7 +118,7 @@ namespace pages {
                 // 系列配置
                 series: [
                     {
-                        name: '物种分布',
+                        name: '比例分布',
                         type: 'pie',
                         radius: ['35%', '70%'],  // 环形图，更美观
                         center: ['40%', '55%'],

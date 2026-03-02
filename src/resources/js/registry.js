@@ -289,12 +289,12 @@ var pages;
             $ts.get(url_annotation_hits, function (msg) {
                 if (msg.code == 0) {
                     var anno_hits = msg.info;
-                    _this.viz_pie(anno_hits.organism, "org_pie");
-                    _this.viz_pie(anno_hits.tissue, "tissue_pie");
+                    _this.viz_pie(anno_hits.organism, "org_pie", '物种分布统计');
+                    _this.viz_pie(anno_hits.tissue, "tissue_pie", '来源分布统计');
                 }
             });
         };
-        spectrum_data.prototype.viz_pie = function (rawData, chart_id) {
+        spectrum_data.prototype.viz_pie = function (rawData, chart_id, title) {
             // 转换为 ECharts 需要的格式
             var pieData = viewer.toPieData(rawData);
             // 计算总和
@@ -303,7 +303,7 @@ var pages;
             var option = {
                 // 标题配置
                 title: {
-                    text: '物种分布统计',
+                    text: title,
                     subtext: "\u603B\u8BA1: ".concat(total.toFixed(2)),
                     left: 'center',
                     top: 20,
@@ -356,7 +356,7 @@ var pages;
                 // 系列配置
                 series: [
                     {
-                        name: '物种分布',
+                        name: '比例分布',
                         type: 'pie',
                         radius: ['35%', '70%'], // 环形图，更美观
                         center: ['40%', '55%'],
