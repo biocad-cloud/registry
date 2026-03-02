@@ -65,6 +65,7 @@
               <tr>
                 <td><a href='/metabolite/@sleft["id"]'>@sleft["name"]</a><br /><br />
                 Formula: <a href='/metabolites/?formula=@sleft["formula"]'>@sleft["formula"]</a>
+
                 </td>    
                 <td><a href='/compartment/?name=@sleft["loc"]'>@sleft["loc"]</a></td>            
                 <td>
@@ -91,7 +92,7 @@
           <tbody>
             <foreach @sright>
               <tr>
-                <td><a href='/metabolite/@sright["id"]'>@sright["name"] [@sright["loc"]]</a><br /><br />
+                <td><a href='/metabolite/@sright["id"]'>@sright["name"]</a><br /><br />
                   Formula: <a href='/metabolites/?formula=@sright["formula"]'>@sright["formula"]</a></td>   
                   
                   <td><a href='/compartment/?name=@sright["loc"]'>@sright["loc"]</a></td>     
