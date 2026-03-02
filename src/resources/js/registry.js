@@ -750,10 +750,10 @@ var viewer;
                             assembly_id: d[5]
                         }
                     }); }),
-                    symbolSize: 12,
+                    symbolSize: 5,
                     emphasis: {
                         itemStyle: {
-                            borderWidth: 2,
+                            borderWidth: 0.5,
                             borderColor: '#1a1d26'
                         }
                     }
@@ -833,9 +833,9 @@ var viewer;
                     }
                 },
                 grid3D: {
-                    boxWidth: 120,
-                    boxHeight: 80,
-                    boxDepth: 80,
+                    // boxWidth: 120,
+                    // boxHeight: 80,
+                    // boxDepth: 80,
                     viewControl: {
                         autoRotate: false,
                         distance: 200,
@@ -845,17 +845,17 @@ var viewer;
                     light: {
                         main: {
                             intensity: 1.2,
-                            shadow: true
+                            shadow: false
                         },
                         ambient: {
                             intensity: 0.3
                         }
                     },
                     postEffect: {
-                        enable: true,
+                        enable: false,
                         bloom: {
                             enable: true,
-                            intensity: 0.1
+                            intensity: 0.8
                         }
                     }
                 },
