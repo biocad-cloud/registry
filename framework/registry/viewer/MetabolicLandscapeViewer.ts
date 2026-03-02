@@ -197,7 +197,7 @@ namespace viewer {
                         assembly_id: d[5]
                     }
                 })),
-                symbolSize: 5,
+                symbolSize: 3,
                 emphasis: {
                     itemStyle: {
                         borderWidth: 0.5,
