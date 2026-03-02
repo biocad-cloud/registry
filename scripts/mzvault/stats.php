@@ -8,12 +8,16 @@ class stats {
             ->find();
 
         if (Utils::isDbNull($piedata)) {
-            RFC7231Error::err404("there is no spectrum annotation hit of this metabolite!");
+            // RFC7231Error::err404("there is no spectrum annotation hit of this metabolite!");
+            return [
+                "organism" => [],
+                "tissue" => []
+            ];
+        } else {
+            return [
+                "organism" => json_decode($piedata["organism_hits"]),
+                "tissue" => json_decode($piedata["tissue_hits"])
+            ];
         }
-
-        return [
-            "organism" => json_decode($piedata["organism_hits"]),
-            "tissue" => json_decode($piedata["tissue_hits"])
-        ];
     }
 }

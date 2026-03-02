@@ -277,8 +277,10 @@ var pages;
                             "Size": a.size
                         };
                     });
-                    $ts("#exp_table").clear();
-                    $ts.appendTable(data_1, "#exp_table", null, { class: "table" });
+                    if (data_1.Count > 0) {
+                        $ts("#exp_table").clear();
+                        $ts.appendTable(data_1, "#exp_table", null, { class: "table" });
+                    }
                 }
             });
         };

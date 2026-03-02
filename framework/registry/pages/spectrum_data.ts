@@ -26,8 +26,10 @@ namespace pages {
                         }
                     });
 
-                    $ts("#exp_table").clear();
-                    $ts.appendTable(data, "#exp_table", null, { class: "table" });
+                    if (data.Count > 0) {
+                        $ts("#exp_table").clear();
+                        $ts.appendTable(data, "#exp_table", null, { class: "table" });
+                    }
                 }
             })
         }
