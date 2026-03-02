@@ -208,7 +208,7 @@ namespace viewer {
 
             const option = {
                 tooltip: {
-                    formatter: function (params) {
+                    formatter: (params) => {
                         if (params.data && params.data.genomeData) {
                             const g = params.data.genomeData;
                             return `<strong>${g.scientific_name}</strong><br/>
@@ -314,7 +314,7 @@ namespace viewer {
 
             // Add click handler
             scatterChart.off('click');
-            scatterChart.on('click', function (params) {
+            scatterChart.on('click', (params) => {
                 if (params.data && params.data.genomeData) {
                     const assemblyId = params.data.genomeData.assembly_id;
                     const genome = currentData.find(g => g.assembly_id === assemblyId);

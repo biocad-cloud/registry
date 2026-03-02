@@ -869,7 +869,7 @@ var viewer;
                     var assemblyId_1 = params.data.genomeData.assembly_id;
                     var genome = currentData.find(function (g) { return g.assembly_id === assemblyId_1; });
                     if (genome) {
-                        this.selectGenome(genome);
+                        _this.selectGenome(genome);
                     }
                 }
             });
