@@ -157,6 +157,4 @@ namespace data.ZipData {
         result.push(current);
         return result;
     }
-
-
 }

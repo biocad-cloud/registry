@@ -489,7 +489,7 @@ namespace viewer {
          * Load embedding data and render visualization
          * @param {Array} data - Array of metabolic_embedding objects
          */
-        loadData(data) {
+        loadData(data: metabolic_embedding[]) {
             if (!Array.isArray(data)) {
                 console.error('Invalid data: expected an array of metabolic_embedding objects');
                 return;

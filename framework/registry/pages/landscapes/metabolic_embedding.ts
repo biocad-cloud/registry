@@ -13,6 +13,11 @@ namespace pages.landscapes {
         protected init(): void {
             this.viz = new viewer.GenomeEmbeddingViz();
             this.viz.initCharts();
+
+            data.ZipData.loadAndParseZipFromUrl("")
+                .then(data => {
+                    this.viz.loadData(data);
+                });
         }
 
     }

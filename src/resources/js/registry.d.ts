@@ -1,6 +1,22 @@
 declare namespace app {
     function run(): void;
 }
+declare namespace data.ZipData {
+    type MetabolicEmbedding = viewer.metabolic_embedding;
+    /**
+     * 从URL下载zip文件并解析为MetabolicEmbedding数组
+     */
+    export function loadAndParseZipFromUrl(url: string): Promise<MetabolicEmbedding[]>;
+    /**
+     * 从ArrayBuffer解压并解析CSV
+     */
+    export function parseZipToArray(zipBuffer: ArrayBuffer): Promise<MetabolicEmbedding[]>;
+    /**
+     * 解析CSV文本为MetabolicEmbedding数组
+     */
+    export function parseCsvText(csvText: string): MetabolicEmbedding[];
+    export {};
+}
 declare namespace viewer {
     class SpectrumViewer {
         private chartInstance;
@@ -166,7 +182,7 @@ declare namespace viewer {
          * Load embedding data and render visualization
          * @param {Array} data - Array of metabolic_embedding objects
          */
-        loadData(data: any): void;
+        loadData(data: metabolic_embedding[]): void;
         /**
          * Set taxonomy level for coloring
          * @param {string} level - Taxonomy level (kingdom, phylum, class, order, family, genus, species)
