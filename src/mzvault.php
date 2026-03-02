@@ -8,8 +8,14 @@ class App {
         include_once APP_PATH . "/scripts/resolver.php";
     }
 
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
     public function annotation_hits() {
-
+        include_once APP_PATH . "/scripts/mzvault/stats.php";
+        controller::success(stats::organism_piedata(resolver::db_xref()));
     }
 
     /**
@@ -18,15 +24,8 @@ class App {
      * @method get
     */
     public function spectrum_list() {
-        $id = resolver::db_xref();
-        $list = (new Table(["mzvault"=>"annotation"]))
-            ->left_join("reference_spectrum")
-            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
-            ->where(["db_xref"=>$id])
-            ->select(["adducts", "ROUND(mz, 4) AS mz", "splash_id", "npeaks"])
-            ;
-        
-        controller::success($list);
+        include_once APP_PATH . "/scripts/mzvault/library.php";       
+        controller::success(library_data::reference_spectrum_list(resolver::db_xref()));
     }
 
     /**
@@ -35,31 +34,7 @@ class App {
      * @method get
     */
     public function spectrum($splash) {
-        $id = resolver::db_xref();
-        $spectrum = (new Table(["mzvault"=>"annotation"]))
-            ->left_join("reference_spectrum")
-            ->on(["reference_spectrum"=>"annotation_id","annotation"=>"id"])
-            ->where(["db_xref"=>$id, "splash_id"=>$splash])
-            ->find(["`reference_spectrum`.id",
-            "splash_id",
-            "name",
-            "adducts",
-            "ROUND(mz, 4) AS precursor"])
-            ;
-        
-        if (Utils::isDbNull($spectrum)) {
-            RFC7231Error::err404("could not found the spectrum data!");
-        }
-
-        $data = (new Table(["mzvault"=>"reference_peaks"]))
-            ->where(["precursor"=>$spectrum["id"]])
-            ->select(["mz","intensity","smiles"])
-            ;
-
-        $spectrum["mz"] = array_column($data,"mz");
-        $spectrum["intensity"] = array_column($data,"intensity");
-        $spectrum["smiles"] = array_column($data,"smiles");
-
-        controller::success($spectrum);
+        include_once APP_PATH . "/scripts/mzvault/library.php";
+        controller::success(library_data::spectrum_data(resolver::db_xref(), $splash));
     }
 }
