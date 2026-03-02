@@ -7,6 +7,8 @@ namespace app {
         Router.AddAppHandler(new pages.taxonomy_data());
         Router.AddAppHandler(new pages.metabolite_data());
 
+        Router.AddAppHandler(new pages.landscapes.metabolic());
+
         Router.RunApp();
     }
 }
