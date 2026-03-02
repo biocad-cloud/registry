@@ -73,7 +73,7 @@ namespace viewer {
         scatterChart = null;
         radarChart = null;
         currentData: metabolic_embedding[] = [];
-        currentTaxonomyLevel = 'kingdom';
+        currentTaxonomyLevel = 'family';
         colorMap = {};
         selectedGenome: metabolic_embedding = null;
 
@@ -212,7 +212,17 @@ namespace viewer {
                         if (params.data && params.data.genomeData) {
                             const g = params.data.genomeData;
                             return `<strong>${g.scientific_name}</strong><br/>
-                                <span style="color:#8b92a5">NCBI TaxID: ${g.ncbi_taxid}</span>`;
+                                <span style="color:#8b92a5">NCBI TaxID: ${g.ncbi_taxid}</span> <br/>
+                                <br/>
+                                <ul>
+                                <li><span class="taxonomy-rank">Kingdom</span><span class="taxonomy-value">${g.kingdom || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Phylum</span><span class="taxonomy-value">${g.phylum || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Class</span><span class="taxonomy-value">${g.class || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Order</span><span class="taxonomy-value">${g.order || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Family</span><span class="taxonomy-value">${g.family || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Genus</span><span class="taxonomy-value">${g.genus || '-'}</span></li>
+                                <li><span class="taxonomy-rank">Species</span><span class="taxonomy-value">${g.species || '-'}</span></li>
+                                </ul>`;
                         }
                         return '';
                     },
@@ -362,7 +372,7 @@ namespace viewer {
             this.updateRadarChart(genome);
 
             // Highlight selected point in scatter
-            this.highlightPoint(genome);
+            // this.highlightPoint(genome);
         }
 
         /**

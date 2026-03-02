@@ -637,7 +637,7 @@ var viewer;
             this.scatterChart = null;
             this.radarChart = null;
             this.currentData = [];
-            this.currentTaxonomyLevel = 'kingdom';
+            this.currentTaxonomyLevel = 'family';
             this.colorMap = {};
             this.selectedGenome = null;
         }
@@ -764,7 +764,7 @@ var viewer;
                     formatter: function (params) {
                         if (params.data && params.data.genomeData) {
                             var g = params.data.genomeData;
-                            return "<strong>".concat(g.scientific_name, "</strong><br/>\n                                <span style=\"color:#8b92a5\">NCBI TaxID: ").concat(g.ncbi_taxid, "</span>");
+                            return "<strong>".concat(g.scientific_name, "</strong><br/>\n                                <span style=\"color:#8b92a5\">NCBI TaxID: ").concat(g.ncbi_taxid, "</span> <br/>\n                                <br/>\n                                <ul>\n                                <li><span class=\"taxonomy-rank\">Kingdom</span><span class=\"taxonomy-value\">").concat(g.kingdom || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Phylum</span><span class=\"taxonomy-value\">").concat(g.phylum || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Class</span><span class=\"taxonomy-value\">").concat(g.class || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Order</span><span class=\"taxonomy-value\">").concat(g.order || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Family</span><span class=\"taxonomy-value\">").concat(g.family || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Genus</span><span class=\"taxonomy-value\">").concat(g.genus || '-', "</span></li>\n                                <li><span class=\"taxonomy-rank\">Species</span><span class=\"taxonomy-value\">").concat(g.species || '-', "</span></li>\n                                </ul>");
                         }
                         return '';
                     },
@@ -888,7 +888,7 @@ var viewer;
             // Update radar chart
             this.updateRadarChart(genome);
             // Highlight selected point in scatter
-            this.highlightPoint(genome);
+            // this.highlightPoint(genome);
         };
         /**
          * Highlight selected point in scatter chart
