@@ -32,86 +32,107 @@
         <p>UMAP/PCA 3D visualization of microbial metabolic profiles.</p>
       </div><!-- End Section Title -->
 
-      <!-- Stats bar -->
-      <div class="stats-bar">
-        <div class="stat-item">
-          <span>Total Genomes:</span>
-          <span class="stat-value" id="stat-total">0</span>
-        </div>
-        <div class="stat-item">
-          <span>Color by:</span>
-          <span class="stat-value" id="stat-colorby">Kingdom</span>
-        </div>
-        <div class="stat-item">
-          <span>Categories:</span>
-          <span class="stat-value" id="stat-categories">0</span>
-        </div>
-      </div>
+      <div class="row">
+        <div class="col">
 
-      <!-- <div class="container"> -->
 
-      <!-- Main container -->
-      <div class="main-container">
-        <!-- Left: 3D Scatter -->
-        <div class="scatter-panel">
-          <div class="scatter-container">
-            <div id="scatter-chart"></div>
-            <div class="scatter-overlay">
-              Drag to rotate | Scroll to zoom | Click to select
+
+
+          <!-- Stats bar -->
+          <div class="stats-bar">
+            <div class="stat-item">
+              <span>Total Genomes:</span>
+              <span class="stat-value" id="stat-total">0</span>
             </div>
-            <div class="loading-overlay" id="loading-overlay">
-              <div class="loading-spinner"></div>
+            <div class="stat-item">
+              <span>Color by:</span>
+              <span class="stat-value" id="stat-colorby">Kingdom</span>
             </div>
-          </div>
-        </div>
-
-        <!-- Right: Info Panel -->
-        <div class="info-panel">
-          <!-- Taxonomy selector -->
-          <div class="panel-section">
-            <div class="section-title">Color by Taxonomy Level</div>
-            <select class="form-select taxonomy-selector" id="taxonomy-select">
-              <option value="kingdom">Kingdom</option>
-              <option value="phylum">Phylum</option>
-              <option value="class">Class</option>
-              <option value="order">Order</option>
-              <option value="family">Family</option>
-              <option value="genus">Genus</option>
-              <option value="species">Species</option>
-            </select>
-          </div>
-
-          <!-- Legend -->
-          <div class="panel-section">
-            <div class="section-title">Legend</div>
-            <div class="legend-container" id="legend-container">
-              <!-- Dynamically populated -->
+            <div class="stat-item">
+              <span>Categories:</span>
+              <span class="stat-value" id="stat-categories">0</span>
             </div>
           </div>
 
-          <!-- Selected genome info -->
-          <div class="panel-section genome-info">
-            <div class="section-title">Selected Genome</div>
-            <div id="genome-detail">
-              <div class="no-selection">
-                <div class="no-selection-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 8v4M12 16h.01" />
-                  </svg>
+          <!-- <div class="container"> -->
+
+          <!-- Main container -->
+          <div class="main-container">
+            <!-- Left: 3D Scatter -->
+            <div class="scatter-panel">
+              <div class="scatter-container">
+                <div id="scatter-chart"></div>
+                <div class="scatter-overlay">
+                  Drag to rotate | Scroll to zoom | Click to select
                 </div>
-                <p class="no-selection-text">Click a point in the scatter plot to view genome details</p>
+                <div class="loading-overlay" id="loading-overlay">
+                  <div class="loading-spinner"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Info Panel -->
+            <div class="info-panel">
+              <!-- Taxonomy selector -->
+              <div class="panel-section">
+                <div class="section-title">Color by Taxonomy Level</div>
+                <select class="form-select taxonomy-selector" id="taxonomy-select">
+                  <option value="kingdom">Kingdom</option>
+                  <option value="phylum">Phylum</option>
+                  <option value="class">Class</option>
+                  <option value="order">Order</option>
+                  <option value="family">Family</option>
+                  <option value="genus">Genus</option>
+                  <option value="species">Species</option>
+                </select>
+              </div>
+
+              <!-- Legend -->
+              <div class="panel-section">
+                <div class="section-title">Legend</div>
+                <div class="legend-container" id="legend-container">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Selected genome info -->
+              <div class="panel-section genome-info">
+                <div class="section-title">Selected Genome</div>
+                <div id="genome-detail">
+                  <div class="no-selection">
+                    <div class="no-selection-icon">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v4M12 16h.01" />
+                      </svg>
+                    </div>
+                    <p class="no-selection-text">Click a point in the scatter plot to view genome details</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Radar chart -->
+              <div class="panel-section">
+                <div class="section-title">EC Number Embedding Profile</div>
+                <div class="radar-container">
+                  <div id="radar-chart"></div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Radar chart -->
-          <div class="panel-section">
-            <div class="section-title">EC Number Embedding Profile</div>
-            <div class="radar-container">
-              <div id="radar-chart"></div>
+          <br />
+
+          <div class="row">
+            <div class="col" style="margin-left: 35px;">
+              <h3>Other Resources</h3>
+
+              <a href="/resources/assets/metabolic-tree.pdf" style="font-size: larger;"><i class="bi bi-file-earmark-pdf"></i> View Embedding Tree
+                Map</a>
             </div>
           </div>
+
         </div>
       </div>
 
