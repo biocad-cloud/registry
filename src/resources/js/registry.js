@@ -573,7 +573,7 @@ var pages;
                 var _this = this;
                 this.viz = new viewer.GenomeEmbeddingViz();
                 this.viz.initCharts();
-                data.ZipData.loadAndParseZipFromUrl("")
+                data.ZipData.loadAndParseZipFromUrl("/resources/assets/Metabolic-UMAP.zip")
                     .then(function (data) {
                     _this.viz.loadData(data);
                 });
