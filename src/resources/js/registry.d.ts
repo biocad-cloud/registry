@@ -64,8 +64,132 @@ declare namespace pages {
         size: number;
     }
 }
+declare namespace pages.landscapes {
+    type GenomeEmbeddingViz = viewer.GenomeEmbeddingViz;
+    export class metabolic extends Bootstrap {
+        viz: GenomeEmbeddingViz;
+        get appName(): string;
+        protected init(): void;
+    }
+    export {};
+}
 declare namespace viewer {
     function initChart(containerId: string, option: {}): echarts.ECharts;
+}
+declare namespace viewer {
+    /**
+     * a scatter point model that represent a microbial genome embedding result
+    */
+    interface metabolic_embedding {
+        /**
+         * the genome assembly id
+        */
+        assembly_id: string;
+        /**
+         * umap/pca embedding dimension 1
+        */
+        x: number;
+        /**
+         * umap/pca embedding dimension 2
+        */
+        y: number;
+        /**
+         * umap/pca embedding dimension 3
+        */
+        z: number;
+        /**
+         * enzyme embedding raw data, length of 7, represent the emebdding result of ec number class 1-7
+        */
+        ec_number: number[];
+        scientific_name: string;
+        ncbi_taxid: string;
+        kingdom: string;
+        phylum: string;
+        class: string;
+        order: string;
+        family: string;
+        genus: string;
+        species: string;
+    }
+    /**
+      * Genome Embedding Visualization Module
+      * Provides 3D scatter plot and radar chart visualization for microbial genome embedding data
+      */
+    class GenomeEmbeddingViz {
+        scatterChart: any;
+        radarChart: any;
+        currentData: metabolic_embedding[];
+        currentTaxonomyLevel: string;
+        colorMap: {};
+        selectedGenome: metabolic_embedding;
+        /**
+         * Initialize charts
+         */
+        initCharts(): void;
+        /**
+         * Generate color map for unique values
+         */
+        generateColorMap(uniqueValues: any): {};
+        /**
+         * Get unique values for a taxonomy level
+         */
+        getUniqueValues(data: any, level: any): any;
+        /**
+         * Update legend
+         */
+        updateLegend(): void;
+        /**
+         * Update stats bar
+         */
+        updateStats(): void;
+        /**
+         * Update 3D scatter chart
+         */
+        updateScatterChart(): void;
+        /**
+         * Select a genome and display its details
+         */
+        selectGenome(genome: any): void;
+        /**
+         * Highlight selected point in scatter chart
+         */
+        highlightPoint(genome: any): void;
+        /**
+         * Update radar chart for EC number embedding
+         */
+        updateRadarChart(genome: any): void;
+        /**
+         * Show/hide loading overlay
+         */
+        setLoading(isLoading: any): void;
+        /**
+         * Load embedding data and render visualization
+         * @param {Array} data - Array of metabolic_embedding objects
+         */
+        loadData(data: any): void;
+        /**
+         * Set taxonomy level for coloring
+         * @param {string} level - Taxonomy level (kingdom, phylum, class, order, family, genus, species)
+         */
+        setTaxonomyLevel(level: any): void;
+        /**
+         * Get currently selected genome
+         * @returns {Object|null} Selected genome or null
+         */
+        getSelectedGenome(): metabolic_embedding;
+        /**
+         * Get chart instances for external manipulation
+         * @returns {Object} Object containing scatterChart and radarChart instances
+         */
+        getChartInstances(): {
+            scatterChart: any;
+            radarChart: any;
+        };
+        /**
+         * Resize charts
+         */
+        resizeCharts(): void;
+    }
 }
 declare namespace viewer {
     interface PieChartData {
