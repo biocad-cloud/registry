@@ -285,16 +285,94 @@ var pages;
             });
         };
         spectrum_data.prototype.load_pie = function () {
-            var _this = this;
             $ts.get(url_annotation_hits, function (msg) {
                 if (msg.code == 0) {
                     var anno_hits = msg.info;
-                    _this.viz_pie(anno_hits.organism, "org_pie", '物种分布统计');
-                    _this.viz_pie(anno_hits.tissue, "tissue_pie", '来源分布统计');
+                    viewer.PieViewer.viz_pie(anno_hits.organism, "org_pie", '物种分布统计');
+                    viewer.PieViewer.viz_pie(anno_hits.tissue, "tissue_pie", '来源分布统计');
                 }
             });
         };
-        spectrum_data.prototype.viz_pie = function (rawData, chart_id, title) {
+        return spectrum_data;
+    }(Bootstrap));
+    pages.spectrum_data = spectrum_data;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var url_organism_source = "/registry/organism_source/";
+    var taxonomy_data = /** @class */ (function (_super) {
+        __extends(taxonomy_data, _super);
+        function taxonomy_data() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(taxonomy_data.prototype, "appName", {
+            get: function () {
+                return "taxonomy_data";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        taxonomy_data.prototype.taxid = function () {
+            return $ts.location("id");
+        };
+        taxonomy_data.prototype.init = function () {
+            $ts.get("".concat(url_organism_source, "?taxid=").concat(this.taxid()), function (msg) {
+                if (msg.code == 0) {
+                    var data_2 = $from(msg.info).Select(function (a) {
+                        return {
+                            "ID": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.id, "</a>"),
+                            "Name": "<a href=\"/spectrum/?metab=".concat(a.id, "\">").concat(a.name, "</a>"),
+                            "Formula": a.formula,
+                            "Exact Mass": a.exact_mass,
+                            "Hits": a.size
+                        };
+                    });
+                    $ts("#metab-source").clear();
+                    $ts.appendTable(data_2, "#metab-source", null, { class: "table" });
+                }
+            });
+        };
+        return taxonomy_data;
+    }(Bootstrap));
+    pages.taxonomy_data = taxonomy_data;
+})(pages || (pages = {}));
+var viewer;
+(function (viewer) {
+    // 初始化 ECharts 实例
+    function initChart(containerId, option) {
+        var container = document.getElementById(containerId);
+        if (!container) {
+            throw new Error("Container with id \"".concat(containerId, "\" not found"));
+        }
+        var chart = echarts.init(container, undefined, {
+            renderer: 'canvas'
+        });
+        // 设置配置项
+        chart.setOption(option);
+        // 响应式调整
+        window.addEventListener('resize', function () {
+            chart.resize();
+        });
+        return chart;
+    }
+    viewer.initChart = initChart;
+})(viewer || (viewer = {}));
+var viewer;
+(function (viewer) {
+    function toPieData(rawData) {
+        return Object.entries(rawData).map(function (_a) {
+            var name = _a[0], value = _a[1];
+            return ({
+                name: name,
+                value: value
+            });
+        });
+    }
+    viewer.toPieData = toPieData;
+    var PieViewer = /** @class */ (function () {
+        function PieViewer() {
+        }
+        PieViewer.viz_pie = function (rawData, chart_id, title) {
             // 转换为 ECharts 需要的格式
             var pieData = viewer.toPieData(rawData);
             // 计算总和
@@ -424,81 +502,8 @@ var pages;
                 console.log('Clicked:', params.name, params.value);
             });
         };
-        return spectrum_data;
-    }(Bootstrap));
-    pages.spectrum_data = spectrum_data;
-})(pages || (pages = {}));
-var pages;
-(function (pages) {
-    var url_organism_source = "/registry/organism_source/";
-    var taxonomy_data = /** @class */ (function (_super) {
-        __extends(taxonomy_data, _super);
-        function taxonomy_data() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(taxonomy_data.prototype, "appName", {
-            get: function () {
-                return "taxonomy_data";
-            },
-            enumerable: false,
-            configurable: true
-        });
-        taxonomy_data.prototype.taxid = function () {
-            return $ts.location("id");
-        };
-        taxonomy_data.prototype.init = function () {
-            $ts.get("".concat(url_organism_source, "?taxid=").concat(this.taxid()), function (msg) {
-                if (msg.code == 0) {
-                    var data_2 = $from(msg.info).Select(function (a) {
-                        return {
-                            "ID": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.id, "</a>"),
-                            "Name": "<a href=\"/spectrum/?metab=".concat(a.id, "\">").concat(a.name, "</a>"),
-                            "Formula": a.formula,
-                            "Exact Mass": a.exact_mass,
-                            "Hits": a.size
-                        };
-                    });
-                    $ts("#metab-source").clear();
-                    $ts.appendTable(data_2, "#metab-source", null, { class: "table" });
-                }
-            });
-        };
-        return taxonomy_data;
-    }(Bootstrap));
-    pages.taxonomy_data = taxonomy_data;
-})(pages || (pages = {}));
-var viewer;
-(function (viewer) {
-    // 初始化 ECharts 实例
-    function initChart(containerId, option) {
-        var container = document.getElementById(containerId);
-        if (!container) {
-            throw new Error("Container with id \"".concat(containerId, "\" not found"));
-        }
-        var chart = echarts.init(container, undefined, {
-            renderer: 'canvas'
-        });
-        // 设置配置项
-        chart.setOption(option);
-        // 响应式调整
-        window.addEventListener('resize', function () {
-            chart.resize();
-        });
-        return chart;
-    }
-    viewer.initChart = initChart;
-})(viewer || (viewer = {}));
-var viewer;
-(function (viewer) {
-    function toPieData(rawData) {
-        return Object.entries(rawData).map(function (_a) {
-            var name = _a[0], value = _a[1];
-            return ({
-                name: name,
-                value: value
-            });
-        });
-    }
-    viewer.toPieData = toPieData;
+        return PieViewer;
+    }());
+    viewer.PieViewer = PieViewer;
 })(viewer || (viewer = {}));
 //# sourceMappingURL=registry.js.map

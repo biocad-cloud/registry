@@ -41,7 +41,6 @@ declare namespace pages {
         protected init(): void;
         private load_exp;
         private load_pie;
-        private viz_pie;
     }
     interface lcms_exp_result {
         taxname: string;
@@ -77,4 +76,7 @@ declare namespace viewer {
         [key: string]: number;
     }
     function toPieData(rawData: SpeciesData): any;
+    class PieViewer {
+        static viz_pie(rawData: SpeciesData, chart_id: string, title: string): void;
+    }
 }
