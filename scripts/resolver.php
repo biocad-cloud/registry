@@ -37,9 +37,15 @@ class resolver {
         if (Utils::isDbNull($referer)) {
             RFC7231Error::err405("Unknown data entry point to query!");
         } else {
-            $referer = $referer["path"];
-            $referer = Strings::Split($referer, "/");
-            $referer = $referer[2];
+            $q = $referer["query"];
+            
+            if ((!Utils::isDbNull($q)) && array_key_exists("metab", $q)) {
+                $referer = $q["metab"];
+            } else {
+                $referer = $referer["path"];
+                $referer = Strings::Split($referer, "/");
+                $referer = $referer[2];
+            }          
         }
 
         return Regex::Match($referer, "\d+");

@@ -44,23 +44,13 @@ class App {
      * @method get
     */
     public function experiment_source() {
-        $referer = $_SERVER['HTTP_REFERER'];
-        $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer,true );
-
-        if (Utils::isDbNull($referer)) {
-            RFC7231Error::err405("Unknown data entry point to query!");
-        } else {
-            $referer = $referer["query"]["metab"];
-            $referer = Regex::Match($referer, "\d+");
-        }
-
         $exp = (new Table(["mzvault"=>"annotation"]))
             ->left_join("spectrum")
             ->on(["spectrum"=>"annotation_id","annotation"=>"id"])
             ->left_join("sampleinfo")
             ->on(["spectrum"=>"sample_id","sampleinfo"=>"id"])
             ->where([
-                "db_xref"=>$referer,
+                "db_xref"=> resolver::db_xref(),
                 "CHAR_LENGTH(splash_id)"=>gt("0")
             ])->group_by(["adducts", "taxname" , "taxid" , "tissue"])
             ->order_by("size", true)
