@@ -40,6 +40,8 @@ declare namespace pages {
         get appName(): string;
         protected init(): void;
         private load_exp;
+        private load_pie;
+        private viz_pie;
     }
     interface lcms_exp_result {
         taxname: string;
@@ -62,4 +64,17 @@ declare namespace pages {
         exact_mass: number;
         size: number;
     }
+}
+declare namespace viewer {
+    function initChart(containerId: string, option: {}): echarts.ECharts;
+}
+declare namespace viewer {
+    interface PieChartData {
+        name: string;
+        value: number;
+    }
+    interface SpeciesData {
+        [key: string]: number;
+    }
+    function toPieData(rawData: SpeciesData): any;
 }

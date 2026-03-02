@@ -197,6 +197,8 @@ var viewer;
 /// <reference path="../viewer/SpectrumViewer.ts"/>
 var pages;
 (function (pages) {
+    var url_spectrum_list = "/mzvault/spectrum_list/";
+    var url_spectrum_data = "/mzvault/spectrum/";
     var metabolite_data = /** @class */ (function (_super) {
         __extends(metabolite_data, _super);
         function metabolite_data() {
@@ -214,7 +216,7 @@ var pages;
         };
         metabolite_data.prototype.load = function () {
             var _this = this;
-            $ts.get("/registry/spectrum_list/", function (msg) {
+            $ts.get(url_spectrum_list, function (msg) {
                 if (msg.code == 0) {
                     var list = $from(msg.info).Select(function (entry) {
                         return {
@@ -231,7 +233,7 @@ var pages;
             });
         };
         metabolite_data.prototype.click_splash = function (splash_id) {
-            $ts.get("/registry/spectrum/?splash=".concat(splash_id), function (data) {
+            $ts.get("".concat(url_spectrum_data, "?splash=").concat(splash_id), function (data) {
                 if (data.code == 0) {
                     var spectrum = data.info;
                     var display = new viewer.SpectrumViewer();
@@ -246,6 +248,8 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
+    var url_experiment_source = "/mzvault/experiment_source/";
+    var url_annotation_hits = "/mzvault/annotation_hits/";
     var spectrum_data = /** @class */ (function (_super) {
         __extends(spectrum_data, _super);
         function spectrum_data() {
@@ -260,10 +264,10 @@ var pages;
         });
         spectrum_data.prototype.init = function () {
             this.load_exp();
+            this.load_pie();
         };
         spectrum_data.prototype.load_exp = function () {
-            var url = "/registry/experiment_source/";
-            $ts.get(url, function (msg) {
+            $ts.get(url_experiment_source, function (msg) {
                 if (msg.code == 0) {
                     var data_1 = $ts(msg.info).Select(function (a) {
                         return {
@@ -278,12 +282,153 @@ var pages;
                 }
             });
         };
+        spectrum_data.prototype.load_pie = function () {
+            var _this = this;
+            $ts.get(url_annotation_hits, function (msg) {
+                if (msg.code == 0) {
+                    var anno_hits = msg.info;
+                    _this.viz_pie(anno_hits.organism, "org_pie");
+                    _this.viz_pie(anno_hits.tissue, "tissue_pie");
+                }
+            });
+        };
+        spectrum_data.prototype.viz_pie = function (rawData, chart_id) {
+            // 转换为 ECharts 需要的格式
+            var pieData = viewer.toPieData(rawData);
+            // 计算总和
+            var total = pieData.reduce(function (sum, item) { return sum + item.value; }, 0);
+            // ECharts 配置项
+            var option = {
+                // 标题配置
+                title: {
+                    text: '物种分布统计',
+                    subtext: "\u603B\u8BA1: ".concat(total.toFixed(2)),
+                    left: 'center',
+                    top: 20,
+                    textStyle: {
+                        fontSize: 24,
+                        fontWeight: 'bold',
+                        color: '#2C3E50'
+                    },
+                    subtextStyle: {
+                        fontSize: 14,
+                        color: '#7F8C8D'
+                    }
+                },
+                // 提示框配置
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#E0E0E0',
+                    borderWidth: 1,
+                    textStyle: {
+                        color: '#2C3E50'
+                    },
+                    formatter: function (params) {
+                        var percent = ((params.value / total) * 100).toFixed(2);
+                        return "\n          <div style=\"padding: 8px;\">\n            <strong style=\"font-size: 14px;\">".concat(params.name, "</strong><br/>\n            <span style=\"color: #7F8C8D;\">\u6570\u503C: </span>\n            <strong>").concat(params.value.toFixed(4), "</strong><br/>\n            <span style=\"color: #7F8C8D;\">\u5360\u6BD4: </span>\n            <strong>").concat(percent, "%</strong>\n          </div>\n        ");
+                    }
+                },
+                // 图例配置
+                legend: {
+                    type: 'scroll',
+                    orient: 'vertical',
+                    right: 30,
+                    top: 'middle',
+                    itemWidth: 16,
+                    itemHeight: 16,
+                    itemGap: 12,
+                    textStyle: {
+                        fontSize: 13,
+                        color: '#2C3E50'
+                    },
+                    formatter: function (name) {
+                        var item = pieData.find(function (d) { return d.name === name; });
+                        if (item) {
+                            var percent = ((item.value / total) * 100).toFixed(2);
+                            return "".concat(name, "  (").concat(percent, "%)");
+                        }
+                        return name;
+                    }
+                },
+                // 系列配置
+                series: [
+                    {
+                        name: '物种分布',
+                        type: 'pie',
+                        radius: ['35%', '70%'], // 环形图，更美观
+                        center: ['40%', '55%'],
+                        avoidLabelOverlap: true,
+                        // 标签配置
+                        label: {
+                            show: true,
+                            position: 'outside',
+                            formatter: function (params) {
+                                var percent = ((params.value / total) * 100).toFixed(2);
+                                // 占比小于1%的不显示标签
+                                if (parseFloat(percent) < 1) {
+                                    return '';
+                                }
+                                return "".concat(params.name, "\n").concat(percent, "%");
+                            },
+                            fontSize: 12,
+                            color: '#2C3E50',
+                            lineHeight: 18
+                        },
+                        // 标签引导线
+                        labelLine: {
+                            show: true,
+                            length: 15,
+                            length2: 10,
+                            smooth: true,
+                            lineStyle: {
+                                color: '#95A5A6',
+                                width: 1.5
+                            }
+                        },
+                        // 强调样式
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 20,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.3)',
+                                borderWidth: 3,
+                                borderColor: '#FFFFFF'
+                            },
+                            label: {
+                                show: true,
+                                fontSize: 14,
+                                fontWeight: 'bold'
+                            }
+                        },
+                        // 数据项样式
+                        itemStyle: {
+                            borderRadius: 8,
+                            borderColor: '#FFFFFF',
+                            borderWidth: 2
+                        },
+                        // 数据
+                        data: pieData,
+                        // 动画配置
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) { return idx * 100; }
+                    }
+                ]
+            };
+            var chart = viewer.initChart(chart_id, option);
+            // 可选：添加点击事件
+            chart.on('click', function (params) {
+                console.log('Clicked:', params.name, params.value);
+            });
+        };
         return spectrum_data;
     }(Bootstrap));
     pages.spectrum_data = spectrum_data;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
+    var url_organism_source = "/registry/organism_source/";
     var taxonomy_data = /** @class */ (function (_super) {
         __extends(taxonomy_data, _super);
         function taxonomy_data() {
@@ -300,7 +445,7 @@ var pages;
             return $ts.location("id");
         };
         taxonomy_data.prototype.init = function () {
-            $ts.get("/registry/organism_source/?taxid=".concat(this.taxid()), function (msg) {
+            $ts.get("".concat(url_organism_source, "?taxid=").concat(this.taxid()), function (msg) {
                 if (msg.code == 0) {
                     var data_2 = $from(msg.info).Select(function (a) {
                         return {
@@ -320,4 +465,38 @@ var pages;
     }(Bootstrap));
     pages.taxonomy_data = taxonomy_data;
 })(pages || (pages = {}));
+var viewer;
+(function (viewer) {
+    // 初始化 ECharts 实例
+    function initChart(containerId, option) {
+        var container = document.getElementById(containerId);
+        if (!container) {
+            throw new Error("Container with id \"".concat(containerId, "\" not found"));
+        }
+        var chart = echarts.init(container, undefined, {
+            renderer: 'canvas'
+        });
+        // 设置配置项
+        chart.setOption(option);
+        // 响应式调整
+        window.addEventListener('resize', function () {
+            chart.resize();
+        });
+        return chart;
+    }
+    viewer.initChart = initChart;
+})(viewer || (viewer = {}));
+var viewer;
+(function (viewer) {
+    function toPieData(rawData) {
+        return Object.entries(rawData).map(function (_a) {
+            var name = _a[0], value = _a[1];
+            return ({
+                name: name,
+                value: value
+            });
+        });
+    }
+    viewer.toPieData = toPieData;
+})(viewer || (viewer = {}));
 //# sourceMappingURL=registry.js.map
