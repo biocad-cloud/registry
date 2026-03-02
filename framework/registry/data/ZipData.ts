@@ -67,6 +67,7 @@ namespace data.ZipData {
             family: headers.indexOf('family'),
             genus: headers.indexOf('genus'),
             species: headers.indexOf('species'),
+            ncbi_taxid: headers.indexOf('ncbi_taxid')
         };
 
         // 验证必要列存在
@@ -112,14 +113,14 @@ namespace data.ZipData {
                     getNumber('ec_7'),
                 ],
                 scientific_name: getString('scientific_name'),
-                ncbi_taxid: '', // CSV中没有此列，设为空字符串
+                ncbi_taxid: getString('ncbi_taxid'),
                 kingdom: getString('kingdom'),
                 phylum: getString('phylum'),
                 class: getString('class'),
                 order: getString('order'),
                 family: getString('family'),
                 genus: getString('genus'),
-                species: getString('species'),
+                species: getString('species')
             });
         }
 
