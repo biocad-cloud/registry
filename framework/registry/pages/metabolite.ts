@@ -4,6 +4,9 @@ namespace pages {
 
     type SpectrumViewer = viewer.SpectrumViewer;
 
+    const url_spectrum_list = "/mzvault/spectrum_list/";
+    const url_spectrum_data = "/mzvault/spectrum/";
+
     export class metabolite_data extends Bootstrap {
 
         get appName(): string {
@@ -15,7 +18,7 @@ namespace pages {
         }
 
         private load() {
-            $ts.get("/registry/spectrum_list/", msg => {
+            $ts.get(url_spectrum_list, msg => {
                 if (msg.code == 0) {
                     let list = $from(<spectrum_entry[]>msg.info).Select(entry => {
                         return {
@@ -34,7 +37,7 @@ namespace pages {
         }
 
         private click_splash(splash_id: string) {
-            $ts.get(`/registry/spectrum/?splash=${splash_id}`, data => {
+            $ts.get(`${url_spectrum_data}?splash=${splash_id}`, data => {
                 if (data.code == 0) {
                     let spectrum: spectrum_data = <spectrum_data>data.info;
                     let display: SpectrumViewer = new viewer.SpectrumViewer();

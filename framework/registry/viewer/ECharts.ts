@@ -1,7 +1,7 @@
 namespace viewer {
 
     // 初始化 ECharts 实例
-    export function initChart(containerId: string): echarts.ECharts {
+    export function initChart(containerId: string, option:{}): echarts.ECharts {
         const container = document.getElementById(containerId);
         if (!container) {
             throw new Error(`Container with id "${containerId}" not found`);

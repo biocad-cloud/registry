@@ -1,5 +1,7 @@
 namespace pages {
 
+    const url_experiment_source = "/mzvault/experiment_source/";
+
     export class spectrum_data extends Bootstrap {
 
         get appName(): string {
@@ -8,12 +10,11 @@ namespace pages {
 
         protected init(): void {
             this.load_exp();
+            this.load_pie();
         }
 
         private load_exp() {
-            let url = "/registry/experiment_source/";
-
-            $ts.get(url, msg => {
+            $ts.get(url_experiment_source, msg => {
                 if (msg.code == 0) {
                     let data = $ts(<lcms_exp_result[]>msg.info).Select(a => {
                         return {
@@ -28,6 +29,10 @@ namespace pages {
                     $ts.appendTable(data, "#exp_table", null, { class: "table" });
                 }
             })
+        }
+
+        private load_pie() {
+
         }
 
         private viz_pie(rawData: viewer.SpeciesData) {
@@ -172,7 +177,7 @@ namespace pages {
                 ]
             };
 
-            const chart = viewer.initChart('chart-container');
+            const chart = viewer.initChart('chart-container', option);
 
             // 可选：添加点击事件
             chart.on('click', (params: any) => {

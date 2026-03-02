@@ -1,5 +1,7 @@
 namespace pages {
 
+    const url_organism_source = "/registry/organism_source/";
+
     export class taxonomy_data extends Bootstrap {
 
         get appName(): string {
@@ -11,7 +13,7 @@ namespace pages {
         }
 
         protected init(): void {
-            $ts.get(`/registry/organism_source/?taxid=${this.taxid()}`, msg => {
+            $ts.get(`${url_organism_source}?taxid=${this.taxid()}`, msg => {
                 if (msg.code == 0) {
                     let data = $from(<metabolite_sources[]>msg.info).Select(a => {
                         return {
