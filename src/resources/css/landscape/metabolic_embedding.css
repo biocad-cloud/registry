@@ -72,7 +72,7 @@ body {
 
 /* Left panel - 3D scatter */
 .scatter-panel {
-  width: 80%;
+  width: 85%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -109,8 +109,8 @@ body {
 
 /* Right panel */
 .info-panel {
-  width: 20%;
-  min-width: 280px;
+  width: 15%;
+  min-width: 250px;
   background: var(--bg-secondary);
   border-left: 1px solid var(--border-color);
   display: flex;
