@@ -153,8 +153,8 @@
                   <div class="tab-content-preview">
                     <span class="tab-number">04</span>
                     <div class="tab-text">
-                      <h6>Integration</h6>
-                      <small>Seamless workflow</small>
+                      <h6>Organism Source</h6>
+                      <small>Natural Product Synthetic</small>
                     </div>
                   </div>
                 </a>
@@ -296,8 +296,7 @@
 
                       <ol>
                         <foreach @organism>
-                          <li><a href='/taxonomy/?id=@organism["ncbi_taxid"]'>@organism["ncbi_taxid"] -
-                              @organism["taxname"]</a></li>
+                          <li><a href='/taxonomy/?id=@organism["ncbi_taxid"]'> @organism["taxname"] [ncbi taxid: @organism["ncbi_taxid"]]</a></li>
                         </foreach>
                       </ol>
 
