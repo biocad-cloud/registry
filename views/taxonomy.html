@@ -4,6 +4,7 @@
 
 <head>
   <meta name="app" content="taxonomy_data">
+  <meta name="drawer-h" content="125">
 
   ${./includes/head.html}
 </head>
@@ -32,7 +33,7 @@
           ancestor: <a href="/taxonomy/?id={$ancestor}">{$parent_name} ({$parent_rank})</a>
         </p>
 
-        <h5>Child Taxonomy</h5>
+        <h3>Child Taxonomy</h3>
 
         <table class="table">
           <thead>
@@ -54,7 +55,7 @@
         </table>
 
 
-        <h5 id="enzymes">Enzyme Proteins</h5>
+        <h3 id="enzymes">Enzyme Proteins</h3>
 
         <table class="table">
           <thead>
@@ -77,7 +78,11 @@
           </tbody>
         </table>
 
-        <h5 id="metabolites">Metabolites</h5>
+        ${./includes/paging.html}
+
+        <h3 id="metabolites">Metabolites</h3>
+
+        <h5>LCMS Annotations</h5>
 
         <div class="row">
           <div class="col" id="metab-source">
@@ -85,7 +90,45 @@
           </div>
         </div>
 
-        ${./includes/paging.html}
+        <h5>Literature Annotations</h5>
+
+        <div class="row">
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Metabolite</th>
+                  <th>Database Reference</th>
+                  <th>Structure</th>
+                </tr>
+
+              </thead>
+              <tbody>
+                <foreach @metabolite>
+                  <tr>
+                    <td><a href='/metabolite/@metabolite["id"]'>@metabolite["name"]</a><br /><br />
+                      <strong>Formula:</strong> @metabolite["name"]<br />
+                      <strong>Exact Mass:</strong> @metabolite["exact_mass"]<br />
+                      <strong>Source ID:</strong> @metabolite["evidence"]
+                    </td>
+                    <td>
+                      <ul>
+                        <li>CAS Registry: @metabolite["cas_id"]</li>
+                        <li>KEGG: @metabolite["kegg_id"]</li>
+                        <li>LipidMAPS: @metabolite["lipidmaps_id"]</li>
+                        <li>BioCYC: @metabolite["biocyc"]</li>
+                      </ul>
+                    </td>
+                    <td>
+                      <canvas class="smiles_drawer" role="img" focusable="false" style="float:right;"
+                        data='@metabolite["smiles"]'>
+                    </td>
+                  </tr>
+                </foreach>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -95,5 +138,8 @@
 
   ${./includes/footer.html}
 </body>
+
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
+<script src="/resources/js/smiles_batch_render.js"></script>
 
 </html>

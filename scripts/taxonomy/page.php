@@ -55,16 +55,19 @@ class ncbi_taxonomy {
         $tax["metabolite"] = (new Table(["cad_registry"=>"organism_source"]))
             ->left_join("metabolites")
             ->on(["metabolites"=>"id","organism_source"=>"metabolite_id"])
+            ->left_join("struct_data")
+            ->on(["struct_data"=>"metabolite_id","metabolites"=>"id"])
             ->where(["organism_id"=>$id])
             ->select(["`metabolites`.id",
                 "evidence",
                 "name",
                 "formula",
-                "exact_mass",
+                "round(`exact_mass`,4) as `exact_mass`",
                 "cas_id",
                 "kegg_id",
                 "lipidmaps_id",
-                "biocyc"])
+                "biocyc",
+                "smiles"])
             ;
 
         return list_nav( $tax,$page);
