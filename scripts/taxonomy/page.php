@@ -52,6 +52,20 @@ class ncbi_taxonomy {
     LIMIT {$prot_offset},{$page_size}
             ";
         $tax["enzyme"] = (new Table(["cad_registry"=>"protein_data"]))->exec($sql);
+        $tax["metabolite"] = (new Table(["cad_registry"=>"organism_source"]))
+            ->left_join("metabolites")
+            ->on(["metabolites"=>"id","organism_source"=>"metabolite_id"])
+            ->where(["organism_id"=>$id])
+            ->select(["`metabolites`.id",
+                "evidence",
+                "name",
+                "formula",
+                "exact_mass",
+                "cas_id",
+                "kegg_id",
+                "lipidmaps_id",
+                "biocyc"])
+            ;
 
         return list_nav( $tax,$page);
     }
