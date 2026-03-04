@@ -106,10 +106,10 @@
               <tbody>
                 <foreach @metabolite>
                   <tr>
-                    <td><a href='/metabolite/@metabolite["id"]'>@metabolite["name"]</a><br /><br />
-                      <strong>Formula:</strong> @metabolite["name"]<br />
-                      <strong>Exact Mass:</strong> @metabolite["exact_mass"]<br />
-                      <strong>Source ID:</strong> @metabolite["evidence"]
+                    <td><strong><a href='/metabolite/@metabolite["id"]'>@metabolite["name"]</a></strong><br /><br />
+                      <strong>Formula:</strong> <i>@metabolite["formula"]</i><br />
+                      <strong>Exact Mass:</strong> <i>@metabolite["exact_mass"]</i><br />
+                      <strong>Source ID:</strong> <i>@metabolite["evidence"]</i>
                     </td>
                     <td>
                       <ul>
