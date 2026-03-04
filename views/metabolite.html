@@ -257,88 +257,52 @@
 
             <div class="tab-pane fade" id="tabs-tab-3" role="tabpanel">
               <div class="row align-items-center">
-                
-                  <div class="content-area">
-                    <div class="content-badge">
-                      <i class="bi bi-speedometer2"></i>
-                      <span>Mass Spectrum</span>
-                    </div>
 
-                    <div class="row">
-                      <div class="col">
+                <div class="content-area">
+                  <div class="content-badge">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Mass Spectrum</span>
+                  </div>
 
-                        <div id="spectrum_list">
+                  <div class="row">
+                    <div class="col">
 
-                        </div>
+                      <div id="spectrum_list">
 
-                        <a href="/spectrum/?metab={$id}" class="explore-link">
-                          View All Mass Spectrum <i class="bi bi-arrow-up-right"></i>
-                        </a>
                       </div>
-                    </div>
 
-                  </div>                
+                      <a href="/spectrum/?metab={$id}" class="explore-link">
+                        View All Mass Spectrum <i class="bi bi-arrow-up-right"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
 
               </div>
             </div>
 
             <div class="tab-pane fade" id="tabs-tab-4" role="tabpanel">
               <div class="row align-items-center">
-                <div class="col-lg-6">
-                  <div class="content-area">
-                    <div class="content-badge">
-                      <i class="bi bi-puzzle"></i>
-                      <span>Smart Integration</span>
-                    </div>
-                    <h3>Seamless Workflow Integration</h3>
-                    <p>Eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus omnis
-                      voluptas assumenda est omnis dolor repellendus temporibus autem quibusdam et aut officiis debitis.
-                    </p>
 
-                    <div class="highlight-stats">
-                      <div class="stat-item">
-                        <span class="stat-value">450+</span>
-                        <span class="stat-label">Integrations</span>
-                      </div>
-                      <div class="stat-item">
-                        <span class="stat-value">85%</span>
-                        <span class="stat-label">Automation</span>
-                      </div>
-                    </div>
-
-                    <div class="feature-points">
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Rerum necessitatibus saepe eveniet voluptates</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Repudiandae sint et molestiae non recusandae</span>
-                      </div>
-                      <div class="point-item">
-                        <i class="bi bi-arrow-right"></i>
-                        <span>Itaque earum rerum hic tenetur sapiente</span>
-                      </div>
-                    </div>
-
-                    <a href="https://bootstrapmade.com/content/demo/Devin/#" class="explore-link">
-                      Start Integration <i class="bi bi-arrow-up-right"></i>
-                    </a>
+                <div class="content-area">
+                  <div class="content-badge">
+                    <i class="bi bi-puzzle"></i>
+                    <span>Organism Source</span>
                   </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="visual-content">
-                    <img src="./index_files/features-5.webp" alt="" class="img-fluid">
-                    <div class="floating-element">
-                      <div class="floating-card">
-                        <i class="bi bi-link-45deg"></i>
-                        <div class="card-info">
-                          <span>Connected</span>
-                          <strong>24/7 Sync</strong>
-                        </div>
-                      </div>
+
+                  <div class="row">
+                    <div class="col">
+
+                      <ol>
+                        <foreach @organism>
+                          <li><a href='/taxonomy/?id=@organism["ncbi_taxid"]'>@organism["ncbi_taxid"] - @organism["taxname"]</a></li>
+                        </foreach>
+                      </ol>
+
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
