@@ -4,6 +4,11 @@ class ncbi_taxonomy {
 
     public static function taxon_data($id,$page=1,$page_size = 35) {
         $id = Regex::Match($id, "\d+");
+        
+        if (strlen($id) == 0) {
+            RFC7231Error::err400("invalid taxonomy id parameter!");
+        }
+
         $tax = self::find_tax($id);
         $tax["title"] = "{$tax["name"]} ({$tax["rank_name"]})";
         $parent = self::find_tax( $tax["ancestor"]);
