@@ -10,6 +10,11 @@ class ncbi_taxonomy {
         }
 
         $tax = self::find_tax($id);
+
+        if (Utils::isDbNull($tax)) {
+            RFC7231Error::err404("Taxonomy data could not be found which is associated with ncbi taxid: $id");
+        }
+
         $tax["title"] = "{$tax["name"]} ({$tax["rank_name"]})";
         $parent = self::find_tax( $tax["ancestor"]);
         $tax["parent_name"] = $parent["name"];
