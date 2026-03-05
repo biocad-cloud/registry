@@ -13,4 +13,14 @@ class App {
     public function metabolic_embedding() {
         View::Display();
     }
+
+    /**
+     * Natural Product Library
+     * 
+     * @access *
+     * @uses view
+    */
+    public function natural_products() {
+        View::Display();
+    }
 }
