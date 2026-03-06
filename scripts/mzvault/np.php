@@ -4,6 +4,7 @@ class np {
 
     public static function plant_np($page=1, $page_size = 100) {
         $offset = ($page - 1) * $page_size;
+        $text_len = 150;
         $sql = "SELECT 
         CONCAT('BioCAD', LPAD(metabolite_id, 11, '0')) AS id,
         name,
@@ -16,7 +17,9 @@ class np {
         biocyc,
         mesh_id,
         smiles,
-        metabolites.note
+        IF(CHAR_LENGTH(metabolites.note) > {$text_len},
+            CONCAT(MID(metabolites.note, 1, {$text_len}), '...'),
+            metabolites.note) AS note
     FROM
         cad_registry.topic
             LEFT JOIN
