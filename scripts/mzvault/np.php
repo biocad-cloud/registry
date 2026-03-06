@@ -3,8 +3,17 @@
 class np {
 
     public static function plant_np($page=1, $page_size = 50) {
+        return self::np_library(749, "Plant Natural Product", $page, $page_size);
+    }
+
+    public static function microbial_np($page=1, $page_size = 50) {
+        return self::np_library(750, "Microbial Natural Product", $page, $page_size);
+    }
+
+    public static function np_library($topic_id, $name, $page=1, $page_size = 50) {
         $offset = ($page - 1) * $page_size;
         $text_len = 150;
+        $data = (new Table(["cad_registry"=>"vocabulary"]))->where(["id"=>$topic_id])->find();
         $sql = "SELECT 
         CONCAT('BioCAD', LPAD(metabolite_id, 11, '0')) AS id,
         name,
@@ -29,18 +38,16 @@ class np {
             LEFT JOIN
         metabolites ON metabolites.id = struct_data.metabolite_id
     WHERE
-        topic_id = 749 AND topic.type = 0
+        topic_id = {$topic_id} AND topic.type = 0
             AND metabolite_id IN (SELECT 
                 db_xref
             FROM
                 mzvault.annotation_hits)
     LIMIT {$offset} , {$page_size}"
     ;
-        $npdata = (new Table(["cad_registry"=>"topic"]))->getDriver()->Fetch($sql);
-        $npdata = [
-            "np" => $npdata
-        ];
+        $data["name"] = $name;
+        $data["np"] = (new Table(["cad_registry"=>"topic"]))->getDriver()->Fetch($sql);
 
-        return list_nav( $npdata, $page);
+        return list_nav( $data, $page);
     }
 }
