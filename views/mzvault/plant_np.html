@@ -31,9 +31,9 @@
                 <foreach @np>
                     <div class="card" style="width: 18rem;">
 
-                        <a href='/metabolite/@np["id"]'>
-                            <canvas class="smiles_drawer card-img-top" width="300px" height="300px" role="img"
-                                focusable="false" style="float:right;" data='@np["smiles"]'>
+                        <a href='/spectrum/?metab=@np["id"]'>
+                            <canvas class="smiles_drawer card-img-top" role="img" focusable="false"
+                                style="width:100%; max-height: 300px;" data='@np["smiles"]'>
                             </canvas>
                         </a>
 
