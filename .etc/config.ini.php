@@ -38,6 +38,7 @@ return [
     "APP_VERSION" => "2.3.111.13-alpha",
 	"MVC_VIEW_ROOT" => [
         "index" => APP_VIEWS,
-        "landscape" => APP_VIEWS . "/landscape"
+        "landscape" => APP_VIEWS . "/landscape",
+        "mzvault" => APP_VIEWS . "/mzvault"
     ]
 ];

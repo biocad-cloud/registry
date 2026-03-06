@@ -64,10 +64,10 @@ class App {
      * Plant Natural Product
      * 
      * @access *
-     * @uses api
+     * @uses view
      * @method get
     */
-    public function plant_np() {
+    public function plant_np($page=1) {
         View::Display();
     }
 }
