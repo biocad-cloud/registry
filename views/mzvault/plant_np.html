@@ -27,22 +27,23 @@
             </div><!-- End Section Title -->
 
             <div class="container">
+                <div class="d-flex flex-wrap gap-3">
+                    <foreach @np>
+                        <div class="card" style="width: 18rem;">
 
-                <foreach @np>
-                    <div class="card" style="width: 18rem;">
+                            <a href='/spectrum/?metab=@np["id"]'>
+                                <canvas class="smiles_drawer card-img-top" role="img" focusable="false"
+                                    style="width:100%; max-height: 300px;" data='@np["smiles"]'>
+                                </canvas>
+                            </a>
 
-                        <a href='/spectrum/?metab=@np["id"]'>
-                            <canvas class="smiles_drawer card-img-top" role="img" focusable="false"
-                                style="width:100%; max-height: 300px;" data='@np["smiles"]'>
-                            </canvas>
-                        </a>
-
-                        <div class="card-body">
-                            <h5 class="card-title"><a href='/metabolite/@np["id"]'>@np["name"]</a></h5>
-                            <p class="card-text">@np["note"]</p>
+                            <div class="card-body">
+                                <h5 class="card-title"><a href='/metabolite/@np["id"]'>@np["name"]</a></h5>
+                                <p class="card-text">@np["note"]</p>
+                            </div>
                         </div>
-                    </div>
-                </foreach>
+                    </foreach>
+                </div>
 
                 ${../includes/paging.html}
 

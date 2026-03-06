@@ -2,7 +2,7 @@
 
 class np {
 
-    public static function plant_np($page=1, $page_size = 100) {
+    public static function plant_np($page=1, $page_size = 50) {
         $offset = ($page - 1) * $page_size;
         $text_len = 150;
         $sql = "SELECT 
