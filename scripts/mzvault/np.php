@@ -18,7 +18,7 @@ class np {
         CONCAT('BioCAD', LPAD(metabolite_id, 11, '0')) AS id,
         name,
         formula,
-        exact_mass,
+        round(exact_mass,4) as exact_mass,
         cas_id,
         kegg_id,
         hmdb_id,
