@@ -68,6 +68,7 @@ class App {
      * @method get
     */
     public function plant_np($page=1) {
-        View::Display();
+        include_once APP_PATH . "/scripts/mzvault/np.php";
+        View::Display(np::plant_np($page));
     }
 }
