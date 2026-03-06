@@ -81,6 +81,6 @@ class App {
     */
     public function microbial_np($page=1) {
         include_once APP_PATH . "/scripts/mzvault/np.php";
-        View::Display(APP_VIEWS . "/mzvault/np_lib.html", np::microbial_np($page));
+        View::Show(APP_VIEWS . "/mzvault/np_lib.html", np::microbial_np($page));
     }
 }
