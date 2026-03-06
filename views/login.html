@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioDataHub - 生命科学数据库</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0369a1;
+            --primary-light: #0ea5e9;
+            --primary-dark: #075985;
+            --accent: #06b6d4;
+            --bg-main: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-primary: #0c4a6e;
+            --text-secondary: #64748b;
+            --border-color: #bae6fd;
+            --shadow-color: rgba(3, 105, 161, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand-text {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Background Animation Container */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* DNA Helix Animation */
+        .dna-strand {
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: -50%;
+        }
+
+        .dna-strand-left {
+            left: -5%;
+            animation: dnaFloat 25s linear infinite;
+        }
+
+        .dna-strand-right {
+            right: -5%;
+            animation: dnaFloat 25s linear infinite reverse;
+            animation-delay: -12s;
+        }
+
+        @keyframes dnaFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+        }
+
+        .dna-node {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            opacity: 0.3;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .dna-connector {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+            opacity: 0.15;
+            transform-origin: center;
+        }
+
+        /* Floating Cells */
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            background: radial-gradient(circle at 30% 30%, rgba(14, 165, 233, 0.08), transparent);
+            animation: cellFloat 20s ease-in-out infinite;
+        }
+
+        .cell::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 30%;
+            height: 30%;
+            border-radius: 50%;
+            background: rgba(14, 165, 233, 0.15);
+        }
+
+        @keyframes cellFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(-20px, -50px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(20px, -20px) rotate(270deg);
+            }
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        /* Login Card */
+        .login-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow:
+                0 4px 6px -1px var(--shadow-color),
+                0 20px 50px -12px rgba(3, 105, 161, 0.15),
+                0 0 0 1px rgba(14, 165, 233, 0.05);
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            overflow: hidden;
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
+        }
+
+        /* Logo & Brand */
+        .brand-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand-logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.25rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(3, 105, 161, 0.25);
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .brand-logo svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+
+        .form-control {
+            height: 52px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            background: var(--bg-main);
+            color: var(--text-primary);
+        }
+
+        .form-control:focus {
+            background: white;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-group-text {
+            background: var(--bg-main);
+            border: 2px solid var(--border-color);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            color: var(--text-secondary);
+            padding: 0 1rem;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary-light);
+            background: white;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            height: 52px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.01em;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(3, 105, 161, 0.35);
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-custom:active {
+            transform: translateY(0);
+        }
+
+        .btn-link-custom {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.25rem 0;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .btn-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .btn-link-custom:hover {
+            color: var(--primary-dark);
+        }
+
+        .btn-link-custom:hover::after {
+            width: 100%;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Form Check */
+        .form-check-input {
+            width: 1.15em;
+            height: 1.15em;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .form-check-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(3, 105, 161, 0.25);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--bg-main), white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.35rem;
+        }
+
+        .btn-close:focus {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            background: var(--bg-main);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 48px;
+        }
+
+        /* Alert Styles */
+        .alert-info-custom {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .alert-info-custom svg {
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+            }
+
+            .brand-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus Visible */
+        .btn:focus-visible,
+        .form-control:focus-visible,
+        .btn-link-custom:focus-visible {
+            outline: 2px solid var(--primary-light);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation" aria-hidden="true">
+        <div class="grid-bg"></div>
+        <div class="dna-strand dna-strand-left" id="dnaLeft"></div>
+        <div class="dna-strand dna-strand-right" id="dnaRight"></div>
+        <div id="cellsContainer"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="login-card">
+            <!-- Brand Section -->
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z" />
+                        <circle cx="7.5" cy="11.5" r="1.5" />
+                        <circle cx="12" cy="7.5" r="1.5" />
+                        <circle cx="16.5" cy="11.5" r="1.5" />
+                    </svg>
+                </div>
+                <h1 class="brand-name">BioDataHub</h1>
+                <p class="brand-tagline">生命科学数据共享平台</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" novalidate>
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">邮箱地址</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                        </span>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="请输入您的邮箱" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">密码</label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-control" id="loginPassword" placeholder="请输入您的密码" required>
+                        <button type="button" class="password-toggle" aria-label="显示密码" data-target="loginPassword">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="eye-off-icon d-none">
+                                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                                <path
+                                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                                <line x1="2" x2="22" y1="2" y2="22" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">记住我</label>
+                    </div>
+                    <button type="button" class="btn-link-custom" data-bs-toggle="modal"
+                        data-bs-target="#forgotPasswordModal">
+                        忘记密码?
+                    </button>
+                </div>
+
+                <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                    登录
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>或</span>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="footer-links">
+                <p>还没有账号?</p>
+                <button type="button" class="btn-link-custom" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    立即注册，开始探索
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">创建新账号</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert-info-custom d-flex align-items-start gap-2 mb-4">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                        <span>注册后可访问完整的基因组数据库、蛋白质结构数据和文献资源。</span>
+                    </div>
+
+                    <form id="registerForm" novalidate>
+                        <div class="mb-3">
+                            <label for="regName" class="form-label">姓名</label>
+                            <input type="text" class="form-control" id="regName" placeholder="请输入您的姓名" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label">邮箱地址</label>
+                            <input type="email" class="form-control" id="regEmail" placeholder="请输入您的邮箱" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="regInstitution" class="form-label">所属机构</label>
+                            <input type="text" class="form-control" id="regInstitution" placeholder="请输入您的研究机构">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">密码</label>
+                            <div class="password-wrapper">
+                                <input type="password" class="form-control" id="regPassword" placeholder="至少8位，包含字母和数字"
+                                    required>
+                                <button type="button" class="password-toggle" aria-label="显示密码"
+                                    data-target="regPassword">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="eye-icon">
+                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="eye-off-icon d-none">
+                                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                                        <path
+                                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                                        <path
+                                            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                                        <line x1="2" x2="22" y1="2" y2="22" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="regConfirmPassword" class="form-label">确认密码</label>
+                            <div class="password-wrapper">
+                                <input type="password" class="form-control" id="regConfirmPassword"
+                                    placeholder="请再次输入密码" required>
+                                <button type="button" class="password-toggle" aria-label="显示密码"
+                                    data-target="regConfirmPassword">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="eye-icon">
+                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="eye-off-icon d-none">
+                                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                                        <path
+                                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                                        <path
+                                            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                                        <line x1="2" x2="22" y1="2" y2="22" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                我已阅读并同意 <a href="#" class="btn-link-custom">服务条款</a> 和 <a href="#"
+                                    class="btn-link-custom">隐私政策</a>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary"
+                        style="border-radius: 10px; padding: 0.5rem 1.5rem;" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="registerForm" class="btn btn-primary-custom"
+                        style="padding: 0.5rem 1.5rem; border-radius: 10px;">注册账号</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">找回密码</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4" style="font-size: 0.9rem;">请输入您注册时使用的邮箱地址，我们将发送密码重置链接到您的邮箱。</p>
+
+                    <form id="forgotPasswordForm" novalidate>
+                        <div class="mb-4">
+                            <label for="forgotEmail" class="form-label">邮箱地址</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                    </svg>
+                                </span>
+                                <input type="email" class="form-control" id="forgotEmail" placeholder="请输入您的注册邮箱"
+                                    required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary"
+                        style="border-radius: 10px; padding: 0.5rem 1.5rem;" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="forgotPasswordForm" class="btn btn-primary-custom"
+                        style="padding: 0.5rem 1.5rem; border-radius: 10px;">发送重置链接</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<script type="text/javascript" src="/resources/js/login.js"></script>
+
+</html>
