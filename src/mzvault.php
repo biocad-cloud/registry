@@ -59,4 +59,15 @@ class App {
 
         controller::success($exp);
     }
+
+    /**
+     * Plant Natural Product
+     * 
+     * @access *
+     * @uses api
+     * @method get
+    */
+    public function plant_np() {
+        View::Display();
+    }
 }
