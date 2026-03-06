@@ -37,16 +37,21 @@
         <!-- 搜索核心区域 -->
         <div class="search-wrapper">
           <form id="searchForm" class="search-form" action="#" method="get" autocomplete="off">
-            <div class="input-group">
-              <!-- 输入框 -->
-              <input type="text" class="form-control search-input" id="searchInput"
-                style="background-color: transparent;" placeholder="Enter a keyword to search for the related biological knowledge term..." aria-label="Search content">
 
-              <!-- 搜索按钮 (融入右侧) -->
-              <button class="search-btn" type="button" id="searchButton" aria-label="Search">
-                <i class="bi bi-search search-icon"></i>
-              </button>
-            </div>
+  
+                <div class="input-group">
+                  <!-- 输入框 -->
+                  <input type="text" class="form-control search-input" id="searchInput"
+                    style="background-color: transparent;"
+                    placeholder="Enter a keyword to search for the related biological knowledge term..."
+                    aria-label="Search content">
+
+                  <!-- 搜索按钮 (融入右侧) -->
+                  <button class="search-btn" type="button" id="searchButton" aria-label="Search">
+                    <i class="bi bi-search search-icon"></i>
+                  </button>
+                </div>
+    
 
             <!-- 热门搜索下拉框 (模拟后台数据) -->
             <div class="suggestions-dropdown" id="suggestionsBox">
@@ -59,7 +64,21 @@
                 <div id="suggestionsList"></div>
               </div>
             </div>
+
           </form>
+
+
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div class="row">
+          <div class="col-12" style="text-align: center;">
+            <img src="/favicon.png" style="width:150px;">
+          </div>
         </div>
       </div>
 
