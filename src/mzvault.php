@@ -69,6 +69,18 @@ class App {
     */
     public function plant_np($page=1) {
         include_once APP_PATH . "/scripts/mzvault/np.php";
-        View::Display(np::plant_np($page));
+        View::Show(APP_VIEWS . "/mzvault/np_lib.html", np::plant_np($page));
+    }
+
+    /**
+     * Microbial Natural Product
+     * 
+     * @access *
+     * @uses view
+     * @method get
+    */
+    public function microbial_np($page=1) {
+        include_once APP_PATH . "/scripts/mzvault/np.php";
+        View::Display(APP_VIEWS . "/mzvault/np_lib.html", np::microbial_np($page));
     }
 }
