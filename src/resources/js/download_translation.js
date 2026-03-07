@@ -18,9 +18,9 @@ function parseMetaboliteTable() {
     const idCell = cells[0];
     let id = idCell.textContent.trim();
     // 去除可能存在的额外文本
-    const linkElement = idCell.querySelector("a");
+    const linkElement = idCell.querySelector("a").querySelector(".__qingyan_web_translate_origin__");
     if (linkElement) {
-      id = linkElement.textContent.trim();
+        id = linkElement.innerText.trim();
     }
 
     // 提取name（第一个链接中的英文名）
