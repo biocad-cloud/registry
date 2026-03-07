@@ -11,13 +11,13 @@ namespace pages {
         }
 
         public login_onclick() {
-            const email = (<HTMLInputElement><any>$ts("loginEmail")).value;
-            const password = (<HTMLInputElement><any>document.getElementById("loginPassword")).value;
+            const email = (<HTMLInputElement><any>$ts("#loginEmail")).value;
+            const password = (<HTMLInputElement><any>$ts("#loginPassword")).value;
             const loginForm = document.getElementById("loginForm");
 
             if (email && password) {
                 // Simulate login
-                const btn = <HTMLButtonElement>loginForm.querySelector('button[type="submit"]');
+                const btn = <HTMLButtonElement>loginForm.querySelector('button[id="login"]');
                 const originalText = btn.textContent;
 
                 btn.textContent = "登录中...";
@@ -27,6 +27,9 @@ namespace pages {
                     if (result.code == 0) {
                         $goto("/user/home/");
                     } else {
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+
                         msgbox.showMessageModal(result.info);
                     }
                 });
