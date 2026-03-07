@@ -29,6 +29,7 @@ return [
         'DB_PORT' => '3306'
     ],
 
+    "password_salt" => "test-demo",
     "ERR_HANDLER_DISABLE" => "FALSE",
 	"RFC7231"       => APP_VIEWS . "/http_errors/",
     "CACHE" => FALSE,
