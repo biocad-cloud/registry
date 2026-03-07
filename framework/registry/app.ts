@@ -9,6 +9,8 @@ namespace app {
 
         Router.AddAppHandler(new pages.landscapes.metabolic());
 
+        Router.AddAppHandler(new pages.user_login());
+
         Router.RunApp();
     }
 }
