@@ -11,6 +11,8 @@
     ${./includes/head.html}
 
     <link href="/resources/css/login.css" rel="stylesheet">
+    <link href="/resources/css/msgbox.css" rel="stylesheet">
+
 </head>
 
 <body class="index-page scrolled">
@@ -255,6 +257,50 @@
             </div>
         </div>
     </div>
+
+    <!-- 通用消息对话框 -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-message error" id="messageModalContent">
+                        <!-- 图标 -->
+                        <div class="icon-wrapper">
+                            <!-- 错误图标 (默认显示，JS会动态替换) -->
+                            <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="15" y1="9" x2="9" y2="15" />
+                                <line x1="9" y1="9" x2="15" y2="15" />
+                            </svg>
+                            <!-- 成功图标 -->
+                            <svg class="success-icon d-none" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            <!-- 警告图标 -->
+                            <svg class="warning-icon d-none" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                                <line x1="12" x2="12" y1="9" y2="13" />
+                                <line x1="12" x2="12.01" y1="17" y2="17" />
+                            </svg>
+                        </div>
+                        <!-- 标题 -->
+                        <h5 class="modal-title" id="messageModalLabel">错误</h5>
+                        <!-- 内容 -->
+                        <p id="messageModalText">发生了一个错误。</p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center; border-top: none; padding-top: 0;">
+                    <button type="button" class="btn btn-primary-custom"
+                        style="padding: 0.5rem 2rem; border-radius: 10px;" data-bs-dismiss="modal">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     ${./includes/footer.html}
 </body>
