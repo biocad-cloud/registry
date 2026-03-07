@@ -624,6 +624,9 @@ var pages;
                     }
                 });
             }
+            else {
+                msgbox.showMessageModal("Email or Password is required!");
+            }
         };
         return user_login;
     }(Bootstrap));

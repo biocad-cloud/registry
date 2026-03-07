@@ -30,6 +30,8 @@ namespace pages {
                         msgbox.showMessageModal(result.info);
                     }
                 });
+            } else {
+                msgbox.showMessageModal("Email or Password is required!");
             }
         }
     }
