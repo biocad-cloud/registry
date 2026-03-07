@@ -66,6 +66,7 @@ var app;
         Router.AddAppHandler(new pages.taxonomy_data());
         Router.AddAppHandler(new pages.metabolite_data());
         Router.AddAppHandler(new pages.landscapes.metabolic());
+        Router.AddAppHandler(new pages.user_login());
         Router.RunApp();
     }
     app.run = run;
@@ -553,6 +554,26 @@ var pages;
         return taxonomy_data;
     }(Bootstrap));
     pages.taxonomy_data = taxonomy_data;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var user_login = /** @class */ (function (_super) {
+        __extends(user_login, _super);
+        function user_login() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(user_login.prototype, "appName", {
+            get: function () {
+                return "user_login";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        user_login.prototype.init = function () {
+        };
+        return user_login;
+    }(Bootstrap));
+    pages.user_login = user_login;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {

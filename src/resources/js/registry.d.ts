@@ -80,6 +80,12 @@ declare namespace pages {
         size: number;
     }
 }
+declare namespace pages {
+    class user_login extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+    }
+}
 declare namespace pages.landscapes {
     type GenomeEmbeddingViz = viewer.GenomeEmbeddingViz;
     export class metabolic extends Bootstrap {
