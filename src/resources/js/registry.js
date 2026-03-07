@@ -465,6 +465,40 @@ var pages;
     }(Bootstrap));
     pages.metabolite_data = metabolite_data;
 })(pages || (pages = {}));
+var msgbox;
+(function (msgbox) {
+    // 辅助函数：显示消息对话框
+    function showMessageModal(message, title, type) {
+        if (title === void 0) { title = "Error Message"; }
+        if (type === void 0) { type = "error"; }
+        var modalEl = document.getElementById('messageModal');
+        var contentEl = document.getElementById('messageModalContent');
+        var titleEl = document.getElementById('messageModalLabel');
+        var textEl = document.getElementById('messageModalText');
+        // 清除之前的状态类
+        contentEl.classList.remove('error', 'success', 'warning');
+        // 隐藏所有图标
+        contentEl.querySelectorAll('.icon-wrapper svg').forEach(function (icon) { return icon.classList.add('d-none'); });
+        // 设置当前状态
+        contentEl.classList.add(type);
+        titleEl.textContent = title;
+        textEl.textContent = message;
+        // 显示对应图标
+        if (type === 'error') {
+            contentEl.querySelector('.error-icon').classList.remove('d-none');
+        }
+        else if (type === 'success') {
+            contentEl.querySelector('.success-icon').classList.remove('d-none');
+        }
+        else if (type === 'warning') {
+            contentEl.querySelector('.warning-icon').classList.remove('d-none');
+        }
+        // 显示 Modal
+        var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+    }
+    msgbox.showMessageModal = showMessageModal;
+})(msgbox || (msgbox = {}));
 var pages;
 (function (pages) {
     var url_experiment_source = "/mzvault/experiment_source/";
@@ -586,7 +620,7 @@ var pages;
                         $goto("/user/home/");
                     }
                     else {
-                        alert(result.info);
+                        msgbox.showMessageModal(result.info);
                     }
                 });
             }

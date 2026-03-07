@@ -51,6 +51,9 @@ declare namespace pages {
         splash_id: string;
     }
 }
+declare namespace msgbox {
+    function showMessageModal(message: any, title?: string, type?: "error" | "success" | "warning"): void;
+}
 declare namespace pages {
     class spectrum_data extends Bootstrap {
         get appName(): string;

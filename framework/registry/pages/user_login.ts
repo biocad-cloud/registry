@@ -27,7 +27,7 @@ namespace pages {
                     if (result.code == 0) {
                         $goto("/user/home/");
                     } else {
-                        alert(result.info);
+                        msgbox.showMessageModal(result.info);
                     }
                 });
             }
