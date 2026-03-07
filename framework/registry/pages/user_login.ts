@@ -10,7 +10,7 @@ namespace pages {
 
         }
 
-        public login() {
+        public login_onclick() {
             const email = (<HTMLInputElement><any>$ts("loginEmail")).value;
             const password = (<HTMLInputElement><any>document.getElementById("loginPassword")).value;
             const loginForm = document.getElementById("loginForm");

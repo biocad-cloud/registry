@@ -104,7 +104,6 @@ function initPasswordToggles() {
 
 // Form Validation & Submit
 function initFormValidation() {
-
   // Register Form
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {

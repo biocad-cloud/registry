@@ -571,7 +571,7 @@ var pages;
         });
         user_login.prototype.init = function () {
         };
-        user_login.prototype.login = function () {
+        user_login.prototype.login_onclick = function () {
             var email = $ts("loginEmail").value;
             var password = document.getElementById("loginPassword").value;
             var loginForm = document.getElementById("loginForm");

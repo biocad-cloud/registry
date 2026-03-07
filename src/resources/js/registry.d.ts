@@ -84,7 +84,7 @@ declare namespace pages {
     class user_login extends Bootstrap {
         get appName(): string;
         protected init(): void;
-        login(): void;
+        login_onclick(): void;
     }
 }
 declare namespace pages.landscapes {
