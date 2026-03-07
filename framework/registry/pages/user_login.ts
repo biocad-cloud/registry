@@ -7,7 +7,30 @@ namespace pages {
         }
 
         protected init(): void {
-            
+
+        }
+
+        public login() {
+            const email = (<HTMLInputElement><any>$ts("loginEmail")).value;
+            const password = (<HTMLInputElement><any>document.getElementById("loginPassword")).value;
+            const loginForm = document.getElementById("loginForm");
+
+            if (email && password) {
+                // Simulate login
+                const btn = <HTMLButtonElement>loginForm.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+
+                btn.textContent = "登录中...";
+                btn.disabled = true;
+
+                $ts.post("/user/login/", { email: email, passwd: md5(password) }, result => {
+                    if (result.code == 0) {
+                        $goto("/user/home/");
+                    } else {
+                        alert(result.info);
+                    }
+                });
+            }
         }
     }
 }

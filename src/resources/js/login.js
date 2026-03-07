@@ -104,30 +104,6 @@ function initPasswordToggles() {
 
 // Form Validation & Submit
 function initFormValidation() {
-  // Login Form
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-
-      if (email && password) {
-        // Simulate login
-        const btn = this.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        btn.textContent = "登录中...";
-        btn.disabled = true;
-
-        setTimeout(() => {
-          alert("登录成功！即将跳转到数据库主页...");
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }, 1500);
-      }
-    });
-  }
 
   // Register Form
   const registerForm = document.getElementById("registerForm");

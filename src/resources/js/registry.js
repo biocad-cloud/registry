@@ -571,6 +571,26 @@ var pages;
         });
         user_login.prototype.init = function () {
         };
+        user_login.prototype.login = function () {
+            var email = $ts("loginEmail").value;
+            var password = document.getElementById("loginPassword").value;
+            var loginForm = document.getElementById("loginForm");
+            if (email && password) {
+                // Simulate login
+                var btn = loginForm.querySelector('button[type="submit"]');
+                var originalText = btn.textContent;
+                btn.textContent = "登录中...";
+                btn.disabled = true;
+                $ts.post("/user/login/", { email: email, passwd: md5(password) }, function (result) {
+                    if (result.code == 0) {
+                        $goto("/user/home/");
+                    }
+                    else {
+                        alert(result.info);
+                    }
+                });
+            }
+        };
         return user_login;
     }(Bootstrap));
     pages.user_login = user_login;
