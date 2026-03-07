@@ -30,6 +30,8 @@ return [
     ],
 
     "password_salt" => "test-demo",
+    "base_url" => "https://biocad_registry.innovation.ac.cn",
+
     "ERR_HANDLER_DISABLE" => "FALSE",
 	"RFC7231"       => APP_VIEWS . "/http_errors/",
     "CACHE" => FALSE,
