@@ -6,6 +6,7 @@ namespace app {
         Router.AddAppHandler(new pages.spectrum_data());
         Router.AddAppHandler(new pages.taxonomy_data());
         Router.AddAppHandler(new pages.metabolite_data());
+        Router.AddAppHandler(new pages.peakdata());
 
         Router.AddAppHandler(new pages.landscapes.metabolic());
 
