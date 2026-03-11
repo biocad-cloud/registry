@@ -541,9 +541,10 @@ var pages;
                     var peaks = result.info.peak;
                     var data_1 = $from(peaks).Select(function (a) {
                         return {
+                            metabolite: "<a href=\"/spectrum/?metab=".concat(a.db_xref, "\">").concat(a.name, "</a><br /><br />\n                            adduct: ").concat(a.adducts, "<br />\n                            precurosr: ").concat(a.precursor, "\n                            "),
                             splash_id: a.splash_id,
                             mz: "".concat(a.mz, " (").concat(a.intensity, ")"),
-                            smiles: a.smiles
+                            "fragment smiles": a.smiles
                         };
                     });
                     console.table(peaks);

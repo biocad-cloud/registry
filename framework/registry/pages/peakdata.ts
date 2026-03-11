@@ -21,9 +21,13 @@ namespace pages {
                     let peaks = (<any>result.info).peak;
                     let data = $from(<peak_data[]>peaks).Select(a => {
                         return {
+                            metabolite: `<a href="/spectrum/?metab=${a.db_xref}">${a.name}</a><br /><br />
+                            adduct: ${a.adducts}<br />
+                            precurosr: ${a.precursor}
+                            `,
                             splash_id: a.splash_id,
                             mz: `${a.mz} (${a.intensity})`,
-                            smiles: a.smiles
+                            "fragment smiles": a.smiles
                         }
                     });
 
