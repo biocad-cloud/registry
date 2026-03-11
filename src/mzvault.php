@@ -85,7 +85,9 @@ class App {
     }
 
     /**
-     * 
+     * @access *
+     * @uses view
+     * @method get
     */
     public function peak($mz,$page=1) {
         include_once APP_PATH . "/scripts/mzvault/peak.php";
