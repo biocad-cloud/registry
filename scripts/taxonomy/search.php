@@ -3,7 +3,7 @@
 class search {
 
     public static function query_list($q, $page = 1) {
-        $name = $q;
+        $name = trim(urldecode($q));
         $term = Table::make_fulltext_strips($q);
         $page_size = 30;
         $list = (new Table(["cad_registry"=>"ncbi_taxonomy"]))
