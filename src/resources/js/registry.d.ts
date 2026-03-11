@@ -61,6 +61,16 @@ declare namespace pages {
         protected init(): void;
         private show_peakdata;
     }
+    interface peak_data {
+        mz: number;
+        intensity: number;
+        smiles: string;
+        splash_id: string;
+        db_xref: string;
+        name: string;
+        adducts: string;
+        precursor: number;
+    }
 }
 declare namespace pages {
     class spectrum_data extends Bootstrap {

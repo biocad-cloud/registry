@@ -538,6 +538,15 @@ var pages;
             var da = $ts("@da");
             $ts.get("/mzvault/peakdata/?mz=".concat(mz, "&da=").concat(da), function (result) {
                 if (result.code == 0) {
+                    var data_1 = $from(result.info).Select(function (a) {
+                        return {
+                            splash_id: a.splash_id,
+                            mz: "".concat(a.mz, " (").concat(a.intensity, ")"),
+                            smiles: a.smiles
+                        };
+                    });
+                    $ts("#peaksdata").clear();
+                    $ts.appendTable(data_1, "#peaksdata", null, { class: "table" });
                 }
             });
         };
@@ -568,7 +577,7 @@ var pages;
         spectrum_data.prototype.load_exp = function () {
             $ts.get(url_experiment_source, function (msg) {
                 if (msg.code == 0) {
-                    var data_1 = $ts(msg.info).Select(function (a) {
+                    var data_2 = $ts(msg.info).Select(function (a) {
                         return {
                             "Organism Source": "<a href=\"/taxonomy/?id=".concat(a.taxid, "\">").concat(a.taxname, "</a>"),
                             "Tissue": a.tissue,
@@ -576,9 +585,9 @@ var pages;
                             "Size": a.size
                         };
                     });
-                    if (data_1.Count > 0) {
+                    if (data_2.Count > 0) {
                         $ts("#exp_table").clear();
-                        $ts.appendTable(data_1, "#exp_table", null, { class: "table" });
+                        $ts.appendTable(data_2, "#exp_table", null, { class: "table" });
                     }
                 }
             });
@@ -617,7 +626,7 @@ var pages;
         taxonomy_data.prototype.init = function () {
             $ts.get("".concat(url_organism_source, "?taxid=").concat(this.taxid()), function (msg) {
                 if (msg.code == 0) {
-                    var data_2 = $from(msg.info).Select(function (a) {
+                    var data_3 = $from(msg.info).Select(function (a) {
                         return {
                             "ID": "<a href=\"/metabolite/".concat(a.id, "\">").concat(a.id, "</a>"),
                             "Name": "<a href=\"/spectrum/?metab=".concat(a.id, "\">").concat(a.name, "</a>"),
@@ -627,7 +636,7 @@ var pages;
                         };
                     });
                     $ts("#metab-source").clear();
-                    $ts.appendTable(data_2, "#metab-source", null, { class: "table" });
+                    $ts.appendTable(data_3, "#metab-source", null, { class: "table" });
                 }
             });
         };

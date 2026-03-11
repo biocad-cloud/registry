@@ -18,9 +18,30 @@ namespace pages {
 
             $ts.get(`/mzvault/peakdata/?mz=${mz}&da=${da}`, result => {
                 if (result.code == 0) {
+                    let data = $from(<peak_data[]>result.info).Select(a => {
+                        return {
+                            splash_id: a.splash_id,
+                            mz: `${a.mz} (${a.intensity})`,
+                            smiles: a.smiles
+                        }
+                    });
 
+                    $ts("#peaksdata").clear();
+                    $ts.appendTable(data, "#peaksdata", null, { class: "table" });
                 }
             });
         }
     }
+
+    export interface peak_data {
+        mz: number
+        intensity: number;
+        smiles: string;
+        splash_id: string;
+        db_xref: string;
+        name: string;
+        adducts: string;
+        precursor: number;
+    }
 }
+
