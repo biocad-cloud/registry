@@ -2,8 +2,7 @@
 
 class reference_peak {
 
-    public static function get_peakdata($mz, $page = 1) {
-        $da = 0.05;
+    public static function get_peakdata($mz, $da, $page = 1) {
         $page_size = 150;
         $peaks = (new Table(["mzvault"=>"reference_peaks"]))
             ->left_join("reference_spectrum")

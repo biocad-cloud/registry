@@ -89,8 +89,17 @@ class App {
      * @uses view
      * @method get
     */
-    public function peak($mz,$page=1) {
+    public function peak($mz) {        
+        View::Display(["mz" => $mz,"da"=> 0.05]);
+    }
+
+    /**
+     * @access *
+     * @uses api
+     * @method get
+    */
+    public function peakdata($mz, $da = 0.05, $page = 1) {
         include_once APP_PATH . "/scripts/mzvault/peak.php";
-        View::Display(reference_peak::get_peakdata($mz, $page));
+        controller::success(reference_peak::get_peakdata($mz, $da, $page));
     }
 }
