@@ -65,6 +65,7 @@ var app;
         Router.AddAppHandler(new pages.spectrum_data());
         Router.AddAppHandler(new pages.taxonomy_data());
         Router.AddAppHandler(new pages.metabolite_data());
+        Router.AddAppHandler(new pages.peakdata());
         Router.AddAppHandler(new pages.landscapes.metabolic());
         Router.AddAppHandler(new pages.user_login());
         Router.RunApp();
@@ -513,6 +514,37 @@ var msgbox;
     }
     msgbox.showMessageModal = showMessageModal;
 })(msgbox || (msgbox = {}));
+var pages;
+(function (pages) {
+    var peakdata = /** @class */ (function (_super) {
+        __extends(peakdata, _super);
+        function peakdata() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.page = 1;
+            return _this;
+        }
+        Object.defineProperty(peakdata.prototype, "appName", {
+            get: function () {
+                return "peakdata";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        peakdata.prototype.init = function () {
+            this.show_peakdata();
+        };
+        peakdata.prototype.show_peakdata = function () {
+            var mz = $ts("@mz");
+            var da = $ts("@da");
+            $ts.get("/mzvault/peakdata/?mz=".concat(mz, "&da=").concat(da), function (result) {
+                if (result.code == 0) {
+                }
+            });
+        };
+        return peakdata;
+    }(Bootstrap));
+    pages.peakdata = peakdata;
+})(pages || (pages = {}));
 var pages;
 (function (pages) {
     var url_experiment_source = "/mzvault/experiment_source/";

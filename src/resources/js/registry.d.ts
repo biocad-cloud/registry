@@ -55,6 +55,14 @@ declare namespace msgbox {
     function showMessageModal(message: any, title?: string, type?: "error" | "success" | "warning"): void;
 }
 declare namespace pages {
+    class peakdata extends Bootstrap {
+        get appName(): string;
+        page: number;
+        protected init(): void;
+        private show_peakdata;
+    }
+}
+declare namespace pages {
     class spectrum_data extends Bootstrap {
         get appName(): string;
         protected init(): void;
