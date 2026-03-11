@@ -18,13 +18,16 @@ namespace pages {
 
             $ts.get(`/mzvault/peakdata/?mz=${mz}&da=${da}`, result => {
                 if (result.code == 0) {
-                    let data = $from(<peak_data[]>result.info).Select(a => {
+                    let peaks = (<any>result.info).peak;
+                    let data = $from(<peak_data[]>peaks).Select(a => {
                         return {
                             splash_id: a.splash_id,
                             mz: `${a.mz} (${a.intensity})`,
                             smiles: a.smiles
                         }
                     });
+
+                    console.table(peaks);
 
                     $ts("#peaksdata").clear();
                     $ts.appendTable(data, "#peaksdata", null, { class: "table" });

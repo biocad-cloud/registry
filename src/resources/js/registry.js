@@ -538,13 +538,15 @@ var pages;
             var da = $ts("@da");
             $ts.get("/mzvault/peakdata/?mz=".concat(mz, "&da=").concat(da), function (result) {
                 if (result.code == 0) {
-                    var data_1 = $from(result.info).Select(function (a) {
+                    var peaks = result.info.peak;
+                    var data_1 = $from(peaks).Select(function (a) {
                         return {
                             splash_id: a.splash_id,
                             mz: "".concat(a.mz, " (").concat(a.intensity, ")"),
                             smiles: a.smiles
                         };
                     });
+                    console.table(peaks);
                     $ts("#peaksdata").clear();
                     $ts.appendTable(data_1, "#peaksdata", null, { class: "table" });
                 }
