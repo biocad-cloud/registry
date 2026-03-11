@@ -83,4 +83,12 @@ class App {
         include_once APP_PATH . "/scripts/mzvault/np.php";
         View::Show(APP_VIEWS . "/mzvault/np_lib.html", np::microbial_np($page));
     }
+
+    /**
+     * 
+    */
+    public function peak($mz,$page=1) {
+        include_once APP_PATH . "/scripts/mzvault/peak.php";
+        View::Display(reference_peak::get_peakdata($mz, $page));
+    }
 }
