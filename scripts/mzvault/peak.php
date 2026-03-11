@@ -15,8 +15,26 @@ class reference_peak {
             "splash_id",
             "annotation_id"])
             ;
+        $ion_data = (new Table(["mzvault"=>"annotation"]))->where(["id" => in(array_column($peaks,"annotation_id"))])->select();
+        $ion_index = [];
+
+        foreach($ion_data as $i) {
+            $ion_index["ion_{$i["id"]}"] = $i;
+        }
+
+        $peakdata = array_map(function($pk) use($ion_index) {
+            $key = "ion_{$pk["annotation_id"]}";
+            $ion = $ion_index[$key];
+            $pk[ "db_xref"] = $ion["db_xref"];
+            $pk[ "name"]= $ion["name"];
+            $pk[ "adducts"]= $ion["adducts"];
+            $pk[ "precursor"]= $ion["mz"];
+
+            return $pk;
+        }, $peaks);
+
         $pagedata = [
-            "peak" => $peaks,
+            "peak" => $peakdata,
             "mz" => $mz,
             "da" => $da
         ];
