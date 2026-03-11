@@ -378,6 +378,8 @@ var viewer;
                         itemStyle: {
                             color: '#000', // 经典质谱图通常为黑色线条
                         },
+                        // [修改点1] 添加 cursor 属性，悬停时显示手型图标，提示可点击
+                        cursor: 'pointer',
                         emphasis: {
                             itemStyle: {
                                 color: '#0d6efd' // Bootstrap primary color，鼠标悬停高亮
@@ -404,6 +406,18 @@ var viewer;
                 ]
             };
             this.chartInstance.setOption(option);
+            // [修改点2] 绑定点击事件
+            this.chartInstance.on('click', function (params) {
+                // 确保点击的是数据柱子
+                if (params.componentType === 'series') {
+                    // 这里的 params.data 就是构造 chartData 时的数组：[mz, intensity, smiles]
+                    var mzValue = params.data[0];
+                    // 构造跳转链接
+                    var url = "/mzvault/peak/?mz=".concat(mzValue);
+                    // 执行页面跳转
+                    $goto(url);
+                }
+            });
             // 显示模态框
             if (this.modalInstance) {
                 this.modalInstance.show();
