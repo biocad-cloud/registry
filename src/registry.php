@@ -5,6 +5,15 @@ include __DIR__ . "/../.etc/bootstrap.php";
 class App {
 
     /**
+     * @access *
+     * @uses api
+    */
+    public function hot_search() {
+        include_once APP_PATH . "/scripts/hot.php";
+        controller::success(hot_search::top());
+    }
+
+    /**
      * @uses api
     */
     public function metabolite($id) {
