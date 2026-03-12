@@ -5,6 +5,7 @@ class portal {
     public static function db_search($q, $page=1, $page_size = 30) {
         $q = Table::make_fulltext_strips($q);
         $offset = ($page-1)*$page_size;
+        $tr = 200;
         $sql = [
             self::enzyme_search($q),
             self::location_search($q),
@@ -14,7 +15,18 @@ class portal {
             return "({$ql})";
         }, $sql);
         $sql = Strings::Join($sql, " UNION ");
-        $sql = "SELECT * from ({$sql}) t1 ORDER BY score DESC LIMIT {$offset},{$page_size}";
+        $sql = "SELECT 
+            id, 
+            name, 
+            IF(CHAR_LENGTH(note) > $tr,
+                CONCAT(MID(note, 1, $tr), '...'),
+                note) as note, 
+            score, 
+            `type` 
+        FROM ({$sql}) t1 
+        ORDER BY score DESC 
+        LIMIT {$offset},{$page_size}"
+        ;
         $data = (new Table(["cad_registry"=>"vocabulary"]))->getDriver()->Fetch($sql);
         $data = [
             "item" => self::assign_url( $data)
