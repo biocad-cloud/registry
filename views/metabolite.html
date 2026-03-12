@@ -294,11 +294,37 @@
                   <div class="row">
                     <div class="col">
 
+                      <h4>Taxonomy Source</h4>
+
                       <ol>
                         <foreach @organism>
-                          <li><a href='/taxonomy/?id=@organism["ncbi_taxid"]'> @organism["taxname"] [ncbi taxid: @organism["ncbi_taxid"]]</a></li>
+                          <li><a href='/taxonomy/?id=@organism["ncbi_taxid"]'> @organism["taxname"] [ncbi taxid:
+                              @organism["ncbi_taxid"]]</a></li>
                         </foreach>
                       </ol>
+
+                      <h4>Pathway Synthetic</h4>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>pathway id</th>
+                            <th>name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <foreach @pathway>
+                            <tr>
+                              <td><a href='/pathway/?id=@pathway["id"]'>@pathway["accession_id"]</a></td>
+                              <td>@pathway["name"]</td>
+                            </tr>
+                          </foreach>
+                        </tbody>
+                      </table>
+
+                      <a href="/pathways/?metab={$id}" class="explore-link">
+                        View All Pathways <i class="bi bi-arrow-up-right"></i>
+                      </a>
 
                     </div>
                   </div>

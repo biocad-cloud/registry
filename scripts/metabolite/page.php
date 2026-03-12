@@ -163,6 +163,17 @@ class metabolite_page {
             $page["network"] = [];
         }
 
+        $pathway = (new Table(["cad_registry"=>"pathway_network"]))
+            ->where(["model_id"=>$id, "class_id" => ENTITY_METABOLITE])
+            ->project("pathway_id")
+            ;
+    
+        if (count($pathway) > 0) {
+            $page["pathway"] = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathway)])->limit(20)->select();
+        } else {
+            $page["pathway"] = [];
+        }
+
         return $page;
     }
 }
