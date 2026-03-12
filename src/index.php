@@ -237,9 +237,9 @@ class App {
      * @access *
      * @uses view
     */
-    public function pathways($tax = null, $page=1) {
+    public function pathways($tax = null,$metab=null, $page=1) {
         include_once APP_PATH . "/scripts/pathways/list.php";
-        View::Display(pathway_list::get_list($tax, $page));
+        View::Display(pathway_list::get_list($tax,$metab, $page));
     }
 
     /**

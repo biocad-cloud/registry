@@ -2,15 +2,28 @@
 
 class pathway_list {
 
-    public static function get_list($tax=null, $page=1) {
+    public static function get_list($tax=null, $metab=null, $page=1) {
         $q = ["type" => "conserved"];
         $page_size = 20;
+        $offset = ($page-1) * $page_size;
+        $data = [];
 
         if (!Utils::isDbNull($tax)) {
             $q = ["taxid" => $tax];
-        }
+        } else if (!Utils::isDbNull($metab)) {
+            $metab = Regex::Match($metab, "\d+");
+            $list = (new Table(["cad_registry"=>"pathway_network"]))
+                ->where(["class_id" => ENTITY_METABOLITE, "model_id" => $metab])
+                ->project("pathway_id")
+                ;
 
-        $offset = ($page-1) * $page_size;
+            if (count($list) > 0) {
+                $q = ["id" => in($list)];
+            } else {
+                RFC7231Error::err404("Sorry, no pathway data is associated with this metabolite!");
+            }            
+        }       
+
         $data = (new Table(["cad_registry"=>"pathway"]))->where($q)->limit($offset, $page_size)->select();
 
         for($i = 0; $i < count($data); $i++) {
