@@ -3,6 +3,8 @@
 <html lang="en">
 
 <head>
+  <meta name="drawer-h" content="300">
+
   ${./includes/head.html}
 </head>
 
@@ -26,7 +28,27 @@
 
       <div class="container">
 
+        <h3>Metabolites</h3>
 
+        <div class="d-flex flex-wrap gap-3">
+          <foreach @metab>
+            <div class="card" style="width: 18rem;">
+
+              <a href='/spectrum/?metab=@metab["metabolite_id"]'>
+                <canvas class="smiles_drawer card-img-top" role="img" focusable="false"
+                  style="width:100%; max-height: 300px;" data='@metab["smiles"]'>
+                </canvas>
+              </a>
+
+              <div class="card-body">
+                <h5 class="card-title"><a href='/metabolite/@metab["metabolite_id"]'>@metab["name"]</a></h5>
+                <p class="card-text">Formula: <a href='/metabolites/?formula=@metab["formula"]'>@metab["formula"]</a> (<a
+                    href='/metabolites/?exact_mass=@metab["exact_mass"]'>@metab["exact_mass"]</a>)</p>
+                <p class="card-text">CAS ID: <i>@metab["cas_id"]</i></p>
+              </div>
+            </div>
+          </foreach>
+        </div>
 
       </div>
 
@@ -37,5 +59,8 @@
 
   ${./includes/footer.html}
 </body>
+
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
+<script src="/resources/js/smiles_batch_render.js"></script>
 
 </html>
