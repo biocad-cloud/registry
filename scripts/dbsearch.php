@@ -5,14 +5,15 @@ class portal {
     public static function db_search($q, $page=1, $page_size = 50) {
         $q = Table::make_fulltext_strips($q);
         $offset = ($page-1)*$page_size;
-        $tr = 200;
         $sql = [
             self::enzyme_search($q),
             self::location_search($q),
             self::metabolite_search($q),
             self::pathway_search($q),
             self::taxonomy_search($q),
-            self::motif_search($q)
+            self::motif_search($q),
+            self::protein_search($q),
+            self::reaction_search($q)
         ];
         $sql = array_map(function($ql) {
             return "({$ql})";
@@ -70,6 +71,16 @@ class portal {
                     $color = "info";
                     break;
 
+                case "protein":
+                    $url = "/protein/fasta/?id={$id}";
+                    $color = "dark";
+                    break;
+                
+                case "reaction":
+                    $url = "/reaction/?id={$id}";
+                    $color = "danger";
+                    break;
+
                 default:
                     RFC7231Error::err500("not implemented for build url of item type '{$type}'.");
             }
@@ -80,6 +91,30 @@ class portal {
 
         return $terms;
     } 
+
+    private static function protein_search($q) {
+        return "SELECT 
+        id,
+        `function` AS name,
+        MATCH (`function`) AGAINST ('{$q}' IN BOOLEAN MODE) AS score,
+        'protein' AS type
+    FROM
+        cad_registry.protein_data
+    WHERE
+        MATCH (`function`) AGAINST ('{$q}' IN BOOLEAN MODE)";
+    }
+
+    private static function reaction_search($q) {
+        return "SELECT 
+        id,
+        name,
+        MATCH (name , note) AGAINST ('{$q}' IN BOOLEAN MODE) AS score,
+        'reaction' AS type
+    FROM
+        cad_registry.reaction
+    WHERE
+        MATCH (name , note) AGAINST ('{$q}' IN BOOLEAN MODE)";
+    }
 
     private static function pathway_search($q) {
         return "SELECT 
