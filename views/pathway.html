@@ -78,6 +78,32 @@
           </tbody>
         </table>
 
+        <br />
+        <br />
+
+        <h3>Proteins</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Protein ID</th>
+              <th>name</th>
+              <th>full name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @prot>
+              <tr>
+                <td>
+                  <a href='/protein/?id=@prot["id"]'>@prot["uniprot_id"]</a>
+                </td>
+                <td>@prot["name"]</td>
+                <td>@prot["function"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
       </div>
 
     </section>

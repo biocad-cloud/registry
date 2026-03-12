@@ -14,7 +14,14 @@ class pathway_model {
             ->left_join("enzyme")
             ->on(["enzyme"=>"id","pathway_network"=>"model_id"])
             ->where(["class_id"=> EC_NUMBER, "pathway_id"=> $id])
-            ->select(["`enzyme`.*", "symbol_id as ec_number"]);
+            ->select(["`enzyme`.*", "symbol_id as ec_number"])
+            ;
+        $pwy["prot"] =  (new Table(["cad_registry"=>"pathway_network"]))
+            ->left_join("protein_data")
+            ->on(["protein_data"=>"id","pathway_network"=>"model_id"])
+            ->where(["class_id" => FASTA_PROTEIN, "model_id" => gt(0), "pathway_id"=>$id])
+            ->select(["symbol_id AS uniprot_id", "name", "`function`", "`protein_data`.id"])
+            ;
 
         return $pwy;
     }
