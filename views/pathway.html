@@ -42,13 +42,41 @@
 
               <div class="card-body">
                 <h5 class="card-title"><a href='/metabolite/@metab["metabolite_id"]'>@metab["name"]</a></h5>
-                <p class="card-text">Formula: <a href='/metabolites/?formula=@metab["formula"]'>@metab["formula"]</a> (<a
-                    href='/metabolites/?exact_mass=@metab["exact_mass"]'>@metab["exact_mass"]</a>)</p>
+                <p class="card-text">Formula: <a href='/metabolites/?formula=@metab["formula"]'>@metab["formula"]</a>
+                  (<a href='/metabolites/?exact_mass=@metab["exact_mass"]'>@metab["exact_mass"]</a>)</p>
                 <p class="card-text">CAS ID: <i>@metab["cas_id"]</i></p>
               </div>
             </div>
           </foreach>
         </div>
+
+        <br />
+        <br />
+
+        <h3>Enzyme</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>EC Number</th>
+              <th>name</th>
+              <th>full name</th>
+              <th>note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @enzyme>
+              <tr>
+                <td>
+                  <a href='/enzyme/?id=@enzyme["id"]'>@enzyme["ec_number"]</a>
+                </td>
+                <td>@enzyme["recommended_name"]</td>
+                <td>@enzyme["systematic_name"]</td>
+                <td>@enzyme["note"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
 
       </div>
 
