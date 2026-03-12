@@ -12,7 +12,7 @@ return [
     // Specifies the directory path where the icon files are located.
     // When using Composer, you should set this to null, except if you've published the assets to your own project during setup.
     // For more information, see https://github.com/fabianwennink/IconCaptcha-PHP/wiki/Configuration#iconpath
-    'iconPath' => __DIR__ . '/../assets/icons/',
+    'iconPath' => APP_PATH . '/src/resources/assets/IconCaptcha/icons',
 
     // Specifies a function that must return the IP address of the visitor.
     // Using Cloudflare? Ensure to return the visitor's original IP (HTTP_CF_CONNECTING_IP) and not the proxy IP.
@@ -39,17 +39,17 @@ return [
     'storage' => [
         // Specifies the driver to use for data storage.
         // Default available drivers: 'session', 'mysql', 'sqlsrv', 'pgsql' and 'sqlite'.
-        'driver' => 'session',
+        'driver' => 'mysql',
         // Specifies the connection details for database session driver.
         // Alternatively, you can use an existing PDO object for the 'connection' key.
         // For more information, see https://github.com/fabianwennink/IconCaptcha-PHP/wiki/Database-Storage
         'connection' => [
             //'url' => 'mysql:host=127.0.0.1;port=3306;dbname=db', // You can use a DSN URL if your database requires a more complex connection.
-            'host' => '127.0.0.1',
+            'host' => '192.168.3.15',
             'port' => 3306,
-            'database' => 'db',
-            'username' => 'root',
-            'password' => '',
+            'database' => 'registry_engine',
+            'username' => 'xieguigang',
+            'password' => '123456',
         ],
         // Specifies the format used to create formatted datetime values to use in database queries.
         // Use a different format if needed for your database. See https://www.php.net/manual/en/datetime.format.php.
