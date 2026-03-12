@@ -26,9 +26,42 @@ class portal {
         'reaction'   => ['url' => '/reaction/?id=%s', 'color' => 'danger'],
     ];
 
+    private static function make_stats($q) {
+        $nl_q = "MATCH (term) AGAINST ('{$q}' IN BOOLEAN MODE)";
+        $hot_table = new Table(["registry_engine"=>"search_hits"]);
+        $top = $hot_table
+            ->where($nl_q)
+            ->order_by("score",true)
+            ->find(["`search_hits`.*","{$nl_q} AS score"])
+            ;
+
+        if (Utils::isDbNull($top)) {
+            $hot_table->add([
+                "symbol_id" => 0,
+                "term" => $q,
+                "hashcode" => md5( strtolower($q) ),
+                "type_id" => 0,
+                "hits" => 1
+            ]);
+        } else {
+            $hot_table->where(["id" => $top["id"]])
+                ->limit(1)
+                ->save(["hits" => "~`hits`+1"])
+                ;
+        }
+
+        (new Table(["registry_engine"=>"search_history"]))->add([
+            "q"=>$q,
+            "hashcode"=> md5( strtolower($q)),
+            "user_id" => user_id()
+        ]);
+    }
+
     public static function db_search($q, $page = 1, $page_size = 50) {
         $q = Table::make_fulltext_strips($q);
         $offset = ($page - 1) * $page_size;
+
+        self::make_stats($q);
 
         // 动态生成所有 SQL 查询
         $sqlParts = [];
