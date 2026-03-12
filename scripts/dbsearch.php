@@ -7,7 +7,8 @@ class portal {
         $offset = ($page-1)*$page_size;
         $sql = [
             self::enzyme_search($q),
-            self::location_search($q)
+            self::location_search($q),
+            self::metabolite_search($q)
         ];
         $sql = array_map(function($ql) {
             return "({$ql})";
@@ -32,9 +33,14 @@ class portal {
                 case "enzyme":
                     $url = "/enzyme/?id={$id}";
                     break;
+
                 case "location":
                     $id = urlencode($terms[$i]["name"]);
                     $url = "/compartment/?name={$id}";
+                    break;
+
+                case "metabolite":
+                    $url = "/metabolite/?id={$id}";
                     break;
 
                 default:
@@ -46,6 +52,19 @@ class portal {
 
         return $terms;
     } 
+
+    private static function metabolite_search($q) {
+        return "SELECT 
+        id,
+        name,
+        note,
+        MATCH (name , note) AGAINST ('{$q}' IN BOOLEAN MODE) AS score,
+        'metabolite' AS type
+    FROM
+        cad_registry.metabolites
+    WHERE
+        MATCH (name , note) AGAINST ('{$q}' IN BOOLEAN MODE)";
+    }
 
     private static function enzyme_search($q) {
         return "SELECT 
