@@ -26,7 +26,22 @@
 
       <div class="container">
 
-
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @item>
+              <tr>
+                <td><a href='@item["url"]'>@item["name"]</a></td>
+                <td>@item["note"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
 
       </div>
 
