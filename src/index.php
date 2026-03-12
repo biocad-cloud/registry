@@ -287,8 +287,8 @@ class App {
      * @access *
      * @uses view
     */
-    public function search($q) {
-        View::Display((include APP_PATH . "/scripts/search.php")->get_result(urldecode($q)));
+    public function search($q, $page = 1) {
+        View::Display((include APP_PATH . "/scripts/search.php")->get_result(urldecode($q), $page));
     }
 
     /**
