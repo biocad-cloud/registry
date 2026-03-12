@@ -2,85 +2,79 @@
 
 class portal {
 
-    // ===== 搜索配置：统一管理各资源的查询逻辑 =====
-    private const SEARCH_CONFIGS = [
-        'enzyme'    => ['table' => 'cad_registry.enzyme', 'match' => ['recommended_name', 'systematic_name', 'note'], 'name_col' => 'recommended_name AS name'],
-        'location'  => ['table' => 'cad_registry.compartment_location', 'match' => ['fullname', 'note'], 'name_col' => 'fullname AS name'],
-        'metabolite'=> ['table' => 'cad_registry.metabolites', 'match' => ['name', 'note'], 'name_col' => 'name'],
-        'pathway'   => ['table' => 'cad_registry.pathway', 'match' => ['name', 'note'], 'name_col' => 'name'],
-        'taxonomy'  => ['table' => 'cad_registry.ncbi_taxonomy', 'match' => ['name', 'zh_name', 'note'], 'name_col' => 'name'],
-        'motif'     => ['table' => 'cad_registry.motif', 'match' => ['name', 'note'], 'name_col' => 'name'],
-        'protein'   => ['table' => 'cad_registry.protein_data', 'match' => ['function'], 'name_col' => '`function` AS name'],
-        'reaction'  => ['table' => 'cad_registry.reaction', 'match' => ['name', 'note'], 'name_col' => 'name'],
+    // 1. 定义搜索配置：将数据表、字段映射集中管理
+    private static $searchSchema = [
+        'enzyme'     => ['table' => 'cad_registry.enzyme', 'name_col' => 'recommended_name', 'match_cols' => 'recommended_name, systematic_name, note'],
+        'location'   => ['table' => 'cad_registry.compartment_location', 'name_col' => 'name', 'match_cols' => 'fullname, note'],
+        'metabolite' => ['table' => 'cad_registry.metabolites', 'name_col' => 'name', 'match_cols' => 'name, note'],
+        'pathway'    => ['table' => 'cad_registry.pathway', 'name_col' => 'name', 'match_cols' => 'name, note'],
+        'taxonomy'   => ['table' => 'cad_registry.ncbi_taxonomy', 'name_col' => 'name', 'match_cols' => 'name, zh_name, note'],
+        'motif'      => ['table' => 'cad_registry.motif', 'name_col' => 'name', 'match_cols' => 'name, note'],
+        'protein'    => ['table' => 'cad_registry.protein_data', 'name_col' => '`function`', 'match_cols' => '`function`'],
+        'reaction'   => ['table' => 'cad_registry.reaction', 'name_col' => 'name', 'match_cols' => 'name, note'],
     ];
 
-    // ===== URL 与样式映射：消除 switch，支持动态字段与编码 =====
-    private const TYPE_CONFIG = [
-        'enzyme'    => ['url' => '/enzyme/?id={val}', 'color' => 'primary', 'field' => 'id', 'encode' => false],
-        'location'  => ['url' => '/compartment/?name={val}', 'color' => 'secondary', 'field' => 'name', 'encode' => true],
-        'metabolite'=> ['url' => '/metabolite/?id={val}', 'color' => 'success', 'field' => 'id', 'encode' => false],
-        'pathway'   => ['url' => '/pathway/?id={val}', 'color' => 'danger', 'field' => 'id', 'encode' => false],
-        'taxonomy'  => ['url' => '/taxonomy/?id={val}', 'color' => 'warning', 'field' => 'id', 'encode' => false],
-        'motif'     => ['url' => '/motif/?id={val}', 'color' => 'info', 'field' => 'id', 'encode' => false],
-        'protein'   => ['url' => '/protein/fasta/?id={val}', 'color' => 'dark', 'field' => 'id', 'encode' => false],
-        'reaction'  => ['url' => '/reaction/?id={val}', 'color' => 'danger', 'field' => 'id', 'encode' => false],
+    // 2. 定义URL与样式映射
+    private static $displayMap = [
+        'enzyme'     => ['url' => '/enzyme/?id=%s', 'color' => 'primary'],
+        'location'   => ['url' => '/compartment/?name=%s', 'color' => 'secondary', 'use_name' => true],
+        'metabolite' => ['url' => '/metabolite/?id=%s', 'color' => 'success'],
+        'pathway'    => ['url' => '/pathway/?id=%s', 'color' => 'danger'],
+        'taxonomy'   => ['url' => '/taxonomy/?id=%s', 'color' => 'warning'],
+        'motif'      => ['url' => '/motif/?id=%s', 'color' => 'info'],
+        'protein'    => ['url' => '/protein/fasta/?id=%s', 'color' => 'dark'],
+        'reaction'   => ['url' => '/reaction/?id=%s', 'color' => 'danger'],
     ];
 
     public static function db_search($q, $page = 1, $page_size = 50) {
-        $q = Table::make_fulltext_strips($q); // 假设已做安全处理
+        $q = Table::make_fulltext_strips($q);
         $offset = ($page - 1) * $page_size;
 
-        // 动态构建 UNION 查询（自动过滤无效配置）
-        $queries = array_filter(array_map(function($type, $cfg) use ($q) {
-            if (!isset($cfg['match']) || !is_array($cfg['match'])) return null;
-            $matchCols = implode(', ', array_map(fn($c) => "`$c`", $cfg['match']));
-            $against = str_replace("'", "''", $q); // 基础转义（强烈建议后续改用参数化）
-            return sprintf(
-                "(SELECT id, %s AS name, MATCH(%s) AGAINST ('%s' IN BOOLEAN MODE) AS score, '%s' AS type 
-                  FROM %s 
-                  WHERE MATCH(%s) AGAINST ('%s' IN BOOLEAN MODE))",
-                $cfg['name_col'],
-                $matchCols,
-                $against,
-                $type,
-                $cfg['table'],
-                $matchCols,
-                $against
-            );
-        }, array_keys(self::SEARCH_CONFIGS), self::SEARCH_CONFIGS));
-
-        if (empty($queries)) {
-            return list_nav(['item' => []], $page);
+        // 动态生成所有 SQL 查询
+        $sqlParts = [];
+        foreach (self::$searchSchema as $type => $config) {
+            $sqlParts[] = "(SELECT id, {$config['name_col']} AS name, 
+                    MATCH ({$config['match_cols']}) AGAINST ('{$q}' IN BOOLEAN MODE) AS score, 
+                    '{$type}' AS type 
+                    FROM {$config['table']} 
+                    WHERE MATCH ({$config['match_cols']}) AGAINST ('{$q}' IN BOOLEAN MODE))";
         }
 
-        $unionSql = implode(' UNION ', $queries);
-        $finalSql = sprintf(
-            "SELECT id, name, score, `type` FROM (%s) t1 ORDER BY score DESC LIMIT %d, %d",
-            $unionSql,
-            $offset,
-            $page_size
-        );
+        $sql = Strings::Join($sqlParts, " UNION ");
+        $sql = "SELECT id, name, score, `type` FROM ({$sql}) t1 ORDER BY score DESC LIMIT {$offset},{$page_size}";
 
-        $data = (new Table(["cad_registry" => "vocabulary"]))->getDriver()->Fetch($finalSql);
-        return list_nav(['item' => self::assign_url($data)], $page);
+        $data = (new Table(["cad_registry" => "vocabulary"]))->getDriver()->Fetch($sql);
+        
+        $data = [
+            "item" => self::assign_url($data)
+        ];
+
+        return list_nav($data, $page);
     }
 
-    private static function assign_url(array $terms): array {
-        foreach ($terms as &$term) {
-            $type = $term['type'] ?? '';
-            $cfg = self::TYPE_CONFIG[$type] ?? null;
+    private static function assign_url($terms) {
+        foreach ($terms as &$term) { // 使用引用直接修改数组
+            $type = $term["type"];
             
-            if (!$cfg) {
-                RFC7231Error::err500("URL builder not implemented for item type '{$type}'.");
+            if (!isset(self::$displayMap[$type])) {
+                RFC7231Error::err500("not implemented for build url of item type '{$type}'.");
             }
 
-            $val = $term[$cfg['field']] ?? '';
-            $val = $cfg['encode'] ? urlencode((string)$val) : (string)$val;
-            $term['url'] = str_replace('{val}', $val, $cfg['url']);
-            $term['bs_color'] = $cfg['color'];
+            $config = self::$displayMap[$type];
+            
+            // 处理 ID：location 使用 name，其他使用 id
+            $idValue = ($config['use_name'] ?? false) ? $term["name"] : $term["id"];
+            
+            // 如果是 name，需要进行 urlencode (原逻辑行为)
+            if ($config['use_name'] ?? false) {
+                $idValue = urlencode($idValue);
+            }
+
+            $term["url"] = sprintf($config['url'], $idValue);
+            $term["bs_color"] = $config['color'];
         }
+        unset($term); // 断开引用
+
         return $terms;
     }
 }
-
-
