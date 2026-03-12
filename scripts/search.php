@@ -21,7 +21,7 @@ class search {
         // 重定向映射：别名 → 目标路径片段
         $redirectMap = [
             'compartments'    => 'compartments',
-            'metabolites'     => 'metabolites', 'metabolite' => 'metabolites', 'spectrum' => 'metabolites',
+            'metabolites'     => 'metabolites', 'metabolite' => 'metabolites', 'spectrum' => 'metabolites', "natural_products" => 'metabolites', "landscape" => 'metabolites',
             'motifs'          => 'motifs',      'motif'      => 'motifs',
             'enzymes'         => 'enzymes',     'enzyme'     => 'enzymes',
             'taxonomy'        => 'taxonomy_search', 'taxonomy_search' => 'taxonomy_search',
@@ -30,11 +30,9 @@ class search {
         
         if (isset($redirectMap[$lowerRefer])) {
             // 假设 Redirect() 内部含 exit；若无，建议在 Redirect 后显式添加 exit;
-            Redirect("/{$redirectMap[$lowerRefer]}/?q={$encode_q}");
-        } elseif ($lowerRefer === 'database' || $lowerRefer === 'search') {
-            return self::global_search($q, $page);
+            Redirect("/{$redirectMap[$lowerRefer]}/?q={$encode_q}");            
         } else {
-            RFC7231Error::err405("search for '{$q}' on resource controller '{$refer}' has not been implemented yet!");
+            return self::global_search($q, $page);
         }     
     }
 
