@@ -14,6 +14,17 @@ class prot_fasta {
             ->where(["type" => FASTA_PROTEIN,"db_name"=>EC_NUMBER,"obj_id"=>$id])
             ->project("db_xref")
             ;
+        $pathway = (new Table(["cad_registry"=>"pathway_network"]))
+            ->where(["model_id"=>$id, "class_id" => FASTA_PROTEIN])
+            ->project("pathway_id")
+            ;
+    
+        if (count($pathway) > 0) {
+            $pathway = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathway)])->select();
+        } else {
+            $pathway = [];
+        }
+
         $rxns = [];
         $cc = (new Table(["cad_registry"=>"subcellular_location"]))
             ->left_join("compartment_location")
@@ -46,6 +57,7 @@ class prot_fasta {
             }
         }
 
+        $seq["pathway"] = $pathway;
         $seq["subcellular_locations"] = $cc;
         $seq["reaction"] = $rxns;
         $seq["title"] = $seq["name"] . " - " . $seq["taxname"];

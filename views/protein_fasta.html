@@ -201,14 +201,14 @@
 
         <div class="row">
           <div class="col">
-            <h5>Metadata</h5>
+            <h3>Metadata</h3>
 
             <p>
               Organism Source: <a href="/taxonomy/?id={$ncbi_taxid}">{$ncbi_taxid} - {$taxname}</a><br />
               EC Number: {$ec_numbers}
             </p>
 
-            <h5>Reactions</h5>
+            <h3>Reactions</h3>
 
             <table class="table">
               <thead>
@@ -228,6 +228,26 @@
                 </foreach>
               </tbody>
             </table>
+
+            <h3>Pathways</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>pathway id</th>
+                  <th>name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach @pathway>
+                  <tr>
+                    <td><a href='/pathway/?id=@pathway["id"]'>@pathway["accession_id"]</a></td>
+                    <td>@pathway["name"]</td>
+                  </tr>
+                </foreach>
+              </tbody>
+            </table>
+
           </div>
         </div>
 
