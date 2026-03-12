@@ -43,6 +43,10 @@ class search {
                 Redirect("/taxonomy_search/?q={$encode_q}");
                 break;
 
+            case "pathways":
+            case "pathway":
+                Redirect("/pathways/?q={$encode_q}");
+
             default:
                 RFC7231Error::err405("search for '{$q}' on resource controller '{$refer}' has not been implemented yet!");
                 return self::global_search($q);

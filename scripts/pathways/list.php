@@ -2,7 +2,7 @@
 
 class pathway_list {
 
-    public static function get_list($tax=null, $metab=null, $page=1) {
+    public static function get_list($tax=null, $metab=null, $query=null, $page=1) {
         $q = ["type" => "conserved"];
         $page_size = 20;
         $offset = ($page-1) * $page_size;
@@ -22,7 +22,10 @@ class pathway_list {
             } else {
                 RFC7231Error::err404("Sorry, no pathway data is associated with this metabolite!");
             }            
-        }       
+        } else if (!Utils::isDbNull($query)) {
+            $query = Table::make_fulltext_strips($query);
+            $q = "MATCH (name , note) AGAINST ('{$query}' IN BOOLEAN MODE)";
+        }      
 
         $data = (new Table(["cad_registry"=>"pathway"]))->where($q)->limit($offset, $page_size)->select();
 
