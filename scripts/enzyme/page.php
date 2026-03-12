@@ -40,11 +40,22 @@ class enzyme_data {
             ->where(["`kinetics_law`.ec_number" => $ec])
             ->select(["`kinetics_law`.*", "`reaction`.name"])
             ;
+        $pathways = (new Table(["cad_registry"=>"pathway_network"]))
+            ->where(["model_id" => $enzyme["id"],"class_id"=> EC_NUMBER])
+            ->project("pathway_id")
+            ;
+
+        if (count($pathways) > 0) {
+            $pathways = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathways)])->select();
+        } else {
+            $pathways = [];
+        }
 
         return [
             "ec" => $ec,
             "law" => $laws,
-            "note" => $note_str
+            "note" => $note_str,
+            "pathway" => $pathways
         ];
     }
 }

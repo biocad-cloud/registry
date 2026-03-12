@@ -51,6 +51,25 @@
           </tbody>
         </table>
 
+
+        <h3>Pathways</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>pathway id</th>
+              <th>name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @pathway>
+              <tr>
+                <td><a href='/pathway/?id=@pathway["id"]'>@pathway["accession_id"]</a></td>
+                <td>@pathway["name"]</td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
       </div>
 
     </section>
