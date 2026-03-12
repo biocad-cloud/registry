@@ -16,44 +16,26 @@ class search {
     private static function local_search($refer, $q, $page = 1) {
         $encode_q = urlencode($q);
         $refer = Strings::Split($refer, "/")[0];
+        $lowerRefer = strtolower($refer);
 
-        switch(strtolower($refer)) {
-            case "compartments":
-                Redirect("/compartments/?q={$encode_q}");
-                break;
-
-            case "metabolites":
-            case "metabolite":
-            case "spectrum":
-                Redirect("/metabolites/?q={$encode_q}");
-                break;
-
-            case "motifs":
-            case "motif":
-                Redirect("/motifs/?q={$encode_q}");
-                break;
-
-            case "enzymes":
-            case "enzyme":
-                Redirect("/enzymes/?q={$encode_q}");
-                break;
-
-            case "taxonomy":
-            case "taxonomy_search":
-                Redirect("/taxonomy_search/?q={$encode_q}");
-                break;
-
-            case "pathways":
-            case "pathway":
-                Redirect("/pathways/?q={$encode_q}");
-
-            case "database":
-                return self::global_search($q, $page);
-
-            default:
-                RFC7231Error::err405("search for '{$q}' on resource controller '{$refer}' has not been implemented yet!");
-                
-        }
+        // 重定向映射：别名 → 目标路径片段
+        $redirectMap = [
+            'compartments'    => 'compartments',
+            'metabolites'     => 'metabolites', 'metabolite' => 'metabolites', 'spectrum' => 'metabolites',
+            'motifs'          => 'motifs',      'motif'      => 'motifs',
+            'enzymes'         => 'enzymes',     'enzyme'     => 'enzymes',
+            'taxonomy'        => 'taxonomy_search', 'taxonomy_search' => 'taxonomy_search',
+            'pathways'        => 'pathways',    'pathway'    => 'pathways',
+        ];
+        
+        if (isset($redirectMap[$lowerRefer])) {
+            // 假设 Redirect() 内部含 exit；若无，建议在 Redirect 后显式添加 exit;
+            Redirect("/{$redirectMap[$lowerRefer]}/?q={$encode_q}");
+        } elseif ($lowerRefer === 'database' || $lowerRefer === 'search') {
+            return self::global_search($q, $page);
+        } else {
+            RFC7231Error::err405("search for '{$q}' on resource controller '{$refer}' has not been implemented yet!");
+        }     
     }
 
     private static function global_search($q, $page = 1) {
