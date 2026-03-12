@@ -243,6 +243,15 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+    */
+    public function pathway($id) {
+        include_once APP_PATH . "/scripts/pathways/model.php";
+        View::Display(pathway_model::get_model($id));
+    }
+
+    /**
      * Data Search
      * 
      * @access *
