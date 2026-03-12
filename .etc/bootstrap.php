@@ -27,5 +27,13 @@ function strip_postVal($str) {
     }    
 }
 
+function user_id() {
+    if (Utils::isDbNull($_SESSION["user_id"])) {
+        return "0";
+    } else {
+        return $_SESSION["user_id"];
+    }
+}
+
 dotnet::AutoLoad(APP_PATH . "/.etc/config.ini.php");
 dotnet::HandleRequest(new App(), new accessController());
