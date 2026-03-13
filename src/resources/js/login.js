@@ -104,44 +104,6 @@ function initPasswordToggles() {
 
 // Form Validation & Submit
 function initFormValidation() {
-  // Register Form
-  const registerForm = document.getElementById("registerForm");
-  if (registerForm) {
-    registerForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const password = document.getElementById("regPassword").value;
-      const confirmPassword =
-        document.getElementById("regConfirmPassword").value;
-
-      if (password !== confirmPassword) {
-        alert("两次输入的密码不一致，请重新输入。");
-        return;
-      }
-
-      if (password.length < 8) {
-        alert("密码长度至少为8位。");
-        return;
-      }
-
-      // Simulate registration
-      const btn = document.querySelector(
-        '#registerModal button[type="submit"]'
-      );
-      btn.textContent = "注册中...";
-      btn.disabled = true;
-
-      setTimeout(() => {
-        alert("注册成功！请查收验证邮件。");
-        btn.textContent = "注册账号";
-        btn.disabled = false;
-        bootstrap.Modal.getInstance(
-          document.getElementById("registerModal")
-        ).hide();
-      }, 1500);
-    });
-  }
-
   // Forgot Password Form
   const forgotForm = document.getElementById("forgotPasswordForm");
   if (forgotForm) {

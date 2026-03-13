@@ -688,6 +688,40 @@ var pages;
                 msgbox.showMessageModal("Email or Password is required!");
             }
         };
+        user_login.prototype.do_register_onclick = function () {
+            // Register Form
+            var registerForm = document.getElementById("registerForm");
+            var password = $ts("#regPassword").value;
+            var confirmPassword = $ts("#regConfirmPassword").value;
+            var name = $ts("#regName").value;
+            var affi = $ts("#regInstitution").value;
+            var regEmail = $ts("#regEmail").value;
+            if (password !== confirmPassword) {
+                alert("两次输入的密码不一致，请重新输入。");
+                return;
+            }
+            if (password.length < 8) {
+                alert("密码长度至少为8位。");
+                return;
+            }
+            // Simulate registration
+            var btn = document.querySelector('#registerModal button[id="do_register"]');
+            btn.textContent = "注册中...";
+            btn.disabled = true;
+            $ts.post("/user/register/", {
+                name: name,
+                email: regEmail,
+                passwd: md5(password),
+                affiliation: affi
+            }, function (result) {
+                btn.textContent = "注册账号";
+                btn.disabled = false;
+                if (result.code == 0) {
+                    alert("注册成功！请查收验证邮件。");
+                }
+                bootstrap.Modal.getInstance(document.getElementById("registerModal")).hide();
+            });
+        };
         return user_login;
     }(Bootstrap));
     pages.user_login = user_login;

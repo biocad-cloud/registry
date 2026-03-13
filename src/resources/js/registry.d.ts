@@ -106,6 +106,7 @@ declare namespace pages {
         get appName(): string;
         protected init(): void;
         login_onclick(): void;
+        do_register_onclick(): void;
     }
 }
 declare namespace pages.landscapes {
