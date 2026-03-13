@@ -1,0 +1,31 @@
+<?php
+
+return [
+    "price" => "Digital License Purchase",
+    "note" => "You can pay to use this database resource according to your needs",
+    "basic" => "Education Edition / Basic Edition",
+    "commercial" => "Commercial Edition",
+    "enterprise" => "Enterprise Edition",
+    "basic_note" => "A free version suitable for enrolled students. Register directly with an email address for free access",
+    "commercial_note" => "Suitable for scientific research service providers to integrate online database resources into automated data analysis workflows",
+    "enterprise_note" => "Suitable for R&D work in production enterprises requiring data localization and large-scale localized deployment",
+    "login" => "Free Registration",
+    "purchase" => "Contact Distributor",
+    "enterprice" => "100,000",
+    "trial_note" => "The commercial version supports a 30-day trial. If you find our software meets your needs, you can decide whether to pay after the trial.",
+    "pruchase_note" => "If you require specific customization of software features, please contact our sales team directly.",
+    "edu_note1" => "Register directly with a school or research institution email (edu.cn, ac.cn, cas.cn) to access all database resource pages. Registering with other email addresses will result in restricted access to some resources",
+    "edu_note2" => "Log in to the Virtual Cell Workstation using an education or research email to support automated virtual cell model construction and simulation analysis via this database",
+    "edu_note3" => "After-sales technical support via community forums",
+    "comm_note1" => "Access to all database resource pages",
+    "comm_note2" => "After-sales technical support on workdays",
+    "comm_note3" => "Support for developing custom virtual cell analysis workflows using our provided SDK",
+    "comm_note4" => "Log in to the Virtual Cell Workstation to support automated virtual cell model construction and simulation analysis via this database",
+    "enter_note1" => "24/7 after-sales technical support",
+    "enter_note2" => "Support for downloading the annually updated knowledge base for offline virtual cell modeling and data analysis",
+    "enter_note3" => "Free on-site engineer service",
+    "enter_note4" => "Proprietary digital twin solution for fermenter pilot scale-up combined with computational fluid dynamics simulation",
+    "free" => "Free",
+    "comm_license" => "Per Year / Per Computing Device",
+    "year" => "Year"
+];
