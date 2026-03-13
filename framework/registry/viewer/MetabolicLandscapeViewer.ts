@@ -353,8 +353,8 @@ namespace viewer {
 
             detailContainer.innerHTML = `
             <div class="genome-card fade-in">
-                <div class="genome-name">${genome.scientific_name}</div>
-                <div class="genome-taxid">NCBI TaxID: ${genome.ncbi_taxid}</div>
+                <div class="genome-name"><a href="/taxonomy_search/?q=${encodeURIComponent(genome.scientific_name)}">${genome.scientific_name}</a></div>
+                <div class="genome-taxid">NCBI TaxID: <a href="/taxonomy/?id=${genome.ncbi_taxid}">${genome.ncbi_taxid}</a></div>
             </div>
             <div class="section-title" style="margin-top: 0.5rem;">Taxonomy</div>
             <ul class="taxonomy-list">
