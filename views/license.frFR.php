@@ -1,0 +1,32 @@
+<?php
+
+return [
+    "price" => "Achat de licence numérique",
+    "note" => "Vous pouvez payer pour utiliser cette ressource de base de données selon vos besoins",
+    "basic" => "Édition Éducation / Édition de Base",
+    "commercial" => "Édition Commerciale",
+    "enterprise" => "Édition Entreprise",
+    "basic_note" => "Une version gratuite adaptée aux étudiants inscrits. Inscrivez-vous directement avec une adresse e-mail pour un accès gratuit",
+    "commercial_note" => "Adapté aux fournisseurs de services de recherche scientifique pour intégrer des ressources de bases de données en ligne dans des flux de travail d'analyse de données automatisés",
+    "enterprise_note" => "Adapté aux travaux de R&D dans les entreprises de production nécessitant une localisation des données et un déploiement localisé à grande échelle",
+    "login" => "Inscription gratuite",
+    "purchase" => "Contacter le distributeur",
+    "enterprice" => "100 000",
+    "trial_note" => "La version commerciale prend en charge un essai de 30 jours. Si vous trouvez que notre logiciel répond à vos besoins, vous pouvez décider de payer ou non après l'essai.",
+    "pruchase_note" => "Si vous avez besoin d'une personnalisation spécifique des fonctionnalités du logiciel, veuillez contacter directement notre équipe commerciale.",
+    "edu_note1" => "Inscrivez-vous directement avec un e-mail d'école ou d'institution de recherche (edu.cn, ac.cn, cas.cn) pour accéder à toutes les pages de ressources de la base de données. L'inscription avec d'autres adresses e-mail entraînera un accès restreint à certaines ressources",
+    "edu_note2" => "Connectez-vous à la station de travail Virtual Cell en utilisant un e-mail d'éducation ou de recherche pour prendre en charge la construction automatisée de modèles de cellules virtuelles et l'analyse de simulation via cette base de données",
+    "edu_note3" => "Les adresses e-mail éducatives ou de recherche nécessitent une vérification d'activation annuelle.",
+    "edu_note4" => "Support technique après-vente via les forums de la communauté",
+    "comm_note1" => "Accès à toutes les pages de ressources de la base de données",
+    "comm_note2" => "Support technique après-vente les jours ouvrés",
+    "comm_note3" => "Support pour le développement de flux de travail d'analyse de cellules virtuelles personnalisés à l'aide de notre SDK fourni",
+    "comm_note4" => "Connectez-vous à la station de travail Virtual Cell pour prendre en charge la construction automatisée de modèles de cellules virtuelles et l'analyse de simulation via cette base de données",
+    "enter_note1" => "Support technique après-vente 24h/24 et 7j/7",
+    "enter_note2" => "Support pour le téléchargement de la base de connaissances mise à jour annuellement pour la modélisation de cellules virtuelles hors ligne et l'analyse de données",
+    "enter_note3" => "Service d'ingénieur sur site gratuit",
+    "enter_note4" => "Solution propriétaire de jumeau numérique pour la montée en échelle pilote de fermenteurs, combinée à la simulation de mécanique des fluides numérique",
+    "free" => "Gratuit",
+    "comm_license" => "an/appareil de calcul",
+    "year" => "Année"
+];
