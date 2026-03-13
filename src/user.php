@@ -44,7 +44,7 @@ class App {
             "password"    => $hashedPassword,
             "affiliation" => $affiliation,
             "banned"      => 0,
-            "activated"   => 0 // 默认未激活
+            "activated"   => 1 // 默认未激活
         ];
 
         $insertResult = (new Table(["registry_engine" => "user"]))->add($data);
