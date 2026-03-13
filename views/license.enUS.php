@@ -26,6 +26,6 @@ return [
     "enter_note3" => "Free on-site engineer service",
     "enter_note4" => "Proprietary digital twin solution for fermenter pilot scale-up combined with computational fluid dynamics simulation",
     "free" => "Free",
-    "comm_license" => "Per Year / Per Computing Device",
+    "comm_license" => "year/computing device",
     "year" => "Year"
 ];
