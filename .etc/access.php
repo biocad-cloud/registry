@@ -13,12 +13,32 @@ class accessController extends controller {
         parent::__construct();
     }
 
-    public function accessControl() {       
+    public function accessControl() {        
+        if (MAINTENANCE_MODE && !self::maintenance_mode()) {
+            \Redirect("/maintenance_mode/");
+        }
+        
         if ($this->AccessByEveryOne()) {
             return true;
         }
 
         return !Utils::isDbNull(user_id());
+    }
+
+    /**
+     * 判断当前的控制器是否是maintenance_mode以避免陷入跳转死循环
+    */
+    private static function maintenance_mode() {
+        $requestUri =$_SERVER['REQUEST_URI']; 
+        // 1. 使用 parse_url 获取路径部分（去掉查询参数）
+        $path = parse_url($requestUri, PHP_URL_PATH); // 结果: /maintenance_mode/
+        // 2. 去掉首尾斜杠
+        $path = trim($path, '/'); // 结果: maintenance_mode
+        // 3. 如果有多级路径，只取第一段
+        $segments = explode('/',$path);
+
+        // 结果: maintenance_mode
+        return $segments[0] == "maintenance_mode";
     }
 
     /**

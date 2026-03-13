@@ -3,6 +3,7 @@
 define("APP_PATH", dirname(__DIR__));
 define("WEB_ROOT", dirname(APP_PATH));
 define("APP_DEBUG", false);
+define("MAINTENANCE_MODE", true);
 
 define("YEAR", date("Y"));
 

@@ -24,6 +24,16 @@ class App {
         resolver::resolve($ref);
     }
 
+    /** 
+     * 维护模式
+     * 
+     * @access *
+     * @uses view
+    */
+    public function maintenance_mode() {
+        View::Display();
+    }
+
     /**
      * @access *
      * @uses view
