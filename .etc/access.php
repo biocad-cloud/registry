@@ -26,7 +26,7 @@ class accessController extends controller {
     */
     public function Redirect($code) {
         $url = urlencode(Utils::URL());
-        $url = "{<platform>passport/portal}&goto=$url";
+        $url = "/login/?goto=$url";
 
         \Redirect($url);
     }   
