@@ -15,6 +15,7 @@ class App {
 
     /**
      * @uses api
+     * @access *
     */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
@@ -100,7 +101,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */

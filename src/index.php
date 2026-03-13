@@ -230,7 +230,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses view
     */
     public function spectrum($metab) {

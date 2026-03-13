@@ -117,7 +117,7 @@ class App {
      * User Logout
      * 
      * @access *
-     * @method post
+     * @method get
      * @uses api
      */
     public function logout() {
@@ -137,7 +137,7 @@ class App {
      * Activate Account
      * 
      * @access *
-     * @method get/post
+     * @method get
      * @uses api
      * @param int $id User ID
      * @param string $token Activation Token

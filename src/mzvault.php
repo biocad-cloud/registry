@@ -9,7 +9,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */
@@ -19,7 +18,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */
@@ -29,7 +27,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */
@@ -39,7 +36,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */
@@ -85,7 +81,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses view
      * @method get
     */
@@ -94,7 +89,6 @@ class App {
     }
 
     /**
-     * @access *
      * @uses api
      * @method get
     */
