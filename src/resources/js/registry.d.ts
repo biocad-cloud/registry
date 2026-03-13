@@ -5,6 +5,7 @@ declare namespace data.ZipData {
     type MetabolicEmbedding = viewer.metabolic_embedding;
     /**
      * 从URL下载zip文件并解析为MetabolicEmbedding数组
+     * 优先从 localStorage 读取缓存的 ZIP Base64
      */
     export function loadAndParseZipFromUrl(url: string): Promise<MetabolicEmbedding[]>;
     /**

@@ -78,29 +78,88 @@ var data;
 (function (data) {
     var ZipData;
     (function (ZipData) {
+        // 缓存配置
+        // 修改这个版本号可以强制让用户刷新缓存（例如数据更新时）
+        var CACHE_VERSION = 'v1_20231027';
+        var CACHE_KEY = "metabolic_embedding_zip_".concat(CACHE_VERSION);
         /**
          * 从URL下载zip文件并解析为MetabolicEmbedding数组
+         * 优先从 localStorage 读取缓存的 ZIP Base64
          */
         function loadAndParseZipFromUrl(url) {
             return __awaiter(this, void 0, void 0, function () {
-                var response, arrayBuffer;
+                var cachedBase64, arrayBuffer_1, error_1, response, arrayBuffer, base64;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, fetch(url)];
-                        case 1:
+                        case 0:
+                            _a.trys.push([0, 3, , 4]);
+                            cachedBase64 = localStorage.getItem(CACHE_KEY);
+                            if (!cachedBase64) return [3 /*break*/, 2];
+                            console.log('[Cache] Loading data from localStorage...');
+                            arrayBuffer_1 = base64ToArrayBuffer(cachedBase64);
+                            if (!(arrayBuffer_1 && arrayBuffer_1.byteLength > 0)) return [3 /*break*/, 2];
+                            return [4 /*yield*/, parseZipToArray(arrayBuffer_1)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                        case 2: return [3 /*break*/, 4];
+                        case 3:
+                            error_1 = _a.sent();
+                            console.warn('[Cache] Failed to read cache, fetching from network...', error_1);
+                            // 如果读取失败（如解析错误），清除脏数据
+                            localStorage.removeItem(CACHE_KEY);
+                            return [3 /*break*/, 4];
+                        case 4:
+                            // 2. 没有缓存或缓存失效，从网络获取
+                            console.log('[Network] Fetching zip file from server...');
+                            return [4 /*yield*/, fetch(url)];
+                        case 5:
                             response = _a.sent();
                             if (!response.ok) {
                                 throw new Error("Failed to fetch zip file: ".concat(response.status, " ").concat(response.statusText));
                             }
                             return [4 /*yield*/, response.arrayBuffer()];
-                        case 2:
+                        case 6:
                             arrayBuffer = _a.sent();
+                            // 3. 存入 localStorage (异步执行，不阻塞解析)
+                            // 注意：如果数据超过 localStorage 限制（通常5MB），try-catch 会捕获错误
+                            try {
+                                base64 = arrayBufferToBase64(arrayBuffer);
+                                localStorage.setItem(CACHE_KEY, base64);
+                                console.log('[Cache] Data cached successfully.');
+                            }
+                            catch (error) {
+                                console.warn('[Cache] Failed to save to localStorage (likely quota exceeded).', error);
+                            }
+                            // 4. 解析并返回
                             return [2 /*return*/, parseZipToArray(arrayBuffer)];
                     }
                 });
             });
         }
         ZipData.loadAndParseZipFromUrl = loadAndParseZipFromUrl;
+        /**
+         * ArrayBuffer 转 Base64 字符串
+         */
+        function arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+        /**
+         * Base64 字符串 转 ArrayBuffer
+         */
+        function base64ToArrayBuffer(base64) {
+            var binaryString = window.atob(base64);
+            var len = binaryString.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
         /**
          * 从ArrayBuffer解压并解析CSV
          */
