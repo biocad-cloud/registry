@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 src/resources/assets/Metabolic-UMAP.zip
 src/resources/assets/metabolic-tree.pdf
+.etc/config.ini.php
