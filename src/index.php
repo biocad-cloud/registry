@@ -215,6 +215,10 @@ class App {
         View::Display(ncbi_taxonomy::taxon_data($id,$page));
     }
 
+    /**
+     * @access *
+     * @uses view
+    */
     public function taxonomy_root() {
         include APP_PATH . "/scripts/taxonomy/page.php";
         View::Display(ncbi_taxonomy::taxon_data("1",1));
