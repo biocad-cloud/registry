@@ -95,9 +95,9 @@ CREATE TABLE `search_history` (
   `add_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `index_hash` (`hashcode`) /*!80000 INVISIBLE */,
-  KEY `user_obj_idx` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  KEY `user_obj_idx` (`user_id`),
+  KEY `hash_index` (`hashcode`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,15 +110,16 @@ DROP TABLE IF EXISTS `search_hits`;
 CREATE TABLE `search_hits` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `symbol_id` int unsigned NOT NULL,
-  `term` varchar(1024) NOT NULL,
+  `term` varchar(2048) NOT NULL,
   `hashcode` char(32) NOT NULL,
   `type_id` int unsigned NOT NULL,
   `hits` int unsigned NOT NULL DEFAULT '0',
   `add_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `index_hash` (`hashcode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  KEY `hash_index` (`hashcode`),
+  FULLTEXT KEY `search_text` (`term`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,14 +149,17 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` char(32) NOT NULL,
+  `password` varchar(255) NOT NULL COMMENT 'password_hash result',
   `affiliation` varchar(255) NOT NULL DEFAULT '-',
   `banned` int unsigned NOT NULL DEFAULT '0',
+  `activated` int NOT NULL DEFAULT '0' COMMENT 'verified of the user email?',
   `add_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `unique_account` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,4 +179,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-07 18:40:42
+-- Dump completed on 2026-03-13 12:42:59
