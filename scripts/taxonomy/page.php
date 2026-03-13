@@ -37,7 +37,7 @@ class ncbi_taxonomy {
         } else {
             $tax["childs"] = [];
         }
-        
+       
         $prot_data = FASTA_PROTEIN;
         $ec_number = EC_NUMBER;
         $sql = "SELECT 
