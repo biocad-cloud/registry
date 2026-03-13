@@ -9,9 +9,9 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="/" class="active">Home</a></li>
-                <li><a href="/database/" class="">Database</a></li>
-                <li class="dropdown"><a href="#"><span>Browse</span> <i
+                <li><a href="/" class="active">{$home}</a></li>
+                <li><a href="/database/" class="">{$db}</a></li>
+                <li class="dropdown"><a href="#"><span>{$browse}</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="/compartments">Cellular Compartments</a></li>
@@ -28,7 +28,7 @@
                 </li>
 
                 <!-- Megamenu 2 -->
-                <li class="megamenu-2"><a href="#"><span>Registry Resources</span> <i
+                <li class="megamenu-2"><a href="#"><span>{$resource}</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
 
                     <!-- Desktop Megamenu -->
@@ -130,9 +130,9 @@
                     </div><!-- End Desktop Megamenu -->
 
                 </li><!-- End Mega Menu 2 -->
-                <li><a href="/about" class="">About</a></li>
-                <li><a href="/license" class="">License</a></li>
-                <li><a href="/downloads">Download</a></li>
+                <li><a href="/about" class="">{$about}</a></li>
+                <li><a href="/license" class="">{$license}</a></li>
+                <li><a href="/downloads">{$download}</a></li>
 
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -141,7 +141,7 @@
         <div class="nav-search-form">
             <form class="search-form d-flex align-items-center ajaxform" data-append="#main" method="get"
                 action="/search/">
-                <input type="text" value="" id="q" name="q" placeholder="Search" title="Enter search keyword">
+                <input type="text" value="" id="q" name="q" placeholder="{$search}" title="Enter search keyword">
                 <button id="search-submit" onclick="javascript:void(0);" title="Search">
                     <svg class="icon icon-search" fill="currentColor">
                         <use xlink:href="/resources/assets/icons.svg#search">

@@ -21,8 +21,8 @@
 
       <!-- Section Title -->
       <div class="container section-title">
-        <h2>Pricing</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <h2>{$price}</h2>
+        <p>{$note}</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -32,13 +32,13 @@
           <div class="col-lg-4 col-md-6">
             <div class="pricing-card starter">
               <div class="plan-header">
-                <h3 class="plan-name">Starter</h3>
-                <p class="plan-description">Perfect for individuals and small projects getting started.</p>
+                <h3 class="plan-name">{$basic}</h3>
+                <p class="plan-description">{$basic_note}</p>
               </div>
               <div class="pricing-display">
                 <div class="price">
-                  <span class="currency">$</span>
-                  <span class="amount">19</span>
+                  <span class="currency">￥</span>
+                  <span class="amount">0</span>
                   <span class="period">/mo</span>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                   <span>SSL Certificate</span>
                 </div>
               </div>
-              <a href="https://bootstrapmade.com/content/demo/Devin/#" class="btn-plan">Get Started</a>
+              <a href="/login/" class="btn-plan">{$login}</a>
             </div>
           </div><!-- End Starter Plan -->
 
@@ -72,8 +72,8 @@
             <div class="pricing-card professional featured">
               <div class="plan-header">
                 <div class="featured-badge">Most Popular</div>
-                <h3 class="plan-name">Professional</h3>
-                <p class="plan-description">Ideal for growing businesses and teams that need more power.</p>
+                <h3 class="plan-name">{$commercial}</h3>
+                <p class="plan-description">{$commercial_note}</p>
               </div>
               <div class="pricing-display">
                 <div class="price">
@@ -108,15 +108,15 @@
                   <span>Custom Integrations</span>
                 </div>
               </div>
-              <a href="https://bootstrapmade.com/content/demo/Devin/#" class="btn-plan">Start Free Trial</a>
+              <a href="#" class="btn-plan">{$purchase}</a>
             </div>
           </div><!-- End Professional Plan -->
 
           <div class="col-lg-4 col-md-6">
             <div class="pricing-card enterprise">
               <div class="plan-header">
-                <h3 class="plan-name">Enterprise</h3>
-                <p class="plan-description">Comprehensive solution for large organizations with specific needs.</p>
+                <h3 class="plan-name">{$enterprise}</h3>
+                <p class="plan-description">{$enterprise_note}</p>
               </div>
               <div class="pricing-display">
                 <div class="price">
@@ -151,7 +151,7 @@
                   <span>Dedicated Account Manager</span>
                 </div>
               </div>
-              <a href="https://bootstrapmade.com/content/demo/Devin/#" class="btn-plan">Contact Sales</a>
+              <a href="#" class="btn-plan">{$purchase}</a>
             </div>
           </div><!-- End Enterprise Plan -->
 
