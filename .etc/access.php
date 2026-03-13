@@ -18,7 +18,7 @@ class accessController extends controller {
             return true;
         }
 
-        return true;
+        return !Utils::isDbNull(user_id());
     }
 
     /**
