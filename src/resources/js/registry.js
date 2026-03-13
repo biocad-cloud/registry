@@ -675,7 +675,8 @@ var pages;
                 btn_1.disabled = true;
                 $ts.post("/user/login/", { email: email, passwd: md5(password) }, function (result) {
                     if (result.code == 0) {
-                        $goto("/user/home/");
+                        // $goto("/user/home/");
+                        $goto("/database/");
                     }
                     else {
                         btn_1.textContent = originalText_1;
