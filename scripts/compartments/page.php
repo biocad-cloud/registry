@@ -14,9 +14,11 @@ class compartment_location {
         $metabolites = $metabolites
             ->left_join("metabolites")
             ->on(["compartment_enrich"=>"metabolite_id","metabolites"=>"id"])
+            ->left_join("struct_data")
+            ->on(["compartment_enrich"=>"metabolite_id","struct_data"=>"metabolite_id"])
             ->where(["location_id"=>$loc["id"]])
             ->limit(100)
-            ->select(["`metabolites`.id","name","formula","ROUND(exact_mass, 4) AS exact_mass"])
+            ->select(["`metabolites`.id","name","formula","ROUND(exact_mass, 4) AS exact_mass","cas_id","smiles"])
             ;
         $proteins = (new Table(["cad_registry"=>"subcellular_location"]))
             ->left_join("protein_data")
