@@ -3,6 +3,8 @@
 <html lang="en">
 
 <head>
+  <meta name="drawer-h" content="300">
+
   ${./includes/head.html}
 </head>
 
@@ -28,12 +30,29 @@
 
         <h3>Metabolites</h3>
 
-        <p>
+        <div class="d-flex flex-wrap gap-3">
           <foreach @metabolite>
-            <a href='/metabolite/@metabolite["id"]'
-              title='@metabolite["formula"] [@metabolite["exact_mass"]]'>@metabolite["name"]</a>;
-          </foreach>
+            <div class="card" style="width: 18rem;">
 
+              <a href='/spectrum/?metab=@metabolite["id"]'>
+                <canvas class="smiles_drawer card-img-top" role="img" focusable="false"
+                  style="width:100%; max-height: 300px;" data='@metabolite["smiles"]'>
+                </canvas>
+              </a>
+
+              <div class="card-body">
+                <h5 class="card-title"><a href='/metabolite/@metabolite["id"]'>@metabolite["name"]</a></h5>
+                <p class="card-text">Formula: <a
+                    href='/metabolites/?formula=@metabolite["formula"]'>@metabolite["formula"]</a><br />
+                  Exact Mass: <a
+                    href='/metabolites/?exact_mass=@metabolite["exact_mass"]'>@metabolite["exact_mass"]</a><br />
+                  CAS: @metabolite["cas_id"]</p>
+              </div>
+            </div>
+          </foreach>
+        </div>
+
+        <p>
           <br />
           <strong>
             <a href="/metabolites/?location={$name}" class="explore-link">
@@ -44,8 +63,7 @@
 
         <p>
           <foreach @protein>
-            <a href='/protein/fasta/?id=@protein["id"]'
-              title='@protein["source_id"]'>@protein["name"]</a>;
+            <a href='/protein/fasta/?id=@protein["id"]' title='@protein["source_id"]'>@protein["name"]</a>;
           </foreach>
 
           <br />
@@ -63,5 +81,8 @@
 
   ${./includes/footer.html}
 </body>
+
+<script src="/resources/vendor/smiles-drawer.min.js"></script>
+<script src="/resources/js/smiles_batch_render.js"></script>
 
 </html>
