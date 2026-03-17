@@ -1,5 +1,4 @@
 RewriteEngine On
-AllowOverride FileInfo
 
 Header set Access-Control-Allow-Origin "*"
 
@@ -75,14 +74,7 @@ RewriteRule ^(.+)$ /index.php?app=$1 [L,QSA]
     AddOutputFilterByType DEFLATE font/woff              # 旧版WOFF未深度压缩，可选压缩（现代站点建议用WOFF2）
     
     # ===== 3. 【双重保险】按扩展名排除所有已压缩/二进制文件 =====
-    SetEnvIfNoCase Request_URI "\.(?: 
-        gif|jpe?g|png|webp|bmp|tiff|ico|svgz|       # 图片（含SVGZ）
-        zip|gz|tar|bz2|rar|7z|                       # 压缩包（您明确要求排除的）
-        pdf|docx|xlsx|pptx|                          # Office/PDF（本身已压缩）
-        mp3|mp4|avi|mov|wmv|flv|webm|                # 音视频
-        woff2|eot|ttf|otf|                           # 现代字体（WOFF2/TTF等已优化）
-        exe|dll|apk|ipa                              # 可执行文件
-    )$" no-gzip dont-vary
+    SetEnvIfNoCase Request_URI "\.(gif|jpe?g|png|webp|bmp|tiff|ico|svgz|zip|gz|tar|bz2|rar|7z|pdf|mp3|mp4|avi|mov|wmv|flv|webm|woff2|eot|ttf|otf)$" no-gzip dont-vary
 
     # ===== 4. 关键：添加Vary头（确保CDN/代理正确缓存）=====
     Header append Vary Accept-Encoding env=!dont-vary
