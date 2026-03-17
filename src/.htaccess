@@ -1,4 +1,5 @@
 RewriteEngine On
+AllowOverride FileInfo
 
 Header set Access-Control-Allow-Origin "*"
 
@@ -53,4 +54,39 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.+)$ /index.php?app=$1 [L,QSA]
+
+<IfModule mod_deflate.c>
+    # ===== 1. 压缩级别（平衡CPU与压缩率）=====
+    DeflateCompressionLevel 6
+
+    # ===== 2. 【核心】仅压缩明确可受益的文本MIME类型 =====
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/atom+xml
+    AddOutputFilterByType DEFLATE image/svg+xml          # SVG是XML文本，强烈建议压缩
+    AddOutputFilterByType DEFLATE font/woff              # 旧版WOFF未深度压缩，可选压缩（现代站点建议用WOFF2）
+    
+    # ===== 3. 【双重保险】按扩展名排除所有已压缩/二进制文件 =====
+    SetEnvIfNoCase Request_URI "\.(?: 
+        gif|jpe?g|png|webp|bmp|tiff|ico|svgz|       # 图片（含SVGZ）
+        zip|gz|tar|bz2|rar|7z|                       # 压缩包（您明确要求排除的）
+        pdf|docx|xlsx|pptx|                          # Office/PDF（本身已压缩）
+        mp3|mp4|avi|mov|wmv|flv|webm|                # 音视频
+        woff2|eot|ttf|otf|                           # 现代字体（WOFF2/TTF等已优化）
+        exe|dll|apk|ipa                              # 可执行文件
+    )$" no-gzip dont-vary
+
+    # ===== 4. 关键：添加Vary头（确保CDN/代理正确缓存）=====
+    Header append Vary Accept-Encoding env=!dont-vary
+    Header append Vary User-Agent env=!dont-vary
+</IfModule>
+
 
