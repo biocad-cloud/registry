@@ -25,8 +25,10 @@ namespace pages {
 
                 $ts.post("/user/login/", { email: email, passwd: md5(password) }, result => {
                     if (result.code == 0) {
-                        // $goto("/user/home/");
-                        $goto("/database/");
+                        let $goto_url = $ts.location("goto", false, "/database/");
+
+                        $goto_url = decodeURIComponent($goto_url);
+                        $goto($goto_url);
                     } else {
                         btn.textContent = originalText;
                         btn.disabled = false;
