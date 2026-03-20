@@ -8,7 +8,7 @@ class cluster_info {
             ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
             ->where(["cluster_id" => $id])
             ->limit(($page-1)* $page_size, $page_size)
-            ->select(["id","source_id","`protein_data`.name","function","ncbi_taxid","ncbi_taxonomy.name as taxname"])
+            ->select(["`protein_data`.id","source_id","`protein_data`.name","`function`","ncbi_taxid","ncbi_taxonomy.name as taxname"])
             ;
         $info = (new Table(["cad_registry"=>"protein_data"]))->where(["id"=>$id])->find();
         $info["prot"] = $data;
