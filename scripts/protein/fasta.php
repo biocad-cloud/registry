@@ -27,6 +27,14 @@ class prot_fasta {
             $seq["cluster_name"] = "";
         }        
 
+        if ($seq["protein_id"] > 0) {
+            $seq["model"] = (new Table(["cad_registry"=>"protein"]))->where(["id" => $seq["protein_id"]])->find();
+            $seq["model_name"] = $seq["model"]["name"] . " - " . $seq["model"]["function"] ;
+        } else {
+            $seq["model"] = [];
+            $seq["model_name"] = "";
+        }
+
         if (count($pathway) > 0) {
             $pathway = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathway)])->select();
         } else {

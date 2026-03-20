@@ -33,25 +33,23 @@ class model_data {
 
         # build internal link for ec number
         $prot["dblink"] = resolver::internal_link($prot["dblink"]);
+        # protein sequence
+        $offset = ($page-1)*$page_size;
+        $prot["fasta"] = (new Table(["cad_registry"=>"protein_data"]))
+            ->left_join("ncbi_taxonomy")
+            ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
+            ->where(["protein_id"=>$id])
+            ->order_by(["name","`function`"], true)
+            ->limit($offset,$page_size)
+            ->select(["protein_data.id",
+            "protein_data.source_id",
+            "protein_data.name",
+            "protein_data.function",
+            "ncbi_taxid",
+            "ncbi_taxonomy.name as taxname"])
+            ;
 
         if (count($ec) > 0) {
-            # protein sequence
-            $offset = ($page-1)*$page_size;
-            $prot["fasta"] = (new Table(["cad_registry"=>"db_xrefs"]))
-                ->left_join("protein_data")
-                ->on(["protein_data"=>"id","db_xrefs" => "obj_id"])
-                ->left_join("ncbi_taxonomy")
-                ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])
-                ->where(["type"=> FASTA_PROTEIN,"db_xref"=>in($ec)])
-                ->order_by(["name","`function`"], true)
-                ->limit($offset,$page_size)
-                ->select(["protein_data.id",
-                "protein_data.source_id",
-                "protein_data.name",
-                "protein_data.function",
-                "ncbi_taxid",
-                "ncbi_taxonomy.name as taxname"])
-                ;
             # reactions
             $prot["reaction"] = (new Table(["cad_registry"=>"db_xrefs"]))
                 ->left_join("reaction")
@@ -67,7 +65,6 @@ class model_data {
                 "reaction.note"])
                 ;
         } else {
-            $prot["fasta"] = [];
             $prot["reaction"] = [];
         }
 
