@@ -33,6 +33,7 @@
               <th>ID</th>
               <th>name</th>
               <th>function</th>
+              <th>diamond blastp</th>
               <th>taxonomy</th>
             </tr>
           </thead>
@@ -42,6 +43,9 @@
                 <td><a href='/protein/fasta/?id=@prot["id"]'>@prot["source_id"]</a></td>
                 <td>@prot["name"]</td>
                 <td>@prot["function"]</td>
+                <td>
+                  Identities: @prot["identities"]% / E-value: @prot["e_value"] / Bit Score: @prot["bit_score"]
+                </td>
                 <td><a href='/taxonomy/?id=@prot["ncbi_taxid"]'>@prot["taxname"]</a></td>
               </tr>
             </foreach>
