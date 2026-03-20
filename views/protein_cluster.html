@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  ${./includes/head.html}
+</head>
+
+<body class="index-page scrolled">
+  ${./includes/nav.html}
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <main class="main">
+
+    <section id="data" class="section">
+
+      <!-- Section Title -->
+      <div class="container section-title">
+        <h2>{$name}</h2>
+        <p>{$function}</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>name</th>
+              <th>function</th>
+              <th>taxonomy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach @prot>
+              <tr>
+                <td><a href='/protein/fasta/?id=@prot["id"]'>@prot["source_id"]</a></td>
+                <td>@prot["name"]</td>
+                <td>@prot["function"]</td>
+                <td><a href='/taxonomy/?id=@prot["ncbi_taxid"]'>@prot["taxname"]</a></td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  ${./includes/footer.html}
+</body>
+
+</html>

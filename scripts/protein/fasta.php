@@ -18,7 +18,15 @@ class prot_fasta {
             ->where(["model_id"=>$id, "class_id" => FASTA_PROTEIN])
             ->project("pathway_id")
             ;
-    
+        
+        if ($seq["cluster_id"] > 0) {
+            $seq["cluster"] = (new Table(["cad_registry"=>"protein_data"]))->where(["id" => $seq["cluster_id"]])->find();
+            $seq["cluster_name"] = $seq["cluster"]["function"];
+        } else {
+            $seq["cluster"] = [];
+            $seq["cluster_name"] = "";
+        }        
+
         if (count($pathway) > 0) {
             $pathway = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathway)])->select();
         } else {

@@ -120,6 +120,15 @@ class App {
         include APP_PATH . "/scripts/protein/fasta.php";
         View::Display(prot_fasta::seqinfo($id));
     }
+    
+    /**
+     * @access *
+     * @uses view
+    */
+    public function protein_cluster($id, $page = 1) {
+        include APP_PATH . "/scripts/protein/cluster.php";
+        View::Display(cluster_info::cluster_table($id, $page));
+    }
 
     /**
      * Subcellular Locations
