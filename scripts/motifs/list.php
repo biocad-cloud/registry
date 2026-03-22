@@ -30,6 +30,8 @@ class motif_list {
             for($i =0;$i < count($list); $i++) {
                 $list[$i]["logo"] = motif_data::svg_str($list[$i]["logo"]);
             }
+
+            accessController::make_stats($q, "motif");
         }
 
         $page_num = $page;

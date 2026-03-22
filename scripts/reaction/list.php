@@ -3,7 +3,7 @@
 class reaction_list {
 
     public static function get_list($metabolite, $page=1, $page_size = 30) {
-        $id = Regex::Match($metabolite,"\d+");
+        $id = intval( Regex::Match($metabolite,"\d+"));
         $offset = ($page -1) * $page_size;
         $meta = (new Table(["cad_registry"=>"metabolites"]))->where(["id"=>$id])->find();
         $network = (new Table(["cad_registry"=>"metabolic_network"]))

@@ -10,6 +10,12 @@ class metabolite_list {
         $data = self::page_data($q, $term, $page, $page_size);
         $data["title"] = "Metabolites Page {$page}";
 
+        if ($q == "search") {
+            accessController::make_stats($term,"metabolite");
+        } else {
+            accessController::log_pageview("metabolite_set", $q . "->" . $term);
+        }        
+
         if (count($data) == 1) {
             # no data
             $data["desc"] = "no related data could be found.";

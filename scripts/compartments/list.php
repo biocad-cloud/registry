@@ -19,6 +19,8 @@ class location_list {
                 ->limit($offset,$page_size)
                 ->select()
                 ;
+            
+                accessController::make_stats($q, "subcellular_location");
         }
 
         $page = [

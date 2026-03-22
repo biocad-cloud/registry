@@ -79,7 +79,7 @@ class accessController extends controller {
         return $geo;
     }
 
-    public static function make_stats($q) {
+    public static function make_stats($q, $res = "general") {
         $nl_q = "MATCH (term) AGAINST ('{$q}' IN BOOLEAN MODE)";
         $hot_table = new Table(["registry_engine"=>"search_hits"]);
         $top = $hot_table
@@ -112,7 +112,8 @@ class accessController extends controller {
             "user_id" => user_id(),
             "session_id" => session_id(),
             "ipaddress" => $ip,
-            "geo" => $geo["id"]
+            "geo" => $geo["id"],
+            "resource"=>$res
         ]);
     }
 }

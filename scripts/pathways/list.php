@@ -25,6 +25,8 @@ class pathway_list {
         } else if (!Utils::isDbNull($query)) {
             $query = Table::make_fulltext_strips($query);
             $q = "MATCH (name , note) AGAINST ('{$query}' IN BOOLEAN MODE)";
+
+            accessController::make_stats($query, "pathway");
         }      
 
         $data = (new Table(["cad_registry"=>"pathway"]))->where($q)->limit($offset, $page_size)->select();

@@ -55,6 +55,8 @@ class enzyme_list {
             ->select(["CONCAT(enzyme_class, '.', sub_class, '.', sub_category, '.', enzyme_number) AS `ec_number`","`enzyme`.*"])
             ;
         
+        accessController::make_stats($q,"enzyme");
+
         return list_nav(["enzyme"=>$data] , $page);
     }
 }
