@@ -50,4 +50,32 @@ class accessController extends controller {
 
         \Redirect($url);
     }   
+
+    public static function log_pageview($res, $id) {
+        $ip = Utils::UserIPAddress();
+        $geo = self::geo_loc($ip);
+        $ua =$_SERVER['HTTP_USER_AGENT'] ?? '';
+
+        (new Table(["registry_engine"=>"page_view"]))->add([
+            "session_id" => session_id(),
+            "user_id" => user_id(),
+            "ipaddress" => $ip,
+            "geo_id" => $geo["id"],
+            "user_agent"=> $ua,
+            "resource"=>$res,
+            "identifier"=>$id
+        ]);
+    }
+
+    public static function geo_loc($ip) {
+        $geo_ip = (new Table(["registry_engine"=>"geo_ip"]));
+        $geo = $geo_ip->where(["ipaddress"=> $ip])->find();
+
+        if (Utils::isDbNull($geo)) {
+            $geo_ip->add(["ipaddress"=>$ip,"location"=>"-"]);
+            $geo = $geo_ip->where(["ipaddress"=> $ip])->order_by("id", true)->find();
+        }
+
+        return $geo;
+    }
 }

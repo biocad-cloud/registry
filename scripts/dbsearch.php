@@ -51,13 +51,7 @@ class portal {
         }
 
         $ip = Utils::UserIPAddress();
-        $geo_ip = (new Table(["registry_engine"=>"geo_ip"]));
-        $geo = $geo_ip->where(["ipaddress"=> $ip])->find();
-
-        if (Utils::isDbNull($geo)) {
-            $geo_ip->add(["ipaddress"=>$ip,"location"=>"-"]);
-            $geo = $geo_ip->where(["ipaddress"=> $ip])->order_by("id", true)->find();
-        }
+        $geo = accessController::geo_loc($ip);
 
         (new Table(["registry_engine"=>"search_history"]))->add([
             "q"=>$q,
