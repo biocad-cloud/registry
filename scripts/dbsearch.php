@@ -50,10 +50,22 @@ class portal {
                 ;
         }
 
+        $ip = Utils::UserIPAddress();
+        $geo_ip = (new Table(["registry_engine"=>"geo_ip"]));
+        $geo = $geo_ip->where(["ipaddress"=> $ip])->find();
+
+        if (Utils::isDbNull($geo)) {
+            $geo_ip->add(["ipaddress"=>$ip,"location"=>"-"]);
+            $geo = $geo_ip->where(["ipaddress"=> $ip])->order_by("id", true)->find();
+        }
+
         (new Table(["registry_engine"=>"search_history"]))->add([
             "q"=>$q,
             "hashcode"=> md5( strtolower($q)),
-            "user_id" => user_id()
+            "user_id" => user_id(),
+            "session_id" => session_id(),
+            "ipaddress" => $ip,
+            "geo" => $geo["id"]
         ]);
     }
 
