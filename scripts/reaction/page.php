@@ -5,7 +5,10 @@ include_once APP_PATH . "/scripts/resolver.php";
 class reaction_model {
 
     public static function get_data($id) {
-        $id = Regex::Match($id,"\d+");
+        $id = intval(Regex::Match($id,"\d+"));
+
+        accessController::log_pageview("reaction", $id);
+
         $rxn = (new Table(["cad_registry"=>"reaction"]))
             ->left_join("vocabulary")
             ->on(["vocabulary"=>"id","reaction"=>"db_source"])

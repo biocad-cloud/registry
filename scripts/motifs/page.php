@@ -34,6 +34,8 @@ class motif_data {
             "ncbi_taxonomy.name AS taxname"])
             ;
         
+        accessController::log_pageview("motif",$id);
+
         return $motif;
     }
 
@@ -60,6 +62,8 @@ class motif_data {
             ->limit($offset,$page_size)
             ->select(["id","name","logo","width","note"])
             ;
+
+        accessController::log_pageview("motif_family", $family);
 
         for($i =0;$i < count($data); $i++) {
             $data[$i]["logo"] = self::svg_str($data[$i]["logo"]);

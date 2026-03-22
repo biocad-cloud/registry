@@ -22,6 +22,8 @@ class reference_peak {
             $ion_index["ion_{$i["id"]}"] = $i;
         }
 
+        accessController::log_pageview("reference_peak", "m/z:" . $mz);
+
         $peakdata = array_map(function($pk) use($ion_index) {
             $key = "ion_{$pk["annotation_id"]}";
             $ion = $ion_index[$key];

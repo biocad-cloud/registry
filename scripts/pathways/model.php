@@ -4,6 +4,9 @@ class pathway_model {
 
     public static function get_model($id) {
         $pwy = (new Table(["cad_registry"=>"pathway"]))->where(["id"=>$id])->find();
+
+        accessController::log_pageview("pathway", $id);
+
         $pwy["metab"] = (new Table(["cad_registry"=>"pathway_network"]))
             ->left_join("metabolites")->on(["metabolites"=>"id", "pathway_network"=> "model_id"])
             ->left_join("struct_data")->on(["struct_data"=>"metabolite_id","metabolites"=>"id"])

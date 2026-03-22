@@ -29,8 +29,10 @@ class enzyme_data {
                 ;
         }
 
+        accessController::log_pageview("enzyme", $ec);
+
         if (Utils::isDbNull($enzyme)) {
-            RFC7231Error::err404("unknown enzyme data!");
+            RFC7231Error::err404("unknown enzyme data ($ec)!");
         }
 
         $note_str = "{$enzyme["recommended_name"]} ({$enzyme["systematic_name"]})<br />{$enzyme["note"]}";

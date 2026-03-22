@@ -7,6 +7,8 @@ class model_data {
     public static function protein_model($id,$page,$page_size = 10) {
         $prot = (new Table(["cad_registry"=>"protein"]))->where(["id"=>$id])->find();
 
+        accessController::log_pageview("protein",$id);
+
         if (Utils::isDbNull($prot)) {
             RFC7231Error::err404("can not found the specific protein model!");
         } else {

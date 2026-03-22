@@ -23,6 +23,8 @@ class library_data {
                 "ROUND(mz, 4) AS precursor"])
             ;
         
+        accessController::log_pageview("reference_spectrum", $splash);
+
         if (Utils::isDbNull($spectrum)) {
             RFC7231Error::err404("could not found the spectrum data!");
         }

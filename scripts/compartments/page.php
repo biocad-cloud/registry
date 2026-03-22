@@ -6,6 +6,8 @@ class compartment_location {
         $name = urldecode($name);
         $loc = (new Table(["cad_registry"=>"compartment_location"]))->where(["name"=>$name])->find();
 
+        accessController::log_pageview("subcellular_location", $name);
+
         if (Utils::isDbNull($loc)) {
             RFC7231Error::err404("subcellular location compartment '{$name}' can not be found!");
         }

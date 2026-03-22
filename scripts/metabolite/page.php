@@ -87,8 +87,11 @@ class metabolite_page {
     }
 
     public static function page_json($id) {
-        $id = Regex::Match($id, "\d+");
+        $id = intval(Regex::Match($id, "\d+"));
         $model_id = (new Table(["cad_registry"=>"registry_resolver"]))->where(["type"=>ENTITY_METABOLITE,"symbol_id"=>$id])->find();
+
+        accessController::log_pageview("metabolite", $id);
+
         $page = new Table(["cad_registry"=>"metabolites"]);
         $page = $page
             ->left_join("struct_data")

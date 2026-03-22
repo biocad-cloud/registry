@@ -3,6 +3,8 @@
 class prot_fasta {
 
     public static function seqinfo($id) {
+        accessController::log_pageview("protein_fasta", $id);
+
         $seq = (new Table(["cad_registry"=>"protein_data"]))
             ->left_join("ncbi_taxonomy")
             ->on(["ncbi_taxonomy"=>"id","protein_data"=>"ncbi_taxid"])

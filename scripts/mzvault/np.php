@@ -3,10 +3,12 @@
 class np {
 
     public static function plant_np($page=1, $page_size = 50) {
+        accessController::log_pageview("plant_np", "page_" . $page);
         return self::np_library(749, "Plant Natural Product", $page, $page_size);
     }
 
     public static function microbial_np($page=1, $page_size = 50) {
+        accessController::log_pageview("microbial_np", "page_" . $page);
         return self::np_library(750, "Microbial Natural Product", $page, $page_size);
     }
 
