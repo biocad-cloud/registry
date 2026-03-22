@@ -17,7 +17,14 @@ class accessController extends controller {
         if (MAINTENANCE_MODE && !self::maintenance_mode()) {
             \Redirect("/maintenance_mode/");
         }
+
+        $audit = new RestrictionMySQL(Utils::UserIPAddress(), $this->ref);
         
+        if ($audit->Check()) {
+            RFC7231Error::err429($audit->Description());
+            return false;
+        }
+
         if ($this->AccessByEveryOne()) {
             return true;
         }
