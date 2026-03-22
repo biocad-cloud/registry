@@ -78,4 +78,41 @@ class accessController extends controller {
 
         return $geo;
     }
+
+    public static function make_stats($q) {
+        $nl_q = "MATCH (term) AGAINST ('{$q}' IN BOOLEAN MODE)";
+        $hot_table = new Table(["registry_engine"=>"search_hits"]);
+        $top = $hot_table
+            ->where($nl_q)
+            ->order_by("score",true)
+            ->find(["`search_hits`.*","{$nl_q} AS score"])
+            ;
+
+        if (Utils::isDbNull($top)) {
+            $hot_table->add([
+                "symbol_id" => 0,
+                "term" => $q,
+                "hashcode" => md5( strtolower($q) ),
+                "type_id" => 0,
+                "hits" => 1
+            ]);
+        } else {
+            $hot_table->where(["id" => $top["id"]])
+                ->limit(1)
+                ->save(["hits" => "~`hits`+1"])
+                ;
+        }
+
+        $ip = Utils::UserIPAddress();
+        $geo = accessController::geo_loc($ip);
+
+        (new Table(["registry_engine"=>"search_history"]))->add([
+            "q"=>$q,
+            "hashcode"=> md5( strtolower($q)),
+            "user_id" => user_id(),
+            "session_id" => session_id(),
+            "ipaddress" => $ip,
+            "geo" => $geo["id"]
+        ]);
+    }
 }

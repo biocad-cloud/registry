@@ -20,6 +20,8 @@ class search {
             ->find(["ncbi_taxonomy.*","term as rank_name"])
             ;
 
+        accessController::make_stats($term);
+
         $page_num = $page;
         $data = [
             "taxon" => $list,
