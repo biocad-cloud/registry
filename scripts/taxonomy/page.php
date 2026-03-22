@@ -7,6 +7,8 @@ class ncbi_taxonomy {
         
         if (strlen($id) == 0) {
             RFC7231Error::err400("invalid taxonomy id parameter!");
+        } else {
+            accessController::log_pageview("taxonomy", $id);
         }
 
         $tax = self::find_tax($id);
@@ -37,7 +39,7 @@ class ncbi_taxonomy {
         } else {
             $tax["childs"] = [];
         }
-       
+    
         $prot_data = FASTA_PROTEIN;
         $ec_number = EC_NUMBER;
         $sql = "SELECT 
