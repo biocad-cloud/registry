@@ -16,6 +16,8 @@ class App {
     /**
      * @uses api
      * @access *
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
@@ -33,6 +35,8 @@ class App {
     /**
      * @access *
      * @uses api
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function metabolites($page       = 1, 
                                 $topic      = null, 
@@ -56,6 +60,8 @@ class App {
     /**
      * @uses file
      * @access *
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function motif($logo) {
         $id = Regex::Match($logo, "\d+");
@@ -72,6 +78,8 @@ class App {
      * @uses api
      * @access *
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function enzyme_data($q) {
         include_once APP_PATH . "/scripts/enzyme/list.php";
@@ -103,6 +111,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function organism_source($taxid) {
         include APP_PATH . "/scripts/taxonomy/metabolites.php";

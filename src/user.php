@@ -73,6 +73,8 @@ class App {
      * @access *
      * @method post
      * @uses api
+     * 
+     * @rate 20/min,50/hour,200/day
      */
     public function login($email, $passwd) {
         // 1. 查找用户

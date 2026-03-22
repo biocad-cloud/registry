@@ -11,6 +11,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function annotation_hits() {
         include_once APP_PATH . "/scripts/mzvault/stats.php";
@@ -20,6 +22,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function spectrum_list() {
         include_once APP_PATH . "/scripts/mzvault/library.php";       
@@ -29,6 +33,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function spectrum($splash) {
         include_once APP_PATH . "/scripts/mzvault/library.php";
@@ -38,6 +44,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function experiment_source() {
         $exp = (new Table(["mzvault"=>"annotation"]))
@@ -62,6 +70,8 @@ class App {
      * @access *
      * @uses view
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function plant_np($page=1) {
         include_once APP_PATH . "/scripts/mzvault/np.php";
@@ -74,6 +84,8 @@ class App {
      * @access *
      * @uses view
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function microbial_np($page=1) {
         include_once APP_PATH . "/scripts/mzvault/np.php";
@@ -83,6 +95,8 @@ class App {
     /**
      * @uses view
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function peak($mz) {        
         View::Display(["mz" => $mz,"da"=> 0.05]);
@@ -91,6 +105,8 @@ class App {
     /**
      * @uses api
      * @method get
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function peakdata($mz, $da = 0.05, $page = 1) {
         include_once APP_PATH . "/scripts/mzvault/peak.php";

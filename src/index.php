@@ -18,6 +18,8 @@ class App {
      * Symbol resolver
      * 
      * @access *
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function s($ref) {
         include APP_PATH . "/scripts/resolver.php";
@@ -37,6 +39,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function metabolites($page       = 1, 
                                 $topic      = null, 
@@ -61,6 +65,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function proteins($ec=null,$cc=null,$topic=null, $page =1) {
         include APP_PATH . "/scripts/protein/list.php";
@@ -77,6 +83,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function protein($id,$page=1) {
         include APP_PATH . "/scripts/protein/page.php";
@@ -86,6 +94,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function enzyme($ec = null, $id = null) {
         include_once APP_PATH . "/scripts/enzyme/page.php";
@@ -97,6 +107,8 @@ class App {
      * 
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function enzymes($q=null, $page=1) {
         if (Utils::isDbNull($q)) {
@@ -115,6 +127,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function protein_fasta($id) {
         include APP_PATH . "/scripts/protein/fasta.php";
@@ -124,6 +138,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function protein_cluster($id, $page = 1) {
         include APP_PATH . "/scripts/protein/cluster.php";
@@ -135,6 +151,8 @@ class App {
      * 
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function compartments($page=1, $q=null) {
         include APP_PATH . "/scripts/compartments/list.php";
@@ -144,6 +162,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function compartment($name) {
         include APP_PATH . "/scripts/compartments/page.php";
@@ -153,6 +173,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function motif($id = null, $family = null,$page=1) {
         include APP_PATH . "/scripts/motifs/page.php";
@@ -174,6 +196,8 @@ class App {
      * 
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function motifs($page=1,$q=null,$page_size=10) {
         include APP_PATH . "/scripts/motifs/list.php";
@@ -194,7 +218,7 @@ class App {
      * @access *
      * @uses view
      * 
-     * @rate 3/min,500/hour,2000/day
+     * @rate 30/min,500/hour,2000/day
     */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
@@ -212,6 +236,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function reaction($id) {
         include APP_PATH . "/scripts/reaction/page.php";
@@ -221,6 +247,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function reactions($metabolite=null, $page=1) {
         include APP_PATH . "/scripts/reaction/list.php";
@@ -230,6 +258,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function taxonomy($id,$page=1) {
         include APP_PATH . "/scripts/taxonomy/page.php";
@@ -239,6 +269,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function taxonomy_root() {
         include APP_PATH . "/scripts/taxonomy/page.php";
@@ -248,6 +280,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function taxonomy_search($q, $page = 1) {
         include APP_PATH . "/scripts/taxonomy/search.php";
@@ -256,6 +290,8 @@ class App {
 
     /**
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function spectrum($metab) {
         include APP_PATH . "/scripts/spectrum/page.php";
@@ -265,6 +301,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function pathways($tax = null,$metab=null,$q=null, $page=1) {
         include_once APP_PATH . "/scripts/pathways/list.php";
@@ -274,6 +312,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function pathway($id) {
         include_once APP_PATH . "/scripts/pathways/model.php";
@@ -315,6 +355,8 @@ class App {
      * 
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function search($q, $page = 1) {
         View::Display((include APP_PATH . "/scripts/search.php")->get_result(urldecode($q), $page));
