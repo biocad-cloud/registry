@@ -1,6 +1,7 @@
 <?php 
 
 imports("MVC.controller");
+imports("MVC.restriction_mysql");
 imports("RFC7231.logger");
 imports("RFC7231.index");
 
@@ -18,7 +19,7 @@ class accessController extends controller {
             \Redirect("/maintenance_mode/");
         }
 
-        $audit = new RestrictionMySQL(Utils::UserIPAddress(), $this->ref);
+        $audit = new RestrictionMySQL(Utils::UserIPAddress(), $this);
         
         if ($audit->Check()) {
             RFC7231Error::err429($audit->Description());
