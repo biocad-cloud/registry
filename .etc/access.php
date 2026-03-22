@@ -22,6 +22,15 @@ class accessController extends controller {
         $audit = new RestrictionMySQL(Utils::UserIPAddress(), $this);
         
         if ($audit->Check()) {
+            $ip = Utils::UserIPAddress();
+            $geo = self::geo_loc($ip );
+            $uid = user_id();
+            (new Table(["registry_engine"=>"audit_warnings"]))->add([
+                "user_id" => $uid,
+                "ipaddress" => $ip,
+                "geo_id" => $geo["id"],
+                "log" => "too many request from the client({$ip}, user_id={$uid}) on request server resource: {$this->ref}"
+            ]);
             RFC7231Error::err429($audit->Description());
             return false;
         }
