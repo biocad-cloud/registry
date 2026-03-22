@@ -43,6 +43,7 @@ return [
         'DB_PORT' => mysql_port
     ],
 
+    "user_audit" => "registry_engine",
     "password_salt" => "test-demo",
     "base_url" => "https://biocad_registry.innovation.ac.cn",
 
