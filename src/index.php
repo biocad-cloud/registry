@@ -193,6 +193,8 @@ class App {
     /**
      * @access *
      * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
     */
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
