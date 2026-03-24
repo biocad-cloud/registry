@@ -26,6 +26,7 @@ Header set Cache-Control: "max-age=0, no-store"
 RewriteRule ^registry/([^/]+)/?$ /registry.php?app=$1 [L,QSA,NC]
 RewriteRule ^mzvault/([^/]+)/?$ /mzvault.php?app=$1 [L,QSA,NC]
 RewriteRule ^landscape/([^/]+)/?$ /landscape.php?app=$1 [L,QSA,NC]
+RewriteRule ^release/([^/]+)/?$ /release.php?app=$1 [L,QSA,NC]
 
 RewriteRule ^user/([^/]+)/?$ /user.php?app=$1 [L,QSA,NC]
 
