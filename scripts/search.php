@@ -6,6 +6,10 @@ class search {
         $referer = $_SERVER['HTTP_REFERER'];
         $referer = Utils::isDbNull($referer) ? null : URL::mb_parse_url ( $referer );
 
+        if (StringHelpers::IsPattern($q,"BioCAD\d+")) {
+            Redirect("/metabolite/$q");
+        }
+
         if (!Utils::isDbNull($referer)) {
             return self::local_search(trim($referer["path"], "/"), $q, $page);
         } else {
