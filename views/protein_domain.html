@@ -3,39 +3,64 @@
 <html lang="en">
 
 <head>
-  ${./includes/head.html}
+    ${./includes/head.html}
 </head>
 
 <body class="index-page scrolled">
-  ${./includes/nav.html}
+    ${./includes/nav.html}
 
-  <br />
-  <br />
-  <br />
-  <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
-  <main class="main">
+    <main class="main">
 
-    <section id="data" class="section">
+        <section id="data" class="section">
 
-      <!-- Section Title -->
-      <div class="container section-title">
-        <h2>Frequently Asked Questions</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title">
+                <h2>{$term}</h2>
+                <p>{$note}</p>
+            </div><!-- End Section Title -->
 
-      <div class="container">
+            <div class="container">
+
+                ${./includes/paging.html}
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>protein</th>
+                            <th>name</th>
+                            <th>left</th>
+                            <th>right</th>
+                            <th>site</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <foreach @site>
+                            <tr>
+                                <td><a href='/protein/fasta/?id=@site["protein_id"]'>@site["name"]</a></td>
+                                <td>@site["function"]</td>
+                                <td>@site["left"]</td>
+                                <td>@site["right"]</td>
+                                <td><code>@site["site"]</code></td>
+                            </tr>
+                        </foreach>
+                    </tbody>
+                </table>
+
+                ${./includes/paging.html}
+
+            </div>
+
+        </section>
 
 
+    </main>
 
-      </div>
-
-    </section>
-
-
-  </main>
-
-  ${./includes/footer.html}
+    ${./includes/footer.html}
 </body>
 
 </html>

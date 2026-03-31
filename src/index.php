@@ -147,6 +147,17 @@ class App {
     }
 
     /**
+     * @access *
+     * @uses view
+     * 
+     * @rate 30/min,500/hour,2000/day
+    */
+    public function protein_domain($id, $page = 1) {
+        include APP_PATH . "/scripts/protein/domain.php";
+        View::Display(domain_info::domain_table($id, $page));
+    }
+
+    /**
      * Subcellular Locations
      * 
      * @access *
