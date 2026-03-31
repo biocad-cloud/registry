@@ -75,6 +75,18 @@ class prot_fasta {
             }
         }
 
+        $seq["domain"] = (new Table(["cad_registry"=>"conserved_domain"]))
+            ->left_join("ontology")->on(["ontology"=>"id","conserved_domain"=>"domain_id"])
+            ->left_join("protein_data")->on(["protein_data"=>"id","conserved_domain"=>"protein_id"])
+            ->where(["`protein_data`.id"=>$id])
+            ->select(["domain_id",
+            "term",
+            "`left`",
+            "`right`",
+            "SUBSTRING(protein_data.sequence,
+                `left`,
+                `right` - `left` + 1) AS site"])
+            ;
         $seq["pathway"] = $pathway;
         $seq["subcellular_locations"] = $cc;
         $seq["reaction"] = $rxns;

@@ -210,6 +210,29 @@
               Registry Model: <a href="/protein/?id={$protein_id}">{$model_name}</a>
             </p>
 
+            <h3>Functional Domains</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>domain</th>
+                  <th>start</th>
+                  <th>ends</th>
+                  <th>site</th>
+                </tr>
+              </thead>
+              <tbody>
+                <foreach @domain>
+                  <tr>
+                    <td><a href='/motif/domain/?id=@domain["domain_id"]'>@domain["term"]</a></td>
+                    <td>@domain["left"]</td>
+                    <td>@domain["right"]</td>
+                    <td><code>@domain["site"]</code></td>
+                  </tr>
+                </foreach>
+              </tbody>
+            </table>
+
             <h3>Reactions</h3>
 
             <table class="table">
