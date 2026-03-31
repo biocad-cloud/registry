@@ -3,7 +3,14 @@
 class domain_info {
 
     public static function domain_table($id, $page=1) {
-        $domain = (new Table(["cad_registry"=>"ontology"]))->where(["id"=>$id]);
+        $domain = (new Table(["cad_registry"=>"ontology"]))->where(["id"=>$id])->find();
+
+        accessController::log_pageview("protein_domain", $id);
+
+        if (Utils::isDbNull($domain)) {
+            RFC7231Error::err404("the required protein domain data could not be found!");
+        }
+
         $page_size = 500;
         $domain["site"] = (new Table(["cad_registry"=>"conserved_domain"]))
             ->left_join("protein_data")
