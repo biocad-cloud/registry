@@ -234,8 +234,8 @@ class App {
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
 
-        $id = metabolite_page::resolve_id($id);
-        $main_id = metabolite_page::resolve_main($id);
+        $id = registry::resolve_id($id);
+        $main_id = registry::resolve_main($id);
 
         if ($main_id > 0) {
             Redirect("/metabolite/BioCAD" . str_pad($main_id,11,"0", STR_PAD_LEFT));

@@ -1,5 +1,7 @@
 <?php
 
+include_once __DIR__ . "/registry.php";
+
 class metabolite_list {
 
     public static function getList($q, 
@@ -68,6 +70,18 @@ class metabolite_list {
     }
 
     private static function page_data($q, $term, $page, $page_size) {
+        if ($q == "search") {
+            $id = registry::resolve_id($term);
+
+            if (!Utils::isDbNull($id)) {
+                $main_id = registry::resolve_main($id);
+                $q = "BioCAD" . str_pad($main_id, 11, '0', STR_PAD_LEFT);
+                $url = "/metabolite/{$q}";
+
+                Redirect($url);
+            }            
+        }
+
         $page = self::load_page($q, $page, $page_size);
         $model_id = $page->q($term);
         
