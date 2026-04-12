@@ -99,32 +99,20 @@ class metabolite_list {
     }
 
     private static function link_topics($data) {
-        $model = (new Table(["cad_registry"=>"registry_resolver"]))
-            ->where(["type" => ENTITY_METABOLITE, "symbol_id"=>$data["uid"]])
-            ->find()
-            ;
+        $metab_id = $data["uid"];
+        $data["topic"] = (new Table(["cad_registry"=>"topic"]))
+            ->left_join("vocabulary")
+            ->on(["vocabulary"=>"id","topic"=>"topic_id"])
+            ->where(["model_id"=>$metab_id, "type"=>ENTITY_METABOLITE])
+            ->distinct()
+            ->select(["`vocabulary`.term","`vocabulary`.color"])
+            ;   
 
-        if (!Utils::isDbNull($model)) {
-            unset($model["symbol_id"]);
-            unset($model["type"]);
-            unset($model["add_time"]);
-            unset($model["note"]);
-
-            $data["registry_model"] = $model;
-            $data["topic"] = (new Table(["cad_registry"=>"topic"]))
-                ->left_join("vocabulary")
-                ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-                ->where(["model_id"=>$model["id"], "type"=>in(0,ENTITY_METABOLITE)])
-                ->distinct()
-                ->select(["`vocabulary`.term","`vocabulary`.color"])
-                ;   
-
-            $data["topic"] = array_map(function($topic) {
-                return "<span class='badge' style='background-color:{$topic["color"]};'><a class='card-link' style='color: white;' href='/metabolites/?topic={$topic["term"]}'>{$topic["term"]}</a></span>";
-            }, $data["topic"]);
-            $data["topic"] = Strings::Join($data["topic"]," ");
-        }
-
+        $data["topic"] = array_map(function($topic) {
+            return "<span class='badge' style='background-color:{$topic["color"]};'><a class='card-link' style='color: white;' href='/metabolites/?topic={$topic["term"]}'>{$topic["term"]}</a></span>";
+        }, $data["topic"]);
+        $data["topic"] = Strings::Join($data["topic"]," ");
+    
         return $data;
     }
 }

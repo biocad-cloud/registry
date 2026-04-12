@@ -37,6 +37,7 @@
           <div class="row">
             <div class="col">
               <p>
+                Chinese Name: {$name_zh} <br />
                 Formula: <a href="/metabolites/?formula={$formula}">{$formula}</a> (<a
                   href="/metabolites/?exact_mass={$exact_mass}">{$exact_mass}</a>)<br />
                 SMILES: <code>{$smiles}</code>
@@ -46,7 +47,7 @@
 
               <section data-identity="medical-review-disclaimer" class="py-rem32px border-y border-gray-400 mt-rem32px"
                 style="padding-top: 2rem;
-              padding-bottom: 2rem;border-color: #e6e6e6;border-bottom-width: 1px;border-top-width: 1px;margin-top: 2rem;">
+              padding-bottom: 2rem;border-color: #e6e6e6;border-bottom-width: 1px;border-top-width: 1px;margin-top: 2rem; display:{$display}">
                 <div data-identity="medically-reviewed-badge"
                   class="text-rem13px leading-rem22px font-medium pr-rem12px pl-rem4px rounded-[22px] bg-paleGreen-050 text-forestGreen-500 w-fit mb-rem8px ml-[-4px]"
                   style="color: #1b7638;line-height: 1.375rem;font-weight: 500;font-size: .8125rem;padding-right: .75rem;padding-left: .25rem;background-color: #e6f2e5;border-radius: 22px;
@@ -64,16 +65,16 @@
                 </div>
                 <p data-identity="main-disclaimer-text" class="text-rem19px leading-rem23px text-gray-900 font-bold">
                   Last reviewed
-                  on 2024-06-28.</p>
+                  on {$reviewed_time}.</p>
                 <p>
                   <strong><i>Cite this Page</i></strong>
                   <br />
                   <br />
                   <i>{$name}</i>. 数据之源，洞见之始. SMRUCC genomics institute, a synthetic life researcher from China.
                   <a
-                    href="https://biocad_registry.innovation.ac.cn/s/(-)-arctiin">https://biocad_registry.innovation.ac.cn/s/(-)-arctiin</a>
+                    href="https://biocad_registry.innovation.ac.cn/s/{$symbol}">https://biocad_registry.innovation.ac.cn/s/{$symbol}</a>
                   (retrieved
-                  2026-01-03) (CAD Registry RN: {$id}). Licensed
+                  {$now_date}) (CAD Registry RN: {$id}). Licensed
                   under the Attribution-Noncommercial 4.0 International License (CC BY-NC 4.0).
                 </p>
               </section>

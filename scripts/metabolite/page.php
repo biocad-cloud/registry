@@ -96,21 +96,22 @@ class metabolite_page {
             ->distinct()
             ->select(["term AS db_name", "db_xref"])
             ;
+        $page["topic"] = (new Table(["cad_registry"=>"topic"]))
+            ->left_join("vocabulary")
+            ->on(["vocabulary"=>"id","topic"=>"topic_id"])
+            ->where(["model_id"=>$id, "type"=>ENTITY_METABOLITE])
+            ->distinct()
+            ->select(["`vocabulary`.term","`vocabulary`.color"])
+            ;  
 
         if (!Utils::isDbNull($model_id)) {
-            unset($model_id["symbol_id"]);
-            unset($model_id["type"]);
-            unset($model_id["add_time"]);
-            unset($model_id["note"]);
-
+            $page["display"] = "block";
             $page["registry_model"] = $model_id;
-            $page["topic"] = (new Table(["cad_registry"=>"topic"]))
-                ->left_join("vocabulary")
-                ->on(["vocabulary"=>"id","topic"=>"topic_id"])
-                ->where(["model_id"=>$model_id["id"], "type"=>in(0,ENTITY_METABOLITE)])
-                ->distinct()
-                ->select(["`vocabulary`.term","`vocabulary`.color"])
-                ;   
+            $page["symbol"] = $model_id["register_name"];
+            $page["reviewed_time"] = date("Y-m-d", strtotime($model_id["add_time"]));
+            $page["now_date"] = date("Y-m-d");
+        } else {
+            $page["display"] = "none";
         }
 
         $page["organism"] = (new Table(["cad_registry"=>"organism_source"]))
@@ -140,7 +141,11 @@ class metabolite_page {
             ;
     
         if (count($pathway) > 0) {
-            $page["pathway"] = (new Table(["cad_registry"=>"pathway"]))->where(["id" => in($pathway)])->limit(20)->select();
+            $page["pathway"] = (new Table(["cad_registry"=>"pathway"]))
+                ->where(["id" => in($pathway)])
+                ->limit(20)
+                ->select()
+                ;
         } else {
             $page["pathway"] = [];
         }
