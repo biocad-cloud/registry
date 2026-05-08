@@ -234,7 +234,7 @@ class App {
     public function metabolite($id) {
         include APP_PATH . "/scripts/metabolite/page.php";
 
-        $id = registry::resolve_id($id);
+        $id = registry::resolve_id($id, false);
         $main_id = registry::resolve_main($id);
 
         if ($main_id > 0) {
